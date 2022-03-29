@@ -1,0 +1,10 @@
+export {default as OrderedProduct } from './OrderedProduct';
+export {default as CheckoutForm } from './CheckoutForm';
+export {default as OrderHistory } from './OrderHistory';
+export {default as Navbar } from './Navbar';
+export {default as NewCollections } from './NewCollections';
+export {default as Sidebar } from './Sidebar';
+export {default as Cart } from './Cart';
+export {default as Card } from './Card';
+export {default as Product } from './Product';
+export {default as CategoryTag } from './CategoryTag';

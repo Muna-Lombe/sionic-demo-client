@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+A simple REST interface is implemented to retrieve data.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To get a list of entities, a GET request of the form
 
-## Available Scripts
+https://test2.sionic.ru/api/{model}
 
-In the project directory, you can run:
+is used, where {model} is the name of the entity
 
-### `npm start`
+The query parameters are passed in the json form of the encoded string. The following query parameters are available:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+filter - filtering on any property of the entity, for example filter={"category_id":20} for the Products model will return to us all the products of the category with id=20. You can also specify values as an array if you want to filter out several ids, for example filter={"category_id":[20,21,22]}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+sort - sort entities by any property, for example, sort=["name","ASC"] for the model Products will sort products by name in ascending
 
-### `npm test`
+range - a sample from a range, for example, range=[0,24] will return us all entities from 0th to 24th, a total of 25.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A maximum of 50 records are returned per request.
 
-### `npm run build`
+The total number of records is returned as a header, for example:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Content-Range: Products 0-24/319
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To get one record by its id, use a query of the form
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+https://test2.sionic.ru/api/{model}/{id}
 
-### `npm run eject`
+Where {model} is the name of the entity and {id} is its id
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The following methods are available:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Categories:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+GET https://test2.sionic.ru/api/Categories?sort=["name","ASC"]&range=[0,24]
 
-## Learn More
+GET https://test2.sionic.ru/api/Categories/21
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Properties:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+name - category
 
-### Code Splitting
+name Products:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+GET https://test2.sionic.ru/api/Products?sort=["name","ASC"]&range=[0,24]&filter={" category_id":20}
 
-### Analyzing the Bundle Size
+GET https://test2.sionic.ru/api/Products/2001
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Properties:
 
-### Making a Progressive Web App
+name - product
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+name category_id - id category
 
-### Advanced Configuration
+description
+Product description
+Product images:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+GET https://test2.sionic.ru/api/ProductImages?sort=["image_name","ASC"]&range=[0,24]&filter={"product_id":1001}
 
-### Deployment
+GET https://test2.sionic.ru/api/ProductImages/3001
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Properties:
 
-### `npm run build` fails to minify
+image_name - image
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+file name product_id - product
+
+id image_url - product
+
+image link Product variations:
+
+GET https://test2.sionic.ru/api/ProductVariations
+
+GET https://test2.sionic.ru/api/ProductVariations/1
+
+product_id - product
+
+id price - price of this variation of the stock product
+
+- quantity in stock
+
+Properties of variations:
+
+GET
+https://test2.sionic.ru/api/ProductVariationProperties
+GET https://test2.sionic.ru/api/ProductVariationProperties/1
+
+Properties:
+
+name - property
+
+name type - property type: 0 - string, 1 - integer, 2 - floating-point number, 3 - value from the list
+
+Values of variation property lists:
+
+GET https://test2.sionic.ru/api/ProductVariationPropertyListValues
+
+GET https://test2.sionic.ru/api/ProductVariationPropertyListValues/1
+
+Properties:
+
+product_variation_property_id - id property variation
+
+title - value value
+
+header - Value value
+
+variation properties:
+
+GET https://test2.sionic.ru/api/ProductVariationPropertyValues
+
+GET https://test2.sionic.ru/api/ProductVariationPropertyValues/1
+
+Properties:
+
+product_variation_id - variation properties
+id
+product_variation_property_id - variation
+
+propertie id value_string - value of type string
+
+value_int - value of type integer
+
+value_float - value of type floating-point
+
+number product_variation_property_list_value_id - id values of variation property from list
