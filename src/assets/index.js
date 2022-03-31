@@ -6,3 +6,5 @@ export {default as SidebarBanner } from './SidebarBanner';
 export {default as DiscountIco } from './DiscountIco';
 export {default as DeleteIco } from './DeleteIco';
 export {default as LocationIco } from './LocationIco';
+export {default as OpenIco } from './OpenIco';
+export {default as CopyIco } from './CopyIco';
