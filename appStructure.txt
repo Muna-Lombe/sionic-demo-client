@@ -56,9 +56,17 @@ dependecies
         to add the routes, install react-routing with the code below
         < npm install react-router-dom >
 
-     #add state-management using redux 
+     #add state-management using redux                                 
+        to use redux toolkit install it with the code below
+        < npm install @reduxjs/toolkit >
+
+        to use react - redux with orm install redux-orm with the code below
+        < npm install react-redux >
+
         to use redux with orm install redux-orm with the code below
         < npm install redux-orm>
+        
+
 
 
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
 //assests
 import productImage from '../assets/images/image13.png';
@@ -45,26 +46,29 @@ const Product = ({categoryTags}) => {
             -10%
           </h4>
         </div>
-        <button 
-          id="add_to_cart_btn" 
-          className={`
-            w-full
-            h-[2.7rem] 
-            border-[1px] 
-            border-[#2967FF] 
-            rounded-3xl 
-            py-1 
-            px-4 
-            text-sm 
-            text-[#2967FF] 
-            active:bg-[#2967FF] 
-            active:text-[#ffffff]
-            font-raleway
-            font-[600]
-          `}
-        >
-          Добавить в корзину
-        </button>
+        <Link to="/cart" >
+          <button 
+            id="add_to_cart_btn" 
+            className={`
+              w-full
+              h-[2.7rem] 
+              border-[1px] 
+              border-[#2967FF] 
+              rounded-3xl 
+              py-1 
+              px-4 
+              text-sm 
+              text-[#2967FF] 
+              active:bg-[#2967FF] 
+              active:text-[#ffffff]
+              font-raleway
+              font-[600]
+            `}
+          >
+             Добавить в корзину 
+            
+          </button>
+        </Link>  
       </div>
     </div>
   )
