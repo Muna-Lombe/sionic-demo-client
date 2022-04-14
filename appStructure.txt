@@ -141,5 +141,45 @@ frameworks
     css - tailwind
     fetching requests - REST api
 
+store
+    reducers/slices
+        - products
+            - product
+                - id
+                - name
+                - image
+                - price
+                - description
+                - quantity 
+                - tags
+            - actions 
+                - products/fetchProducts
+        - cart
+            - cart item
+                - id
+                - products
+                - total_quantity
+                - total_cost
+            - actions
+                - cart/addedItem
+                - cart/updatedItem
+                - cart/deletedItem
+                - cart/removedAllItems
+                
+        - orders
+            - order
+                - id
+                - product_id
+                - order_date
 
+            - actions
+                - orders/addedOrder
+                - orders/deletedOrder
+                - orders/removedAllOrders
 
+        - filters
+            - categories
+                - id
+                - tag
+                - color
+        

@@ -97,7 +97,7 @@ const CheckoutForm = () => {
         </p>
       </div>
       <form id="checkout_form" action="/#" method='POST' >
-        <div id="checkout_content" className="w-full flex-auto justify-between  sm:flex sm:flex-col sm:justify-center sm:gap-2  md:flex md:flex-row md:justify-center md:items-center lg:flex lg:flex-row lg:justify-around">
+        <div id="checkout_content" className="w-full flex-auto justify-center  sm:flex sm:flex-col sm:justify-center sm:gap-2  md:flex md:flex-row md:justify-center md:items-center lg:flex lg:flex-row lg:justify-center">
           
             <div id="checkout_form__wrapper" className="w-full sm:w-auto sm:flex sm:flex-col sm:justify-center md:w-max md:flex md:flex-col md:justify-center p-4 flex flex-col justify-center gap-3 ">
               <CheckoutForm />
