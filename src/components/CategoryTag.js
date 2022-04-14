@@ -1,6 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectcategories } from '../js/slices/filters/categoriesSlice'
 
-const CategoryTag = ({color='#2967FF',tag='tag'})=>{
+const CategoryTag = ({id=1,text='tag'})=>{
   const bearTag = 'bg-[#FFA601] '
   const toyTag = 'bg-[#2967FF]'
   const marmosetTag = 'bg-[#58CF18]'
@@ -8,6 +10,8 @@ const CategoryTag = ({color='#2967FF',tag='tag'})=>{
   const colleaguesTag = 'bg-[#FFA601]"'
   const birthdayTag = 'bg-[#FF2D87]'
   
+  const tags = useSelector(state => state.categories.entities)
+
 
   const handleScroll = (e) =>{
     e.preventDefault();
@@ -20,10 +24,10 @@ const CategoryTag = ({color='#2967FF',tag='tag'})=>{
     })
   }
 
-  if(tag === 'День Рождения Гриши') {
+  if(text === 'День Рождения Гриши') {
     return(
       <div 
-        id={`tag ${tag}`} 
+        id={`tag tag-${text}`} 
         className={`
           w-max 
           h-[1.6rem] 
@@ -45,14 +49,14 @@ const CategoryTag = ({color='#2967FF',tag='tag'})=>{
         onMouseDown={(e)=>handleScroll(e)}
       >
         <h2>
-        {tag}
+        {text}
         </h2>
       </div>
     )
   }
   return(
     <div 
-      id={`tag ${tag}`} 
+      id={`tag tag-${text}`} 
       className={`
         w-max 
         h-[1.6rem] 
@@ -68,12 +72,12 @@ const CategoryTag = ({color='#2967FF',tag='tag'})=>{
         text-[0.9rem] 
         font-sans 
         font-semibold 
-        bg-[${color}]
+        ${tags[id]}
       `}
       onMouseDown={(e)=>handleScroll(e)}
     >
       <h2>
-      {tag}
+      {text}
       </h2>
     </div>
   )

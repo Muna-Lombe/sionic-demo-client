@@ -23,11 +23,18 @@ export class Get {
     return productData;
   }
   SortedProducts = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/Products?sort=["name","ASC"]&range=[0,24]&filter={" category_id":20}';
+    const baseUrl = 'https://test2.sionic.ru/api/Products?sort=["name","ASC"]&range=[0,10]&filter={" category_id":20}';
     const data = await fetch(`${baseUrl}/`);
     const productData = await data.json();
     return productData;
   }
+  ProductsByRange = async(range) => {
+    const baseUrl = `https://test2.sionic.ru/api/Products?sort=["name","ASC"]&range=[0,${range}]&filter={" category_id":20}`;
+    const data = await fetch(`${baseUrl}/`);
+    const productData = await data.json();
+    return productData;
+  }
+
   OneProduct = async() => {
     const baseUrl = 'https://test2.sionic.ru/api/Products/2001';
     const data = await fetch(`${baseUrl}/`);
