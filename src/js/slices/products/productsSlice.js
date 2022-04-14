@@ -69,7 +69,7 @@ const productSlice = createSlice({
     extraReducers:(builder) => {
         builder
             .addCase(fetchProducts.fulfilled, (state, action) => {
-                console.log('action payload:', action)
+                // console.log('action payload:', action)
                 productsAdapter.setAll(state, action.payload.products)
             })
     }

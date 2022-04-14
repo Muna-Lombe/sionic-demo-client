@@ -3,53 +3,62 @@ import React from 'react'
 import Get from '../../../assets/tests/Get'
 
 
-const productsAdapter = createEntityAdapter()
-const initialState = productsAdapter.getInitialState({
+const cartAdapter = createEntityAdapter()
+const initialState = cartAdapter.getInitialState({
 
 })
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async() => {
-    let get = new Get ()
-    let pd = await get.ProductsByRange(10)
-    console.log('get', pd)
-    
-    const products = [1,2,3,4,5,6,7,8].map((i) => Object.assign({"id":i, "product":i}))
-    return { products }
-})
-const productSlice = createSlice({
-    name: 'product',
+
+
+
+const cartSlice = createSlice({
+    name: 'cart',
     initialState,
     reducers: {
-        // productAdded(state, action) {
-        //     const item = action.payload
-        //     state.entities[item.id] = item
-        // },
-        // productUpdated: {
-        //     reducer(state, action) {
-        //         const{ itemId, updateData } = action.payload
-        //         // PAUSE HERE FOR NOW!
+        cartItemAdded(state, action) {
+            const cartItem = action.payload
+            state.entities[cartItem.id] = cartItem
+        },
+        cartItemUpdated: {
+            reducer(state, action) {
+                const{ cartItemId, updateData } = action.payload
+                // PAUSE HERE FOR NOW!
 
-        //     },
-        //     prepare(itemId, updateData ) {
-        //         return {
-        //             payload: { itemId, updateData}
-        //         }
-        //     }
-        // }
+            },
+            prepare(cartItemId, updateData ) {
+                return {
+                    payload: { cartItemId, updateData}
+                }
+            }
+        },
+        cartItemDeleted: cartAdapter.removeOne,
+        allcartItemsDeleted: cartAdapter.removeAll
 
     },
-    extraReducers:(builder) => {
-        builder
-            .addCase(fetchProducts.fulfilled, (state, action) => {
-                console.log('action payload:', action)
-                productsAdapter.setAll(state, action.payload.products)
-            })
-    }
+    // extraReducers:(builder) => {
+    //     builder
+    //         .addCase('cart/itemsInCart', (state, action) => {
+    //             console.log(state.entities)
+    //             console.log('action payload:', action)
+    //             cartAdapter.
+    //             cartAdapter.setAll(state, action.payload.carts)
+    //         })
+    // }
 }) 
-export const { selectAll: selectProducts } = productsAdapter.getSelectors(state => state.products)
-export const selectProductIds = createSelector(
-    selectProducts,
-    product => product
 
+export const {cartItemAdded, cartItemUpdated, cartItemDeleted, allcartItemsDeleted} = cartSlice.actions
+export const { selectAll: selectCartItems,  } = cartAdapter.getSelectors(state => state.cart)
+
+export const selectcartIds = createSelector(
+    selectCartItems,
+    cart => cart.id
 )
-export default productSlice.reducer
+
+export const itemsInCart = createSelector(
+    selectCartItems,
+    items => items
+)
+// export const itemsInCart = createAsyncThunk('carts/itemsInCart', async(getState) => {
+//     console.log(getState)
+// })
+export default cartSlice.reducer

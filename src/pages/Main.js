@@ -35,7 +35,7 @@ const Main = () => {
         {/*w-[calc(100vw-30rem)] lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 */}
         <div id="mainbar__content" className="w-auto h-full mx-2 px-2 grid grid-flow-rows grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]  scroll-smooth gap-[1rem] justify-center justify-items-center border-[1px] border-red">
             {
-                count.map((i)=>(<Product key={i.id} product={i.product} />))
+                count.map((i)=>(<Product key={i.id} id={i.id} product={i.product} />))
             }
             
             
