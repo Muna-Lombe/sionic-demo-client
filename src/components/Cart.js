@@ -1,31 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
-
 
 // assets
 import cartImg from '../assets/images/cart_item.png'
 import { DeleteIco } from '../assets'
 import { selectProductIds, selectProducts } from '../js/slices/products/productsSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import IMG from '../assets/images';
+import { cartItemDeleted } from '../js/slices/cart/cartSlice';
 
 
 
 const Cart = ({ids}) => {
+  const dispatch = useDispatch()
+  let totalPrice = 0
   
-  const text = "Смартфон Xiaomi Redmi Note 8 Pro 6/128GB, белый"
+  var img = new IMG()
+  console.log('img',img[1])
+
   
-  
-  const CartItemProduct = (productId) => {
-    const product = useSelector(selectProducts)[productId]
+  const handleDelete = (id) => {
+    console.log('deleting')
+    dispatch(cartItemDeleted(id))
+  }
+
+  const CartItemProduct = ({product}) => {
+    console.log('prd', product)
+    console.log('tp', totalPrice)
+    // const product = useSelector(selectProducts)[productId].product
+    
     return (
       <div id="product_wrapper" className="w-auto h-[10rem] py-6 mx-8  p-1 flex justify-between gap-1 border-b-[1px] border-b-gray-300">
         <div id="product_details" className="w-max lg:w-[40rem] xl:w-[40rem] flex justify-start">
           <div id="product_image" className=" h-[5rem] px-2 flex justify-center items-center">
-            <img className="w-full h-full object-contain" src={cartImg} alt="IGM" />
+            <img className="w-full h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
           </div>
           <div id="product_description" className="w-[15rem] md:w-[20rem] lg:w-max xl:w-max flex flex-col justify-between">
             <p className=" h-[5rem] overflow-y-hidden">
-              {text.toString().length > 12 ? text.slice(0,90) + "..." : text}
+              {product.name.toString().length > 12 ? product.name.slice(0,90) + "..." : product.name}
             </p>
             <div id="product_tags" className="w-max  flex flex-col lg:flex-row xl:flex-row justify-between ">
               <div className="w-max flex ">
@@ -56,16 +68,16 @@ const Cart = ({ids}) => {
           </div>
           <div id="product_price" className="w-max md:w-full lg:w-[60%] xl:w-full">
             <h2 id="new_price" className=" text-[#2967FF] text-[1.3rem] font-semibold">
-                от 350 000 ₽
+            {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] : product.price) +' ₽'}
             </h2>
             <div id="discounted_price" className="w-[70%] flex pr-2 justify-between ">
               <h4 id="old_price" className="text-[#8D8D8E] text-s line-through font-extralight">
-                450 500 ₽
+              {product.isDiscounted[0] ? product.price +' ₽' : ''}
               </h4>
             </div>
           </div>
         </div>
-        <button id="delete_btn" className=" py-2 flex flex-col  justify-start">
+        <button id="delete_btn" className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(product.id)}>
             <DeleteIco />
         </button>
 
@@ -73,9 +85,12 @@ const Cart = ({ids}) => {
     )
   }
 
-  const CartItem = ({productIds})=> {
-    
-  
+  const CartItem = ({productIds})=> { 
+   const products  = useSelector(selectProducts)
+   let filteredProducts = products.filter((pr) => productIds.includes(pr.id.toString()))
+    filteredProducts.forEach((fp) => {
+      totalPrice += (fp.product.isDiscounted[0] ? fp.product.isDiscounted[2] : fp.product.price)
+    })
    return (
       <div id="cart_item" className="w-full flex flex-col">
         <div id="cart_item__wrapper" className="p-2 flex justify-around items-center border-b-[1px] border-b-gray-300 rounded-b-lg text-xl font-raleway">
@@ -85,8 +100,8 @@ const Cart = ({ids}) => {
             <p className=" ">
               Стоимость корзины:
             </p>
-            <p className=" text-black font-bold">
-              1 185 000₽ 
+            <p className=" text-black text-xl font-bold">
+              {totalPrice+' ₽'} 
             </p>
           </div>
           <div id="Checkout_btn"  className="w-[10rem] h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF] flex justify-center items-center rounded-3xl  text-white  font-medium ">
@@ -97,7 +112,7 @@ const Cart = ({ids}) => {
           </div>
         </div>
         {
-          productIds.map((id) => <CartItemProduct productId = {id} /> )
+          filteredProducts.map((pr) => <CartItemProduct product = {pr.product}  /> )
         }
         
         
@@ -127,8 +142,8 @@ const Cart = ({ids}) => {
       </div>
       <div id="cart_content" className="w-[98%] mx-4 flex flex-col py-1 border-[1px] border-gray-300 rounded-lg">
         
-        { [1,2,3].length > 0
-          ? [1,2,3].map((i) => <CartItem key= {i} productIds={[1,2,3]}/> )
+        { ids.length > 0
+          ? <CartItem productIds={ids}/> 
           : <NoItems/>
         }
         

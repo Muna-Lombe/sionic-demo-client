@@ -1,33 +1,19 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
+import IMG from '../assets/images';
 
-//assests
-import image13_1 from '../assets/images/image13_1.png';
-import image13_2 from '../assets/images/image13_2.png';
-import image13_3 from '../assets/images/image13_3.png';
-import image13_4 from '../assets/images/image13_4.png';
-import image13_5 from '../assets/images/image13_5.png';
-import image13_6 from '../assets/images/image13_6.png';
-import image13_7 from '../assets/images/image13_7.png';
+// assets
+
 import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 import CategoryTag from './CategoryTag';
 
 const Product = ({id,product}) => {
+  let img = new IMG()
   const dispatch = useDispatch()
   const categoryTags = product.category_tags
-  
 
-  const [img,setImg] = useState({
-    1:image13_1,
-    2:image13_2,
-    3:image13_3,
-    4:image13_4,
-    5:image13_5,
-    6:image13_6,
-    7:image13_7
-  })
   const discountTag = (disc,old_price)=>(
       <>
         <h4 id="old_price" className="text-[#8D8D8E] text-s line-through font-extralight">
@@ -44,12 +30,12 @@ const Product = ({id,product}) => {
     dispatch(cartItemAdded({id: productId}))
   }
   return (
-    <div id={"product_card"+id} className="w-[16rem] h-[21rem] flex flex-col gap-y-1 font-raleway ">
+    <div id={"product_card"+id} className="w-[14rem] h-[21rem]  flex flex-col gap-y-1 font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
-          <img className="" width={'180'} height={'150'} src={img[product.img_path_id] ? img[product.img_path_id] :img[1]} alt="prd"  />
+          <img className="" width={'180'} height={'150'} src={img[product.img_path_id]} alt="prd"  />
         </div>
-        <div id="product_tag" className=" w-full absolute bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
+        <div id="product_tag" className=" w-[90%] absolute bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
           {
             categoryTags.map((tag,idx)=>{
               return <CategoryTag key={idx} id={tag[0]} text={tag[1]} />
@@ -77,7 +63,7 @@ const Product = ({id,product}) => {
           }
           
         </div>
-        <Link to="/cart" >
+        {/* <Link to="/cart" > */}
           <button 
             id="add_to_cart_btn" 
             className={`
@@ -100,7 +86,7 @@ const Product = ({id,product}) => {
             Добавить в корзину 
             
           </button>
-        </Link>  
+        {/* </Link>   */}
       </div>
     </div>
   )

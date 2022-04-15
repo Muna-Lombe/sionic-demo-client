@@ -40,11 +40,11 @@ function App() {
   }
   
   return (
-    <div id="App" className="relative w-[100vw] min-w-[900px] h-[100vh] flex flex-col my-0 justify-center items-center">
-      <div id="main" className="w-full h-[90%]  px-2 flex justify-between"> 
+    <div id="App" className="relative w-[100vw] min-w-[700px] h-[100vh] flex flex-col my-0 justify-center items-center">
+      <div id="main" className="w-full min-w-[500px] h-[90%]  px-2 flex justify-between"> 
         <div id="mainbar_container" className="w-full  h-full overflow-y-auto hover:overflow-y-scroll scrollbar">
           <Router>
-            <div id="mainbar" className="sticky top-0 bg-white h-[5rem] z-10 flex items-center">
+            <div id="mainbar" className="w-full sticky top-0 bg-white h-[5rem] z-10 flex items-center">
               <Navbar />
             </div>
             <Routes>
@@ -69,7 +69,7 @@ function App() {
           
            
         </div>
-        <div id="sidebar_container" className="max-w-[20%] border-l-2 px-4 ">
+        <div id="sidebar_container" className="w-auto sm:w-auto md:w-auto md:max-w-[24rem] lg:w-auto lg:max-w-[24rem] xl:w-auto xl:max-w-[24rem]border-l-2 px-4 ">
           <Sidebar />
         </div>
       </div>
