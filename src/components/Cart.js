@@ -20,11 +20,11 @@ const Cart = ({ids}) => {
 
   
   const handleDelete = (id) => {
-    console.log('deleting')
+    console.log('deleting id:',id)
     dispatch(cartItemDeleted(id))
   }
 
-  const CartItemProduct = ({product}) => {
+  const CartItemProduct = ({prId, product}) => {
     console.log('prd', product)
     console.log('tp', totalPrice)
     // const product = useSelector(selectProducts)[productId].product
@@ -77,7 +77,7 @@ const Cart = ({ids}) => {
             </div>
           </div>
         </div>
-        <button id="delete_btn" className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(product.id)}>
+        <button id="delete_btn" className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(prId)}>
             <DeleteIco />
         </button>
 
@@ -112,7 +112,7 @@ const Cart = ({ids}) => {
           </div>
         </div>
         {
-          filteredProducts.map((pr) => <CartItemProduct product = {pr.product}  /> )
+          filteredProducts.map((pr) => <CartItemProduct key= {pr.id} prId ={pr.id} product = {pr.product}  /> )
         }
         
         
