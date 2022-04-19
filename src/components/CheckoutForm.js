@@ -1,55 +1,74 @@
 import React,{useRef} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 // assets
 import { LocationIco } from '../assets'
+import { orderHistoryItemAdded } from '../js/slices/orders/ordersSlice'
 
 const CheckoutForm = () => {
+
   let navigate = useNavigate()
+  const location = useLocation()
   const dateRef = useRef()
   const timeRef = useRef()
+  const dispatch = useDispatch()
+
+  console.log(location)
+
+  const totalPrice = location.state?.totalPrice
+  const prCount = location.state?.prCount
+  const deliveryPrice = 200
+
 
   const handleSubmit=(e)=>{
     e.preventDefault();
-    console.log(e)
-
+    let formData = new FormData(document.forms['checkout_form']);
+    let orderData = {}
+    formData.forEach((k,v)=> {
+        orderData[v] = k
+    })
+    
+     
+    dispatch(orderHistoryItemAdded(orderData))
     setTimeout(() => {
-      navigate("../history", { replace: true })
+      navigate("../history", { replace: true})
     }, 1000);
   }
+ 
 
   const CheckoutForm = ()=> (
     <>
-      <div id="date_time" className="py-2 font-relaway">
+      <div id="date_time" className="py-2 font-relaway" >
         <p className="text-md font-semibold ">Когда доставить</p> 
       </div>
-      <div id="delivery_date_time" className="w-max flex justify-around gap-4">
+      <div id="delivery_date_time__wrapper" className="w-max flex justify-around gap-4">
         <div id="date" className="w-[9rem] flex flex-col justify-center border-b-[1px] border-b-gray-300">
           <label htmlFor="delivery_date" className="w-0 h-0"></label>
-          <input className=" focus:outline-none" form="checkout_form" type="text" name="delivery_date" placeholder="Выберите дату"  ref={dateRef} onFocus={() => (dateRef.current.type = "date")} onBlur={() => (dateRef.current.type = "text")}  ></input>
+          <input id="d_date" className=" focus:outline-none" form="checkout_form" type="text" name="delivery_date" placeholder="Выберите дату"  ref={dateRef} onFocus={() => (dateRef.current.type = "date")} onBlur={() => (dateRef.current.type = "text")} required  ></input>
         </div>
         <div id="time" className="w-[8rem] flex flex-col justify-center border-b-[1px] border-b-gray-300 ">
           <label htmlFor="delivery_time" className="w-0 h-0"></label>
-          <input className="w-min px-2 focus:outline-none"  form="checkout_form"  type="text" name="delivery_time" placeholder="Выберите время" ref={timeRef} onFocus={() => (timeRef.current.type = "time")} onBlur={() => (timeRef.current.type = "text")}  ></input>
+          <input id="d_time" className="w-min px-2 focus:outline-none"  form="checkout_form"  type="text" name="delivery_time" placeholder="Выберите время" ref={timeRef} onFocus={() => (timeRef.current.type = "time")} onBlur={() => (timeRef.current.type = "text")} required ></input>
         </div>
       </div>
-      <div id="address" className="w-[15rem] py-2 flex flex-col justify-center font-raleway">
+      <div id="address__wrapper" className="w-[15rem] py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="delivery_address" className="text-md font-semibold">Куда доставить?</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <LocationIco />
-          <input className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="delivery_address"  placeholder="Выберите адрес доставки" />
+          <input id="d_addr" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="delivery_address"  placeholder="Выберите адрес доставки" required />
         </div>
       </div>
-      <div id="name" className="w-[15rem]  py-2 flex flex-col justify-center font-raleway">
+      <div id="name__wrapper" className="w-[15rem]  py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="receiver_name" className="text-md font-semibold">Имя</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
-          <input className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver"  />
+          <input id="rcv_name" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver" required />
         </div>
       </div>
-      <div id="phone" className="w-[15rem] py-2 flex flex-col justify-center font-raleway">
+      <div id="phone__wrapper" className="w-[15rem] py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="receiver_phone" className=" text-md font-semibold">Телефон</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
-          <input className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver_phone"  />
+          <input id="rcv_phone" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver_phone" required />
         </div>
       </div>
     </>
@@ -58,35 +77,37 @@ const CheckoutForm = () => {
   const CheckoutOrder = () =>(
     <>
       <div id="order_details" className="w-[25rem] p-2 flex flex-col justify-center items-center border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
-        <div id="order_cost" className="w-full py-1 px-4 flex justify-between items-center text-xl text-[#727280]  font-raleway">
-          <label htmlFor="o_cost">
+        <div id="order_cost__wrapper" className="w-full py-1 px-4 flex justify-between items-center text-xl text-[#727280]  font-raleway">
+          <label htmlFor="order_cost">
             Стоимость товаров:
           </label>
-          <input className="w-[8rem] flex justify-end text-2xl bg-transparent" name="o_cost" form="checkout_form" type="text" value={"200 584₽"} readOnly />
+          <input id="o_cost" className="w-[8rem] flex justify-end text-2xl bg-transparent" name="order_cost" form="checkout_form" type="text" value={(totalPrice || 0) +"₽"} readOnly required  />
             
           
         </div>
-        <div id="delivery_cost" className="w-full py-1 px-4 flex justify-between items-center text-xl text-[#727280] font-raleway">
-          <label className="" htmlFor="d_cost">
+        <div id="delivery_cost__wrapper" className="w-full py-1 px-4 flex justify-between items-center text-xl text-[#727280] font-raleway">
+          <label className="" htmlFor="delivery_cost">
             Стоимость доставки:
           </label>
-          <input className="w-[8rem] flex justify-end  bg-transparent" name="d_cost" form="checkout_form" type="text" value={"200₽"} readOnly/>
+          <input id="d_cost" className="w-[8rem] flex justify-end  bg-transparent" name="delivery_cost" form="checkout_form" type="text" value={(deliveryPrice || 0) +"₽"} readOnly required />
             
           
         </div>
-        <div id="total_cost" className="w-full p-4 flex justify-between items-center text-2xl text-[#727280] font-raleway font-medium">
-          <label className="bg-transparent" htmlFor="t_cost">
+        <div id="total_cost__wrapper" className="w-full p-4 flex justify-between items-center text-2xl text-[#727280] font-raleway font-medium">
+          <label className="bg-transparent" htmlFor="total_cost">
             Итого:
           </label>
-          <input className="w-[8rem] flex justify-end  bg-transparent text-black font-bold" name="t_cost" form="checkout_form" type="text" value={"200 784₽"} readOnly/>
+          <input id="t_cost" className="w-[8rem] flex justify-end  bg-transparent text-black font-bold" name="total_cost" form="checkout_form" type="text" value={(totalPrice 
+          + deliveryPrice) +"₽"} readOnly required />
             
           
         </div>
 
       </div>
-      <button form="checkout_form" id="checkout_btn" onClick={(e)=>handleSubmit(e)} className="w-[25rem] p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-[1.9rem] active: text-2xl text-white font-raleway font-normal">
+      {/* <button form="checkout_form" id="checkout_btn" onClick={(e)=>handleSubmit(e)} className="w-[25rem] p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-[1.9rem] active: text-2xl text-white font-raleway font-normal">
         Сделать заказ
-      </button>
+      </button> */}
+      <input type="submit" form="checkout_form" id="checkout_btn" value="Сделать заказ" className="w-[25rem] p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-[1.9rem] active: text-2xl text-white font-raleway font-normal" required/>
     </>
   )
   return (
@@ -96,7 +117,7 @@ const CheckoutForm = () => {
         Доставка
         </p>
       </div>
-      <form id="checkout_form" action="/#" method='POST' >
+      <form id="checkout_form" name="checkout_form" action="/#" method='POST' data-form_data={'set'} onSubmit={(e)=>handleSubmit(e)} >
         <div id="checkout_content" className="w-full flex-auto justify-center  sm:flex sm:flex-col sm:justify-center sm:gap-2  md:flex md:flex-row md:justify-center md:items-center lg:flex lg:flex-row lg:justify-center">
           
             <div id="checkout_form__wrapper" className="w-full sm:w-auto sm:flex sm:flex-col sm:justify-center md:w-max md:flex md:flex-col md:justify-center p-4 flex flex-col justify-center gap-3 ">

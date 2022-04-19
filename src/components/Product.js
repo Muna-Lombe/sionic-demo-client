@@ -30,7 +30,7 @@ const Product = ({id,product}) => {
     dispatch(cartItemAdded({id: productId}))
   }
   return (
-    <div id={"product_card"+id} className="w-[14rem] h-[21rem]  flex flex-col gap-y-1 font-raleway ">
+    <div id={"product_card"+id} className="w-[14rem] h-[23rem]  flex flex-col gap-y-1 font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
           <img className="" width={'180'} height={'150'} src={img[product.img_path_id]} alt="prd"  />
@@ -44,11 +44,17 @@ const Product = ({id,product}) => {
           
         </div>
       </div>
-      <div id="product_content" className="w-full h-[50%] flex flex-col justify-between ">
-        <div id="name_price" className="h-[50%] flex flex-col justify-between">
-          <h4 id='product_name' className=" text-[#2D2D2F] text-[1rem] font-normal">
-            {product.name.length > 41 ? product.name.slice(0,41)+'...' : product.name}
-          </h4>
+      <div id="product_content" className="w-full h-[70%] flex flex-col justify-between ">
+        <div id="name_store_price__wrapper" className="h-[50%] flex flex-col justify-between">
+          <div id="name_store__wrapper" className="h-full flex flex-col justify-between">
+            <h4 id='product_name' className=" text-[#2D2D2F] text-[1rem] font-normal">
+              {product.name.length > 41 ? product.name.slice(0,41)+'...' : product.name}
+            </h4>
+            <h1 id='store_name' className="w-full flex justify-end text-[#8f8f91] text-sm font-[600]">
+              {product.store.name.length > 41 ? product.store.name.slice(0,41)+'...' : product.store.name}
+              
+            </h1>
+          </div>
           <h2 id="product_price" className=" text-[#2967FF] text-[1.3rem] font-semibold">
             {'от '+product.price+' ₽'}
           </h2>

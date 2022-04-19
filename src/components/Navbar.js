@@ -27,7 +27,7 @@ const Navbar = () => {
         </button>
       </div>
       <div id="user_content" className="w-[8rem] h-full flex justify-around items-center">
-        <div id="cart" className=" hidden lg:flex w-[2.8rem] h-[2.8rem]  ">
+        <div id="cart" className=" hidden sm:flex md:flex lg:flex w-[2.8rem] h-[2.8rem]  ">
           <Link to="/cart"> <CartIco /> </Link> 
         </div>
         <div id="avatar_image" className=" hidden lg:flex w-[2.8rem] ">

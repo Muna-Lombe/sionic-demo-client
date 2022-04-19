@@ -3,9 +3,18 @@ import React from 'react'
 // assets 
 import logo from '../assets/images/item_logo.png'
 import { OpenIco, CopyIco } from '../assets'
+import { useLocation } from 'react-router-dom'
+import { selectorderHistoryItems } from '../js/slices/orders/ordersSlice'
+import { useSelector } from 'react-redux'
 
 
 const OrderHistory = () => {
+
+  const { state } = useLocation()
+  const orderedItems = useSelector(selectorderHistoryItems)
+  
+  console.log('state in history:', state)
+  console.log('order history:', orderedItems)
   const Item = ()=>(
     <div id="item" className="  px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
       <div id="item_wrapper" className="w-full p-2 flex flex-col justify-center gap-2">
