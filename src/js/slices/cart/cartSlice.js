@@ -16,7 +16,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         cartItemAdded(state, action) {
-            const cartItem = action.payload
+            const cartItem = {...action.payload, isOrdered: false}
             state.entities[cartItem.id] = cartItem
         },
         cartItemUpdated: {
@@ -31,6 +31,16 @@ const cartSlice = createSlice({
                 }
             }
         },
+        // cartItemOrdered(state, action) {
+        //     const itemIds = action.payload
+        //     itemIds.forEach((itemId)=> {
+        //         const item = state.entities[itemId]
+        //         item.isOrdered = true
+        //     })
+            
+            
+        // },
+        cartItemOrdered: cartAdapter.updateMany,
         cartItemDeleted: cartAdapter.removeOne,
         allcartItemsDeleted: cartAdapter.removeAll
 
@@ -46,13 +56,14 @@ const cartSlice = createSlice({
     // }
 }) 
 
-export const {cartItemAdded, cartItemUpdated, cartItemDeleted, allcartItemsDeleted} = cartSlice.actions
+export const {cartItemAdded, cartItemOrdered, cartItemUpdated, cartItemDeleted, allcartItemsDeleted} = cartSlice.actions
 export const { selectAll: selectCartItems, selectById: selectCartItemIds } = cartAdapter.getSelectors(state => state.cart)
 
 export const selectcartIds = createSelector(
     selectCartItems,
     cart => cart.id
 )
+
 
 export const itemsInCart = createSelector(
     selectCartItems,

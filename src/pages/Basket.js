@@ -6,19 +6,14 @@ import { selectProductIds } from '../js/slices/products/productsSlice'
 
 const Basket = () => {
     
-  const cartItems = useSelector(state => state.cart.entities)
+  // const cartItems = useSelector(state => state.cart.entities)
 
-  console.log(cartItems)
-  console.log(Object.keys(cartItems))
+  // console.log(cartItems)
+  // console.log(Object.keys(cartItems))
   // console.log('p',cartItems.length())
+  const items = useSelector(state => state.cart.entities)
   return (
-    
-      // cartItems.map((pid) =>{
-      //    <Cart id = {pid} />
-      // })
-      <Cart ids = {Object.keys(cartItems)}  />
-      
-   
+    <Cart items={items} />
   )
 }
 

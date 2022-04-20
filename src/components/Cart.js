@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 
 // assets
@@ -7,37 +7,69 @@ import { DeleteIco } from '../assets'
 import { selectProductIds, selectProducts } from '../js/slices/products/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import IMG from '../assets/images';
-import { cartItemDeleted } from '../js/slices/cart/cartSlice';
+import { cartItemDeleted, cartItemOrdered, selectCartItems } from '../js/slices/cart/cartSlice';
 
 
 
-const Cart = ({ids}) => {
-
-  const [orderData, setOrderData] = useState('')
+const Cart = () => {
+  const [orderedItems, setOrderedItems] = useState([])
+  const items = useSelector(state => state.cart.entities)
   const dispatch = useDispatch()
-  let totalPrice = 0
+  const products  = useSelector(selectProducts)
   
+  // logs
+  console.log('orders', orderedItems)
+
+  
+  // CREATE IMAGE INSTANCE
   var img = new IMG()
 
-  const products  = useSelector(selectProducts)
-   let filteredItems = products.filter((pr) => ids.includes(pr.id.toString()))
+  const unorderedItems = Object.keys(items).filter((item) => items[item].isOrdered === false)
+  const ids = unorderedItems
+  const filteredCartItems = products.filter((pr) => ids.includes(pr.id.toString()))
+
+  const filteredCartItemsByStore = Object.create(null)
+  filteredCartItems.forEach((fp)=>{
+    if(filteredCartItemsByStore[fp.product.store.name]){
+
+      filteredCartItemsByStore[fp.product.store.name].push({id:fp.id, ...fp.product, isOrdered: false}) 
+    }else{
+        filteredCartItemsByStore[fp.product.store.name] = [{id:fp.id, ...fp.product, isOrdered: false}]
+    }
+    
+  })
   
   const handleDelete = (id) => {
-   
     dispatch(cartItemDeleted(id))
   }
 
-  const handleItemOrdered = (e) => {
+  const handleItemOrdered = (e, item) => {
+    // const item = products.filter((pr) => cartItemProductsIds.includes(pr.id))
+    // const item = filteredCartItemsByStore
     e.preventDefault()
-  }
+    const cartItemProductsIds = item[1].map((pr) => Object.assign({id:pr.id, changes: {isOrdered: true}}) )
+    console.log('dispatching', cartItemProductsIds)
+    
+    dispatch(cartItemOrdered(cartItemProductsIds))
+    
+    const nos = Object.keys(items).filter((item) => items[item].isOrdered === true)
+    console.log('new orders', nos)
+    // setOrderedItems([item[0], nos.map((i)=> products[i].product)])
 
-  const CartItemProduct = ({prId, product}) => {
     
-    // const product = useSelector(selectProducts)[productId].product
-    
+  }
+  const hasBeenOrdered = (el, idx, arr) => {
+    return el.isOrdered === true
+  }
+  const CartItemProduct = ({isOrdered, product}) => {
+    const Line = () => (
+      <div className="absolute w-full line h-[0px] my-[40px] z-0 border-[1px] border-gray-500">
+
+      </div>
+    )
     return (
       <div id="product_wrapper" 
-        className="w-auto h-[10rem] py-6 mx-8  p-1 flex justify-between gap-1 border-b-[1px] border-b-gray-300 ">
+        className="relative w-auto h-[10rem] py-6 mx-8  p-1 flex justify-between gap-1 border-b-[1px] border-b-gray-300 ">
         <div id="product_details" 
           className="w-max lg:w-[40rem] xl:w-[40rem] flex justify-start">
           <div id="product_image" 
@@ -105,67 +137,58 @@ const Cart = ({ids}) => {
           </div>
         </div>
         <button id="delete_btn" 
-          className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(prId)}>
+          className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(product.id)}>
             <DeleteIco />
         </button>
-
+        {isOrdered && <Line></Line>}
       </div>
     )
   }
 
-  const CartItem = ({productIds})=> { 
-   const products  = useSelector(selectProducts)
-   let filteredItems = products.filter((pr) => productIds.includes(pr.id.toString()))
-
-    filteredItems.forEach((fp) => {
-      totalPrice += (fp.product.isDiscounted[0] ? fp.product.isDiscounted[2] : fp.product.price)
+  const CartItem = ({store,isOrdered,products})=> { 
+   let totalPrice = 0
+   
+    // console.log(isOrdered && )
+    products.forEach((pr) => {
+      totalPrice += (pr.isDiscounted[0] ? pr.isDiscounted[2] : pr.price)
     })
-    const filteredItemsByStore ={}
-    filteredItems.forEach((fp)=>{
-      console.log('fp', fp)
-
-      // STOPPED HERER!, NEED TO ADD A WAY TO FILTER BY STORE. POSSBILE SOLUTION IS WITH USE-STATE 
-      filteredItemsByStore[fp.product.store.name] = fp.product
-      
-    })
-
-    console.log('this should be sorted=> ', filteredItemsByStore)
-
     const disableItem = "filter grayscale contrast-50"
-   return (
-      <div id="cart_item" 
-        className="w-full flex flex-col ">
-        <div id="cart_item__wrapper" 
-          className="p-2 flex justify-around items-center border-b-[1px] border-b-gray-300 rounded-b-lg text-xl font-raleway">
-          <div id="item_name" 
-            className="font-bold">
-            Xiaomi            </div>
-          <div id="cart_item__total_price" 
-            className="">
-            <p 
-              className=" ">
-              Стоимость корзины:
-            </p>
-            <p 
-              className=" text-black text-xl font-bold">
-              {totalPrice+' ₽'} 
-            </p>
+    
+    return (
+        <div id={"cart_item__wrapper"+(isOrdered ? disableItem : "" ) }
+          className="w-full flex flex-col mb-2">
+          <div id="cart_item__header" 
+            className="p-2 flex justify-around items-center  border-[1px] border-gray-300 rounded-lg text-xl font-raleway">
+            <div id="item_name" 
+              className="font-bold">
+              <h4>{store}</h4>           
+            </div>
+            <div id="cart_item__total_price" 
+              className="">
+              <p 
+                className=" ">
+                Стоимость корзины:
+              </p>
+              <p 
+                className=" text-black text-xl font-bold">
+                {totalPrice+' ₽'} 
+              </p>
+            </div>
+            <div id="Checkout_btn"  
+              className="w-[10rem] h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF] flex justify-center items-center rounded-3xl text-white font-medium " onClick={(e)=>handleItemOrdered(e,[store, products])}>
+              {/* <Link to={{pathname: "/checkout"}} state={{totalPrice, prCount:products.length}}  > Оформить </Link> */}
+            </div>
+            <div id="item_ico">
+            
+            </div>
           </div>
-          <div id="Checkout_btn"  
-            className="w-[10rem] h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF] flex justify-center items-center rounded-3xl text-white font-medium ">
-            <Link to={{pathname: "/checkout"}} state={{totalPrice, prCount:productIds.length}} onClick={(e)=>handleItemOrdered(e)} > Оформить </Link>
-          </div>
-          <div id="item_ico">
+          {
+            products.map((pr) => <CartItemProduct key= {pr.id} isOrdered={isOrdered}  product = {pr}  /> )
+          }
           
-          </div>
+          
         </div>
-        {
-          filteredItems.map((pr) => <CartItemProduct key= {pr.id} prId ={pr.id} product = {pr.product}  /> )
-        }
-        
-        
-      </div>
-    )
+      )
   }
 
   const NoItems = ()=>(
@@ -185,6 +208,12 @@ const Cart = ({ids}) => {
       </div>
     </div>
   )
+
+  const OrderedItems = () =>(
+    <>
+      {orderedItems.map((item,idx) => {return <CartItem key={idx} isOrdered={item[1].some(hasBeenOrdered)} store={item[0]}  products={item[1]}/> })}
+    </>
+  )
   return (
     <div id="cart_container" 
       className="w-full flex flex-col justify-center ">
@@ -196,13 +225,21 @@ const Cart = ({ids}) => {
           className="text-md text-[#FF2D87] font-raleway font-semibold">Очистить корзину</div>
       </div>
       <div id="cart_content" 
-        className="w-[98%] mx-4 flex flex-col py-1 border-[1px] border-gray-300 rounded-lg">
+        className="w-[98%] mx-4 flex flex-col pb-1 border-[1px] border-gray-300 rounded-lg ">
         
         { ids.length > 0
-          // ? filteredItems.map((product) => {return <CartItem productIds={ids}/> })
-
-          ? <CartItem productIds={ids}/> 
+          
+          ? Object.keys(filteredCartItemsByStore).map((store,idx) => {return <CartItem key={idx} store={store}  products={filteredCartItemsByStore[store]}/> })
+            
+          // ? <CartItem productIds={ids}/> 
           : <NoItems/>
+        }
+        { orderedItems.length > 0
+          
+          ? <OrderedItems/>
+            
+          // ? <CartItem productIds={ids}/> 
+          : null
         }
         
       </div>

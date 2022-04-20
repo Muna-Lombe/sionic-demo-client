@@ -48,6 +48,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async() 
             price: i[4],
             isDiscounted: i[5]
         }
+        
     }))
     return { products }
 })

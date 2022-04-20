@@ -8,7 +8,7 @@ import BasketIco from './BasketIco'
 const CartIco = () => {
   
   let itemsInCart = useSelector(state => state.cart.entities)
-  const itemsCount = Object.keys(itemsInCart)
+  const itemsCount = Object.keys(itemsInCart).filter((key) => itemsInCart[key].isOrdered !== true)
   console.log('in cart ico comp, cart-ids:')
   return (
    <div id="cart_icon" className="h-full w-full relative border-[0.9px] border-[#727280] rounded-[2rem] flex justify-center items-center ">
