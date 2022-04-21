@@ -26,8 +26,8 @@ const Product = ({id,product}) => {
   )
   
 
-  const handleAddToCart=(productId)=>{
-    dispatch(cartItemAdded({id: productId}))
+  const handleAddToCart=(product)=>{
+    dispatch(cartItemAdded({...product}))
   }
   return (
     <div id={"product_card"+id} className="w-[14rem] h-[23rem]  flex flex-col gap-y-1 font-raleway ">
@@ -87,7 +87,7 @@ const Product = ({id,product}) => {
               font-raleway
               font-[600]
             `}
-            onClick={()=> handleAddToCart(id)}
+            onClick={()=> handleAddToCart({id,product})}
           >
             Добавить в корзину 
             
