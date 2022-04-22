@@ -8,14 +8,15 @@ import { selectorderHistoryItems } from '../js/slices/orders/ordersSlice'
 import { useSelector } from 'react-redux'
 
 
-const OrderHistory = () => {
+const OrderHistory = ({itemsOrdered}) => {
 
   const { state } = useLocation()
   const orderedItems = useSelector(selectorderHistoryItems)
   
   console.log('state in history:', state)
-  console.log('order history:', orderedItems)
-  const Item = ()=>(
+  console.log('order history:', itemsOrdered)
+  const Item = ({order})=>{
+    return (
     <div id="item" className="  px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
       <div id="item_wrapper" className="w-full p-2 flex flex-col justify-center gap-2">
         <div id="item_header" className="w-full  flex justify-between gap-2">
@@ -72,7 +73,7 @@ const OrderHistory = () => {
       </div>
       
     </div>
-  )
+  )}
   return (
     <div id="order_history__container" className="container flex flex-col justify-center gap-2  ">
       <div id="order_history__header" className="text-xl text-black font-raleway font-semibold">
@@ -83,9 +84,8 @@ const OrderHistory = () => {
       </div>
       <div id="order_history__content" className="w-full">
         <div id="content_wrapper" className="w-full px-2 grid  grid-flow-rows grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-6">
-          <Item />
-          <Item />
-          <Item />
+         {itemsOrdered.map((item) => <Item order={item}/>) } 
+          
         </div>
       </div>
 

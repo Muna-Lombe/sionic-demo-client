@@ -17,6 +17,7 @@ const CheckoutForm = () => {
   console.log(location)
 
   const totalPrice = location.state?.totalPrice
+  const id = location.state?.id
   const prCount = location.state?.prCount
   const deliveryPrice = 200
 
@@ -25,12 +26,16 @@ const CheckoutForm = () => {
     e.preventDefault();
     let formData = new FormData(document.forms['checkout_form']);
     let orderData = {}
-    formData.forEach((k,v)=> {
-        orderData[v] = k
-    })
-    
+    formData.forEach((k,v, idx)=> {
+      
      
-    dispatch(orderHistoryItemAdded(orderData))
+      orderData[v] = k
+    })
+    let orderId='664-'+(id.toString().length > 1 ? '0' : '00' + id.toString())
+    let status = ['Оплачен', 'Завершён']
+    let finalOrderData = {orderId,quantity: prCount,status,...orderData}
+    // quantity:4,  status:['Оплачен', 'Завершён']
+    dispatch(orderHistoryItemAdded(finalOrderData))
     setTimeout(() => {
       navigate("../history", { replace: true})
     }, 1000);
@@ -117,7 +122,7 @@ const CheckoutForm = () => {
         Доставка
         </p>
       </div>
-      <form id="checkout_form" name="checkout_form" action="/#" method='POST' data-form_data={'set'} onSubmit={(e)=>handleSubmit(e)} >
+      <form id="checkout_form" name="checkout_form" action="/#" method='POST'  onSubmit={(e)=>handleSubmit(e)} >
         <div id="checkout_content" className="w-full flex-auto justify-center  sm:flex sm:flex-col sm:justify-center sm:gap-2  md:flex md:flex-row md:justify-center md:items-center lg:flex lg:flex-row lg:justify-center">
           
             <div id="checkout_form__wrapper" className="w-full sm:w-auto sm:flex sm:flex-col sm:justify-center md:w-max md:flex md:flex-col md:justify-center p-4 flex flex-col justify-center gap-3 ">

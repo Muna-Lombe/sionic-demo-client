@@ -31,7 +31,9 @@ const Navbar = () => {
           <Link to="/cart"> <CartIco /> </Link> 
         </div>
         <div id="avatar_image" className=" hidden lg:flex w-[2.8rem] ">
-          <img src={avatar} alt="" />
+          <Link to="/history"> 
+             <img src={avatar} alt="" />
+          </Link> 
         </div>
       </div>
       

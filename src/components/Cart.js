@@ -18,14 +18,6 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
   console.log('items', items)
   const dispatch = useDispatch() 
 
-
-  // logs go below
-
-      // test dipatch//
-      // {
-      //   type: 'cart/cartItemOrdered',
-      //   payload: [{id:1, changes: {isOrdered: true}}]
-      // }
   console.log('ord', ord)
   console.log('unOrd', unOrd)
   
@@ -55,89 +47,94 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
 
    const CartItemProduct = ({isOrdered, product}) => {
      const Line = () => (
-       <div className="absolute w-full line h-[0px] my-[40px] z-0 border-[1px] border-gray-500">
-
+       <div className="absolute w-[90%] h-[0px] my-[40px] z-0 ">
+          <svg  width="552" height="2" viewBox="0 0 552 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0.000905796" y1="0.500001" x2="551.001" y2="1.49819" stroke="black"/>
+          </svg>
        </div>
      )
      return (
-       <div id="product_wrapper" 
-         className="relative w-auto h-[10rem] py-6 mx-8  p-1 flex justify-between gap-1 border-b-[1px] border-b-gray-300 ">
-         <div id="product_details" 
-           className="w-max lg:w-[40rem] xl:w-[40rem] flex justify-start">
-           <div id="product_image" 
-             className=" h-[5rem] px-2 flex justify-center items-center">
-             <img 
-               className="w-full h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
-           </div>
-           <div id="product_description" 
-             className="w-[15rem] md:w-[20rem] lg:w-max xl:w-max flex flex-col justify-between">
-             <p 
-               className=" h-[5rem] overflow-y-hidden">
-               {product.name.toString().length > 12 ? product.name.slice(0,90) + "..." : product.name}
-             </p>
-             <div id="product_tags" 
-               className="w-max  flex flex-col lg:flex-row xl:flex-row justify-between ">
-               <div 
-                 className="w-max flex ">
-                 <div 
-                   className="w-max h-[2rem] p-2 flex justify-center items-center border-[1px] border-[#2967FF] rounded-r-3xl rounded-bl-xl text-md text-[#2967FF] font-raleway font-semibold" >
-                   <p> 120 шт. </p>
-                 </div>
-                 <div 
-                   className="w-max h-[2rem] p-2 flex justify-center items-center -z-10 border-t-[1px] border-r-[1px] border-b-[1px] border-[#FF2D87] rounded-r-3xl ext-md text-[#FF2D87] font-raleway font-semibold ">
-                   <p>за 12:48:35</p> 
-                 </div>
-               </div>
-               <div id="purchased_count" 
-                 className=" w-max flex justify-between items-center gap-1 font-raleway">
-                 <p>
-                   Куплено:
-                 </p>
-                 <p 
-                   className="font-semibold">
-                   150 шт.
-                 </p>
-               </div>
-             </div>  
-           </div>
-         </div>
-        
-         <div id="product_quantity" 
-           className="w-max md:w-max flex flex-col-reverse md:flex-col-reverse lg:w-[20rem] lg:flex lg:flex-row xl:flex xl:flex-row justify-between gap-4">
-           <div id="product_count" 
-             className=" w-max md:w-[8rem] lg:w-[8rem] h-[2.5rem] p-2 flex justify-around gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
-             <p 
-               className="px-3">-</p>
-             <input  
-               className="w-[1.4rem] flex justify-center items-center  decoration-transparent bg-transparent " type="text" value="25" disabled="disabled" />
-             <p 
-               className="px-3">+</p>
-           </div>
-           <div id="product_price" 
-             className="w-max md:w-full lg:w-[60%] xl:w-full">
-             <h2 id="new_price" 
-               className=" text-[#2967FF] text-[1.3rem] font-semibold">
-             {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] : product.price) +' ₽'}
-             </h2>
-             <div id="discounted_price" 
-               className="w-[70%] flex pr-2 justify-between ">
-               <h4 id="old_price" 
-                 className="text-[#8D8D8E] text-s line-through font-extralight">
-               {product.isDiscounted[0] ? product.price +' ₽' : ''}
-               </h4>
-             </div>
-           </div>
-         </div>
-         <button id="delete_btn" 
-           className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(product.id)}>
-             <DeleteIco />
-         </button>
-         {isOrdered && <Line></Line>}
-       </div>
+        <div id="product_wrapper" 
+          className="relative w-auto h-[10rem] py-6 mx-8  p-1 flex justify-between gap-8 border-b-[1px] border-b-gray-300 ">
+          <div id="product_item__wrapper" className="w-[95%] flex justify-between">  
+            <div id="product_details" 
+              className="w-full lg:w-[40rem] xl:w-[40rem] flex justify-start">
+              <div id="product_image" 
+                className=" h-[5rem] px-2 flex justify-center items-center">
+                <img 
+                  className="w-full h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
+              </div>
+              <div id="product_description" 
+                className="w-[15rem] md:w-[20rem] lg:w-max xl:w-max flex flex-col justify-between">
+                <p 
+                  className=" h-[5rem] overflow-y-hidden">
+                  {product.name.toString().length > 12 ? product.name.slice(0,60) + "..." : product.name}
+                </p>
+                <div id="product_tags" 
+                  className="w-max  flex flex-col lg:flex-row xl:flex-row justify-between ">
+                  <div 
+                    className="w-max flex ">
+                    <div 
+                      className="w-max h-[2rem] p-2 flex justify-center items-center border-[1px] border-[#2967FF] rounded-r-3xl rounded-bl-xl text-md text-[#2967FF] font-raleway font-semibold" >
+                      <p> 120 шт. </p>
+                    </div>
+                    <div 
+                      className="w-max h-[2rem] p-2 flex justify-center items-center -z-10 border-t-[1px] border-r-[1px] border-b-[1px] border-[#FF2D87] rounded-r-3xl ext-md text-[#FF2D87] font-raleway font-semibold ">
+                      <p>за 12:48:35</p> 
+                    </div>
+                  </div>
+                  <div id="purchased_count" 
+                    className=" w-max flex justify-between items-center gap-1 font-raleway">
+                    <p>
+                      Куплено:
+                    </p>
+                    <p 
+                      className="font-semibold">
+                      150 шт.
+                    </p>
+                  </div>
+                </div>  
+              </div>
+            </div>
+            
+            <div id="product_quantity" 
+              className="w-max md:w-max flex flex-col-reverse md:flex-col-reverse lg:w-[20rem] lg:flex lg:flex-row xl:flex xl:flex-row justify-between gap-4">
+              <div id="product_count" 
+                className=" w-max md:w-[8rem] lg:w-[8rem] h-[2.5rem] p-2 flex justify-around gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
+                <p 
+                  className="px-3">-</p>
+                <input  
+                  className="w-[1.4rem] flex justify-center items-center  decoration-transparent bg-transparent " type="text" value="25" disabled="disabled" />
+                <p 
+                  className="px-3">+</p>
+              </div>
+              <div id="product_price" 
+                className="w-max md:w-full lg:w-[60%] xl:w-full">
+                <h2 id="new_price" 
+                  className=" text-[#2967FF] text-[1.3rem] font-semibold">
+                {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] : product.price) +' ₽'}
+                </h2>
+                <div id="discounted_price" 
+                  className="w-[70%] flex pr-2 justify-between ">
+                  <h4 id="old_price" 
+                    className="text-[#8D8D8E] text-s line-through font-extralight">
+                  {product.isDiscounted[0] ? product.price +' ₽' : ''}
+                  </h4>
+                </div>
+              </div>
+            </div>
+            {/* {isOrdered && <Line/>} */}
+          </div>
+          <button id="delete_btn" 
+            className=" py-2 flex flex-col  justify-start" onClick={()=>handleDelete(product.id)}>
+              <DeleteIco />
+          </button>
+          
+        </div>
      )
    }
 
-   const CartItem = ({store,products})=> { 
+   const CartItem = ({keyId,store,products})=> { 
     let totalPrice = 0
      products.forEach((pr) => {
        totalPrice += (pr.isDiscounted[0] ? pr.isDiscounted[2] : pr.price)
@@ -168,9 +165,11 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
                   onClick={(e)=>handleItemOrdered(e,[store, products])} 
                   disabled={disableItem} 
                 >
+
+                  {/* STOPPED HERE, ID CANNOT BE KEY-ID BECAUSE IT CHANGES AFTER EVERY ORDER */}
                 <Link 
                     to={{pathname: "/checkout"}} 
-                    state={{totalPrice, prCount:products.length}} 
+                    state={{id:keyId, totalPrice, prCount:products}} 
                     className={"w-[10rem] h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-3xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }  
                     
                 > 
@@ -224,12 +223,12 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
 
           { Object.keys(unOrd).length > 0
             
-            ? Object.keys(unOrd).map((store,idx) => {return <CartItem key={idx} store={store}  products={unOrd[store]}/> })
+            ? Object.keys(unOrd).map((store,idx) => {return <CartItem key={idx} keyId={idx} store={store}  products={unOrd[store]}/> })
             : <NoItems/>
           }
           { Object.keys(ord).length > 0
             
-            ? <div id="cart_history__wrapper" className="w-full ">
+            ? <div id="cart_history__wrapper" className="w-full mt-4 ">
                 <div id="cart_history__header" className=" text-lg text-black font-raleway font-medium">
                   <h3>Cart History</h3>
                 </div>
