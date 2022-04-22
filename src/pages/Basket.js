@@ -8,6 +8,7 @@ const Basket = () => {
 
   // recieve the state
   const items = useSelector(state => state.cart.entities)
+  const testItems = useSelector(selectCartItems)
   
   // convert received state to array of state
   
@@ -42,10 +43,10 @@ const Basket = () => {
     const unOrd = filtered(filterByStore(Object.keys(items).map((key)=> items[key])), false)
     const ord = filtered(filterByStore(Object.keys(items).map((key)=> items[key])), true)
     
-
+    console.log('test items', testItems)
 
     return (
-    <Cart items={items} unOrd={unOrd} ord={ord}/>
+    <Cart items={items} unOrd={unOrd} ord={ord} inArrHaveBeenOrdered={inArrHaveBeenOrdered}/>
   )
 }
 

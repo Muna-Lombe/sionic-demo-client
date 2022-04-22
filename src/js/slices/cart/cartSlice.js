@@ -57,7 +57,7 @@ const cartSlice = createSlice({
 }) 
 
 export const {cartItemAdded, cartItemOrdered, cartItemUpdated, cartItemDeleted, allcartItemsDeleted} = cartSlice.actions
-export const { selectAll: selectCartItems, selectById: selectCartItemIds } = cartAdapter.getSelectors(state => state.cart)
+export const { selectAll: selectCartItems, selectById: selectCartItemIds } = cartAdapter.getSelectors(state => state.products)
 
 export const selectcartIds = createSelector(
     selectCartItems,
@@ -72,4 +72,8 @@ export const itemsInCart = createSelector(
 //  export const itemsInCart = createAsyncThunk('carts/itemsInCart', async(getState) => {
 //     console.log(getState)
 // })
+
+// export const selectFilteredCartItems = createSelector(
+
+// )
 export default cartSlice.reducer
