@@ -22,7 +22,8 @@ const orderHistorySlice = createSlice({
     reducers: {
         orderHistoryItemAdded(state, action) {
             const orderHistoryItem = action.payload
-            const orderId = nextOrderId(state.entities?.length > 1  ? state.entities : [{id:0}])
+            // const orderId = nextOrderId(state.entities?.length > 1  ? state.entities : [{id:0}])
+            const orderId = action.payload.id
             state.entities[orderId] = orderHistoryItem
         },
         

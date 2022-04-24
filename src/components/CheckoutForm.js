@@ -1,23 +1,26 @@
+import moment from 'moment'
 import React,{useRef} from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+
 
 // assets
 import { LocationIco } from '../assets'
 import { orderHistoryItemAdded } from '../js/slices/orders/ordersSlice'
 
-const CheckoutForm = () => {
 
+const CheckoutForm = () => {
+  
   let navigate = useNavigate()
   const location = useLocation()
   const dateRef = useRef()
   const timeRef = useRef()
   const dispatch = useDispatch()
-
+  
   console.log(location)
 
   const totalPrice = location.state?.totalPrice
-  const id = location.state?.id
+  const id = location.key
   const prCount = location.state?.prCount
   const deliveryPrice = 200
 
@@ -31,9 +34,11 @@ const CheckoutForm = () => {
      
       orderData[v] = k
     })
-    let orderId='664-'+(id.toString().length > 1 ? '0' : '00' + id.toString())
+    let order_date = moment().toObject()
+    // let orderId='664-'+(id.toString().length > 1 ? '0' : '00' + id.toString())
+    
     let status = ['Оплачен', 'Завершён']
-    let finalOrderData = {orderId,quantity: prCount,status,...orderData}
+    let finalOrderData = {id, order_date, quantity: prCount, status, ...orderData}
     // quantity:4,  status:['Оплачен', 'Завершён']
     dispatch(orderHistoryItemAdded(finalOrderData))
     setTimeout(() => {
@@ -123,12 +128,12 @@ const CheckoutForm = () => {
         </p>
       </div>
       <form id="checkout_form" name="checkout_form" action="/#" method='POST'  onSubmit={(e)=>handleSubmit(e)} >
-        <div id="checkout_content" className="w-full flex-auto justify-center  sm:flex sm:flex-col sm:justify-center sm:gap-2  md:flex md:flex-row md:justify-center md:items-center lg:flex lg:flex-row lg:justify-center">
+        <div id="checkout_content" className="w-full flex flex-col justify-center items-center lg:flex lg:flex-row lg:justify-around">
           
-            <div id="checkout_form__wrapper" className="w-full sm:w-auto sm:flex sm:flex-col sm:justify-center md:w-max md:flex md:flex-col md:justify-center p-4 flex flex-col justify-center gap-3 ">
+            <div id="checkout_form__wrapper" className="w-auto min-w-[23rem] lg:w-full p-4 flex flex-col justify-center align-middle gap-3 ">
               <CheckoutForm />
             </div>
-            <div id="checkout_order__wrapper" className="w-full sm:w-auto sm:flex sm:flex-col sm:justify-center md:w-auto md:flex md:flex-col md:justify-center flex flex-col justify-center items-center gap-2">
+            <div id="checkout_order__wrapper" className="w-full flex-grow sm:w-auto  md:w-auto lg:w-auto xl:w-auto  flex flex-col justify-center items-center gap-2">
               <CheckoutOrder />
             </div>
           
