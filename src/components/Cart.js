@@ -55,7 +55,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
      )
      return (
         <div id="product_wrapper" 
-          className="relative w-auto h-[10rem] py-3 mx-2 md:py-6 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
+          className="relative w-auto h-[10rem] py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
           <div id="product_item__wrapper" className="w-[95%] flex justify-between gap-2">  
             <div id="product_details" 
               className=" w-max md:w-full lg:w-full xl:w-full flex justify-start">
@@ -65,7 +65,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
                   className="w-full h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
               </div>
               <div id="product_description" 
-                className="w-[15rem] md:w-[20rem] lg:w-full xl:w-full flex flex-col justify-between">
+                className="w-[15rem] md:w-full lg:w-full xl:w-full flex flex-col justify-between">
                 <p 
                   className=" h-[4rem] md:h-[5rem] lg:h-[5rem] xl:h-[5rem] flex-wrap overflow-y-hidden">
                   {product.name.toString().length > 12 ? product.name.slice(0,60) + "..." : product.name}
@@ -98,9 +98,9 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             </div>
             
             <div id="product_quantity" 
-              className=" w-max lg:w-[20rem] flex flex-col-reverse md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row justify-end lg:justify-between xl:justify-between gap-2 lg:gap-4 xl:gap-4">
+              className=" w-max md:w-[18rem] lg:w-[20rem] xl:w-[40rem] flex flex-col-reverse md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row justify-end lg:justify-between xl:justify-between gap-2 lg:gap-4 xl:gap-4">
               <div id="product_count" 
-                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
+                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-full h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
                   className="px-3">-</p>
                 <input  

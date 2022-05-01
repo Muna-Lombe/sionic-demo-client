@@ -18,7 +18,7 @@ const Main = () => {
     const tags = useSelector(state => state.categories.entities)
     console.log(tags)
   return (
-    <div id="products_list" className="w-full flex flex-col m-1">
+    <div id="products_list" className="w-full flex flex-col">
         <div id="products_list__header" className="w-[50%] flex justify-between m-3 items-baseline ">
             <h3 className=" text-2xl text-black  font-raleway font-[700]">Категории товаров</h3>
             <h4 className="text-xs text-[#2967FF] flex items-baseline">Настройки</h4>

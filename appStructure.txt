@@ -187,4 +187,4 @@ store
                 - id
                 - tag
                 - color
-        
+  // "start": "PORT=3006 react-scripts start",      

@@ -41,11 +41,12 @@ function App() {
   
   return (
     // sm:w-auto  md:w-full lg:w-full xl:w-full 
-    <div id="App" className="relative min-w-[500px] max-w-[100vw] h-[100vh] flex flex-col my-0 justify-between items-center text-xl ">
+    // <div id="App" className="relative min-w-fit max-w-[100vw] h-[100vh] flex flex-col my-0 justify-between items-center ">
+    <div className="min-h-screen flex flex-col justify-between"> 
       <div id="main" className="w-full h-[90%]  px-2 flex justify-between"> 
-        <div id="mainbar_container" className=" w-full  h-full overflow-y-auto hover:overflow-y-scroll scrollbar">
+        <div id="mainbar_container" className=" w-full  h-full overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
           <Router>
-            <div id="mainbar" className="w-full sticky top-0 bg-white h-max z-10 flex items-center">
+            <div id="mainbar" className="w-full min-h-[10%] sticky top-0 bg-white h-max z-10 flex items-center">
               <Navbar />
             </div>
             <Routes>
@@ -70,15 +71,17 @@ function App() {
           
            
         </div>
-        <div id="sidebar_container" className="hidden sm:flex sm:w-auto md:flex md:w-auto md:max-w-[24rem] lg:flex lg:w-auto lg:max-w-[24rem] xl:flex xl:w-auto xl:max-w-[24rem]border-l-2 px-4 ">
+        {/* sm:flex sm:w-auto md:flex md:w-auto md:max-w-[24rem] */}
+        <div id="sidebar_container" className="hidden lg:flex lg:w-auto lg:max-w-[24rem] xl:flex xl:w-auto xl:max-w-[24rem]border-l-2 px-4 ">
           <Sidebar />
         </div>
       </div>
-      <footer id="footer" className="h-[10%] w-full bg-black">
+      <footer id="footer" className="min-h-[10%] w-full bg-black">
         footer
       </footer>
-      
-    </div>
+    {/* </div> */}
+    </div> 
+    
   );
 }
 

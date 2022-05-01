@@ -32,7 +32,8 @@ const Product = ({id,product}) => {
   return (
     // width={'180'} height={'150'}
     // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
-    <div id={"product_card"+id} className="min-w-[11rem] md:w-[14rem] lg:w-[14rem] xl:w-[14rem] max-w-[14rem] h-[24rem] p-2 flex flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
+    // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
+    <div id={"product_card"+id} className="min-w-[14rem] w-auto  max-w-[14rem] h-[24rem] p-2 flex  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
           <img className="w-full h-[11.5rem] object-contain"  src={img[product.img_path_id]} alt="prd"  />
