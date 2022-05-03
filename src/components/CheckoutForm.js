@@ -85,40 +85,38 @@ const CheckoutForm = () => {
   )
 
   const CheckoutOrder = () =>(
-    <>
-      <div id="order_details" className="w-[25rem] p-2 flex flex-col justify-center items-center border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
-        <div id="order_cost__wrapper" className="w-full py-1 px-4 flex justify-between items-center text-xl text-[#727280]  font-raleway">
+    <div className="w-full flex flex-col justify-center gap-4 lg:p-4">
+      <div id="order_details" className="w-auto p-2 lg:p-4 flex flex-col justify-start md:justify-center lg:justify-center xl:justify-center items-center border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
+        <div id="order_cost__wrapper" className="w-full lg:w-full xl:w-full  py-1 px-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between  items-center text-xl text-[#727280]  font-raleway">
           <label htmlFor="order_cost">
             Стоимость товаров:
           </label>
-          <input id="o_cost" className="w-[8rem] flex justify-end text-2xl bg-transparent" name="order_cost" form="checkout_form" type="text" value={(totalPrice || 0) +"₽"} readOnly required  />
+          <input id="o_cost" className="w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end text-2xl bg-transparent" name="order_cost" form="checkout_form" type="text" value={(totalPrice || 0) +"₽"} readOnly required  />
             
           
         </div>
-        <div id="delivery_cost__wrapper" className="w-full py-1 px-4 flex justify-between items-center text-xl text-[#727280] font-raleway">
+        <div id="delivery_cost__wrapper" className="w-full lg:w-full xl:w-full py-1 px-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between items-center text-xl text-[#727280] font-raleway">
           <label className="" htmlFor="delivery_cost">
             Стоимость доставки:
           </label>
-          <input id="d_cost" className="w-[8rem] flex justify-end  bg-transparent" name="delivery_cost" form="checkout_form" type="text" value={(deliveryPrice || 0) +"₽"} readOnly required />
+          <input id="d_cost" className="w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent" name="delivery_cost" form="checkout_form" type="text" value={(deliveryPrice || 0) +"₽"} readOnly required />
             
           
         </div>
-        <div id="total_cost__wrapper" className="w-full p-4 flex justify-between items-center text-2xl text-[#727280] font-raleway font-medium">
+        <div id="total_cost__wrapper" className="w-full lg:w-full xl:w-full p-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between items-center text-2xl text-[#727280] font-raleway font-medium">
           <label className="bg-transparent" htmlFor="total_cost">
             Итого:
           </label>
-          <input id="t_cost" className="w-[8rem] flex justify-end  bg-transparent text-black font-bold" name="total_cost" form="checkout_form" type="text" value={(totalPrice 
+          <input id="t_cost" className="w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent text-black font-bold" name="total_cost" form="checkout_form" type="text" value={(totalPrice 
           + deliveryPrice) +"₽"} readOnly required />
             
           
         </div>
 
       </div>
-      {/* <button form="checkout_form" id="checkout_btn" onClick={(e)=>handleSubmit(e)} className="w-[25rem] p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-[1.9rem] active: text-2xl text-white font-raleway font-normal">
-        Сделать заказ
-      </button> */}
-      <input type="submit" form="checkout_form" id="checkout_btn" value="Сделать заказ" className="w-[25rem] p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-[1.9rem] active: text-2xl text-white font-raleway font-normal" required/>
-    </>
+      
+      <input type="submit" form="checkout_form" id="checkout_btn" value="Сделать заказ" className="w-auto p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-3xl active: text-2xl text-white font-raleway font-normal" required/>
+    </div>
   )
   return (
     <div id="checkout_wrapper" className="w-full">
@@ -128,12 +126,12 @@ const CheckoutForm = () => {
         </p>
       </div>
       <form id="checkout_form" name="checkout_form" action="/#" method='POST'  onSubmit={(e)=>handleSubmit(e)} >
-        <div id="checkout_content" className="w-full flex flex-col justify-center items-center lg:flex lg:flex-row lg:justify-around">
+        <div id="checkout_content" className="w-auto min-w-[20rem] flex flex-col justify-center items-center md:flex-row lg:flex lg:flex-row lg:justify-start lg:gap-8">
           
-            <div id="checkout_form__wrapper" className="w-auto min-w-[23rem] lg:w-full p-4 flex flex-col justify-center align-middle gap-3 ">
+            <div id="checkout_form__wrapper" className="w-auto min-w-[18rem] lg:w-[30%] p-4 flex flex-col justify-center align-middle gap-3 ">
               <CheckoutForm />
             </div>
-            <div id="checkout_order__wrapper" className="w-full flex-grow sm:w-auto  md:w-auto lg:w-auto xl:w-auto  flex flex-col justify-center items-center gap-2">
+            <div id="checkout_order__wrapper" className="w-auto min-w-[18rem] max-w-[30rem] flex-grow sm:w-auto  md:w-auto lg:w-[45%] xl:w-[45%]   flex flex-col justify-center items-center gap-2">
               <CheckoutOrder />
             </div>
           
