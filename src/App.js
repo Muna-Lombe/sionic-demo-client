@@ -10,6 +10,7 @@ import { Main, Basket, Checkout, History } from './pages';
 
 // assets
 import Get from './assets/tests/Get';
+import { HomeIco, CartIco, AvatarIco } from './assets';
 
 
 function App() {
@@ -49,6 +50,26 @@ function App() {
             <div id="mainbar" className="w-full min-h-[10%] sticky top-0 bg-white h-max z-10 flex items-center">
               <Navbar />
             </div>
+            <footer id="footer" className="fixed bottom-0 min-h-[10%] w-full z-10 flex md:hidden lg:hidden xl:hidden bg-white border border-white no_highlights">
+              <div id="bottom_nav_bar" className="w-full mt-2  pt-2 px-2 flex flex-row justify-around"> 
+                <div id="home_ico">
+                  <Link to="/">
+                    <HomeIco />
+                  </Link>
+                  
+                </div>
+                <div id="cart_ico">
+                  <Link to="/cart">
+                    <CartIco />
+                  </Link>
+                </div>
+                <div id="user_profile_ico">
+                  <Link to="/history">
+                    <AvatarIco size={"2.5rem"}/>
+                  </Link>
+                </div>
+              </div>
+            </footer>
             <Routes>
               <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
               <Route path="/cart" exact element={<Basket />} />
@@ -76,11 +97,9 @@ function App() {
           <Sidebar />
         </div>
       </div>
-      <footer id="footer" className="min-h-[10%] w-full bg-black">
-        footer
-      </footer>
-    {/* </div> */}
-    </div> 
+      
+    </div>
+    // </div> 
     
   );
 }

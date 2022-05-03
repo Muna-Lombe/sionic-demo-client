@@ -2,32 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 // assets
-import { CartIco, PinIco, SearchIco } from '../assets';
-import avatar from '../assets/images/avatar.png'
+import { AvatarIco, CartIco, PinIco, SearchIco } from '../assets';
+
 
 const Navbar = () => {
   const [dropdownActive, setDropdownActive] = useState(false)
-  
-  
+
   const GoToCartIco = ({isBurgerMenu=false,size="2.5rem"}) => (
     // max-w-[2.8rem] max-h-[2.8rem] aspect-square
-    <div id="cart" className={"min-w-[1.5rem] w-["+size+"] max-w-[2.8rem] aspect-square  sm:flex md:flex lg:flex"}>
+    <div id="cart" className={"min-w-max w-["+size+"] max-w-[2.8rem] aspect-square  sm:flex md:flex lg:flex"}>
       <Link to="/cart"> <CartIco isBurgerMenu={isBurgerMenu} /> </Link> 
     </div>
     
   )
-  const AvatarIco = ({size="1.6rem"})=> (
-    <div id="avatar_image" className={"min-w-[1.5rem] w-["+size+"] max-w-[2.5rem] aspect-square  lg:flex  "}>
-      <Link to="/history"> 
-        <img src={avatar} alt="" />
-      </Link> 
-    </div>
+  const GoToAvatarIco = ({size})=> (
+    <Link to="/history"> 
+      <AvatarIco  size={size}  />
+    </Link> 
   )
   const MenuDropDown = () => {
     return(
       <div id="dropdown_menu" className=" absolute top-12 right-0 bottom-0 m-auto p-1 flex flex-col gap-1 bg-white ">
         <GoToCartIco isBurgerMenu={dropdownActive} />
-        <AvatarIco />
+        <GoToAvatarIco size={"1.6rem"} />
       </div>
 
       )
@@ -36,11 +33,14 @@ const Navbar = () => {
 
   useEffect(() => {
     if(document.readyState=== 'complete'){
+      console.log('ready waiting...')
       const burgerMenu = document.getElementById('burger_menu')
-      
-      
-      burgerMenu.addEventListener('focusin', (e)=>{
-        console.log('sigut')
+      window.addEventListener('resize', (e)=> {
+        setDropdownActive(false)
+      })
+
+      burgerMenu.addEventListener('mouseout', (e)=>{
+        setDropdownActive(false)
       })
     }
   
@@ -72,14 +72,15 @@ const Navbar = () => {
         
       </div>
       <div id="navbar_right__wrapper" className=" relative h-full flex md:items-start md:justify-end   lg:m-0 lg:p-0 lg:items-center lg:justify-center xl:m-0 xl:p-0 xl:items-center xl:justify-center">
-        <div id="user_content" className="hidden md:flex lg:flex xl:flex w-[7rem] h-max pt-4 md:w-[8rem] lg:w-[8rem] lg:p-0 xl:w-[8rem] xl:p-0   justify-around items-center">
+        <div id="user_content" className="hidden w-[7rem] h-max md:w-[8rem] lg:w-[8rem] lg:p-0 xl:w-[8rem] xl:p-0 lg:flex xl:flex  pt-4    justify-around items-center">
           <GoToCartIco size={'2.1rem'}/>
-          <AvatarIco size='2.1rem'/>
+          <GoToAvatarIco size={'2.4rem'}/>
         </div>
         <div 
           id="burger_menu"
           // h-[8rem]
-          className="flex items-start pt-4 md:hidden lg:hidden xl:hidden cursor-pointer "
+          className="hidden md:flex md:items-start md:pt-4  lg:hidden xl:hidden cursor-pointer "
+          onFocus={()=>{return console.log('hi')}}
           onClick={()=>setDropdownActive((prevState) => !prevState)}
           
         >

@@ -10,6 +10,7 @@ const CartIco = ({isBurgerMenu}) => {
   let itemsInCart = useSelector(state => state.cart.entities)
   const itemsCount = Object.keys(itemsInCart).filter((key) => itemsInCart[key].isOrdered !== true)
   return (
+    
    <div id="cart_icon" className="w-auto relative border-[0.9px] border-[#727280] rounded-[2rem] flex justify-center items-center ">
      <div id="border_circle" className="p-2" >
         <BasketIco isBurgerMenu={isBurgerMenu} />

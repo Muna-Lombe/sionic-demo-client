@@ -55,25 +55,25 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
      )
      return (
         <div id="product_wrapper" 
-          className="relative w-auto h-[10rem] py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
-          <div id="product_item__wrapper" className="w-[95%] flex justify-between gap-2">  
+          className="relative w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
+          <div id="product_item__wrapper" className="w-auto md:w-[70%] lg:w-[95%] xl:w-[95%] flex flex-col md:flex-row lg:flex-row xl:flex-row justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
             <div id="product_details" 
-              className=" w-max md:w-full lg:w-full xl:w-full flex justify-start">
+              className=" w-max md:w-full lg:w-full xl:w-full flex justify-start ">
               <div id="product_image" 
                 className=" h-[5rem] px-2 flex justify-center items-center">
                 <img 
-                  className="w-full h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
+                  className=" w-20 h-20 md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
               </div>
               <div id="product_description" 
-                className="w-[15rem] md:w-full lg:w-full xl:w-full flex flex-col justify-between">
+                className="w-[12rem] md:w-full lg:w-full xl:w-full flex flex-col justify-between">
                 <p 
-                  className=" h-[4rem] md:h-[5rem] lg:h-[5rem] xl:h-[5rem] flex-wrap overflow-y-hidden">
+                  className=" h-[3rem] md:h-[5rem] lg:h-[5rem] xl:h-[5rem] flex-wrap overflow-y-clip">
                   {product.name.toString().length > 12 ? product.name.slice(0,60) + "..." : product.name}
                 </p>
                 <div id="product_tags" 
-                  className="w-max  flex flex-col lg:flex-row xl:flex-row justify-between gap-2">
+                  className="w-max mt-4 flex flex-col lg:flex-row xl:flex-row justify-between gap-2">
                   <div 
-                    className="w-max flex ">
+                    className="w-max flex  lg:flex-row xl:flex-row justify-between gap-2 ">
                     <div 
                       className="w-max h-[2rem] p-2 flex justify-center items-center border-[1px] border-[#2967FF] rounded-r-3xl rounded-bl-xl text-md text-[#2967FF] font-raleway font-semibold" >
                       <p> 120 шт. </p>
@@ -98,7 +98,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             </div>
             
             <div id="product_quantity" 
-              className=" w-max md:w-[18rem] lg:w-[20rem] xl:w-[40rem] flex flex-col-reverse md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row justify-end lg:justify-between xl:justify-between gap-2 lg:gap-4 xl:gap-4">
+              className=" w-full lg:w-[20rem] xl:w-[40rem] flex flex-row md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row justify-end gap-20 items-center lg:justify-between xl:justify-between lg:gap-4 xl:gap-4">
               <div id="product_count" 
                 className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-full h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
@@ -111,7 +111,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
               <div id="product_price" 
                 className="w-max md:w-[7rem] lg:w-[60%] xl:w-full mx-2">
                 <h2 id="new_price" 
-                  className=" text-[#2967FF] text-[1.3rem] font-semibold">
+                  className=" text-[#2967FF] text-[1.2rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem] font-semibold">
                 {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] : product.price) +' ₽'}
                 </h2>
                 <div id="discounted_price" 
@@ -126,7 +126,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             {/* {isOrdered && <Line/>} */}
           </div>
           <button id="delete_btn" 
-            className=" py-2 flex flex-col justify-end lg:justify-start xl:justify-start" onClick={()=>handleDelete(product.id)}>
+            className="w-max px-2 py-2 flex flex-col justify-start" onClick={()=>handleDelete(product.id)}>
               <DeleteIco />
           </button>
           
