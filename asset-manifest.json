@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/sionic-demo-client/static/css/main.5f6b34b4.css",
+    "main.js": "/sionic-demo-client/static/js/main.80e50cfc.js",
+    "static/js/787.08250d33.chunk.js": "/sionic-demo-client/static/js/787.08250d33.chunk.js",
+    "static/media/image13_6.png": "/sionic-demo-client/static/media/image13_6.234517002bfc9d07d123.png",
+    "static/media/image13_5.png": "/sionic-demo-client/static/media/image13_5.51c4b99c4777f7f4bf81.png",
+    "static/media/image13_7.png": "/sionic-demo-client/static/media/image13_7.2bca5d5606a42131b0e9.png",
+    "static/media/image13_3.png": "/sionic-demo-client/static/media/image13_3.d66a775cd4064f97642f.png",
+    "static/media/image13_4.png": "/sionic-demo-client/static/media/image13_4.a22f1890022f92a099a3.png",
+    "static/media/avatar.png": "/sionic-demo-client/static/media/avatar.e65c503effb30b4738e4.png",
+    "static/media/image13_1.png": "/sionic-demo-client/static/media/image13_1.0234c9bdd9f4d80abe19.png",
+    "static/media/image14.png": "/sionic-demo-client/static/media/image14.6d3917db74be8c29b50e.png",
+    "static/media/image15.png": "/sionic-demo-client/static/media/image15.d6fca4643d5690627c4c.png",
+    "static/media/image13_2.png": "/sionic-demo-client/static/media/image13_2.e9d100bb6c583283e6fb.png",
+    "index.html": "/sionic-demo-client/index.html",
+    "main.5f6b34b4.css.map": "/sionic-demo-client/static/css/main.5f6b34b4.css.map",
+    "main.80e50cfc.js.map": "/sionic-demo-client/static/js/main.80e50cfc.js.map",
+    "787.08250d33.chunk.js.map": "/sionic-demo-client/static/js/787.08250d33.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5f6b34b4.css",
+    "static/js/main.80e50cfc.js"
+  ]
+}
