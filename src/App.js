@@ -79,7 +79,10 @@ function App() {
             <Sidebar />
           </div>
         </div>
-        <footer id="footer" className="fixed bottom-4 right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
+        <footer id="footer" className="min-h-[10%] h-auto p -4 z-10 flex   bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
+          <h4>Footer</h4>
+        </footer>
+        <div id="footer_nav" className="fixed bottom-4 right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
           <div id="bottom_nav_bar" className="w-full mt-2  pt-2 px-2 flex flex-col-reverse justify-around gap-2"> 
             <div id="home_ico">
               <Link to="/">
@@ -99,7 +102,7 @@ function App() {
               </Link>
             </div>
           </div>
-        </footer>
+        </div>
       </div>
     </Router>
     // </div> 
