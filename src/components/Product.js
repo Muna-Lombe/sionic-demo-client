@@ -1,33 +1,19 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
+import IMG from '../assets/images';
 
-//assests
-import image13_1 from '../assets/images/image13_1.png';
-import image13_2 from '../assets/images/image13_2.png';
-import image13_3 from '../assets/images/image13_3.png';
-import image13_4 from '../assets/images/image13_4.png';
-import image13_5 from '../assets/images/image13_5.png';
-import image13_6 from '../assets/images/image13_6.png';
-import image13_7 from '../assets/images/image13_7.png';
+// assets
+
 import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 import CategoryTag from './CategoryTag';
 
 const Product = ({id,product}) => {
+  let img = new IMG()
   const dispatch = useDispatch()
   const categoryTags = product.category_tags
-  
 
-  const [img,setImg] = useState({
-    1:image13_1,
-    2:image13_2,
-    3:image13_3,
-    4:image13_4,
-    5:image13_5,
-    6:image13_6,
-    7:image13_7
-  })
   const discountTag = (disc,old_price)=>(
       <>
         <h4 id="old_price" className="text-[#8D8D8E] text-s line-through font-extralight">
@@ -40,16 +26,19 @@ const Product = ({id,product}) => {
   )
   
 
-  const handleAddToCart=(productId)=>{
-    dispatch(cartItemAdded({id: productId}))
+  const handleAddToCart=(product)=>{
+    dispatch(cartItemAdded({...product}))
   }
   return (
-    <div id={"product_card"+id} className="w-[16rem] h-[21rem] flex flex-col gap-y-1 font-raleway ">
+    // width={'180'} height={'150'}
+    // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
+    // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
+    <div id={"product_card"+id} className="min-w-[14rem] w-auto  max-w-[14rem] h-[24rem] p-2 flex  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
-          <img className="" width={'180'} height={'150'} src={img[product.img_path_id] ? img[product.img_path_id] :img[1]} alt="prd"  />
+          <img className="w-full h-[11.5rem] object-contain"  src={img[product.img_path_id]} alt="prd"  />
         </div>
-        <div id="product_tag" className=" w-full absolute bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
+        <div id="product_tag" className=" w-[90%] absolute bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
           {
             categoryTags.map((tag,idx)=>{
               return <CategoryTag key={idx} id={tag[0]} text={tag[1]} />
@@ -58,11 +47,17 @@ const Product = ({id,product}) => {
           
         </div>
       </div>
-      <div id="product_content" className="w-full h-[50%] flex flex-col justify-between ">
-        <div id="name_price" className="h-[50%] flex flex-col justify-between">
-          <h4 id='product_name' className=" text-[#2D2D2F] text-[1rem] font-normal">
-            {product.name.length > 41 ? product.name.slice(0,41)+'...' : product.name}
-          </h4>
+      <div id="product_content" className="w-full h-[70%] flex flex-col justify-between ">
+        <div id="name_store_price__wrapper" className="h-[50%] flex flex-col justify-between">
+          <div id="name_store__wrapper" className="h-full flex flex-col justify-between">
+            <h4 id='product_name' className=" text-[#2D2D2F] text-[1rem] font-normal">
+              {product.name.length > 41 ? product.name.slice(0,41)+'...' : product.name}
+            </h4>
+            <h1 id='store_name' className="w-full flex justify-end text-[#8f8f91] text-sm font-[600]">
+              {product.store.name.length > 41 ? product.store.name.slice(0,41)+'...' : product.store.name}
+              
+            </h1>
+          </div>
           <h2 id="product_price" className=" text-[#2967FF] text-[1.3rem] font-semibold">
             {'от '+product.price+' ₽'}
           </h2>
@@ -77,7 +72,7 @@ const Product = ({id,product}) => {
           }
           
         </div>
-        <Link to="/cart" >
+        {/* <Link to="/cart" > */}
           <button 
             id="add_to_cart_btn" 
             className={`
@@ -95,12 +90,12 @@ const Product = ({id,product}) => {
               font-raleway
               font-[600]
             `}
-            onClick={()=> handleAddToCart(id)}
+            onClick={()=> handleAddToCart({id,product})}
           >
             Добавить в корзину 
             
           </button>
-        </Link>  
+        {/* </Link>   */}
       </div>
     </div>
   )

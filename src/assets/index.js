@@ -8,3 +8,5 @@ export {default as DeleteIco } from './DeleteIco';
 export {default as LocationIco } from './LocationIco';
 export {default as OpenIco } from './OpenIco';
 export {default as CopyIco } from './CopyIco';
+export {default as HomeIco} from './HomeIco';
+export { default as AvatarIco } from './AvatarIco';

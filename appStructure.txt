@@ -168,9 +168,14 @@ store
                 
         - orders
             - order
-                - id
+                - id - (curr_time+product_id+1)
                 - product_id
                 - order_date
+                - delivery_time
+                - delivery_date
+                - name
+                - delivery_address
+                - phone_number
 
             - actions
                 - orders/addedOrder
@@ -182,4 +187,4 @@ store
                 - id
                 - tag
                 - color
-        
+  // "start": "PORT=3006 react-scripts start",      
