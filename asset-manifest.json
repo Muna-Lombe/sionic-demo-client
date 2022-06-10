@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/sionic-demo-client/static/css/main.b25d4d58.css",
-    "main.js": "/sionic-demo-client/static/js/main.36a72b10.js",
+    "main.css": "/sionic-demo-client/static/css/main.487cddb2.css",
+    "main.js": "/sionic-demo-client/static/js/main.98dcabef.js",
     "static/js/787.08250d33.chunk.js": "/sionic-demo-client/static/js/787.08250d33.chunk.js",
     "static/media/image13_6.png": "/sionic-demo-client/static/media/image13_6.234517002bfc9d07d123.png",
     "static/media/image13_5.png": "/sionic-demo-client/static/media/image13_5.51c4b99c4777f7f4bf81.png",
@@ -14,12 +14,12 @@
     "static/media/image15.png": "/sionic-demo-client/static/media/image15.d6fca4643d5690627c4c.png",
     "static/media/image13_2.png": "/sionic-demo-client/static/media/image13_2.e9d100bb6c583283e6fb.png",
     "index.html": "/sionic-demo-client/index.html",
-    "main.b25d4d58.css.map": "/sionic-demo-client/static/css/main.b25d4d58.css.map",
-    "main.36a72b10.js.map": "/sionic-demo-client/static/js/main.36a72b10.js.map",
+    "main.487cddb2.css.map": "/sionic-demo-client/static/css/main.487cddb2.css.map",
+    "main.98dcabef.js.map": "/sionic-demo-client/static/js/main.98dcabef.js.map",
     "787.08250d33.chunk.js.map": "/sionic-demo-client/static/js/787.08250d33.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b25d4d58.css",
-    "static/js/main.36a72b10.js"
+    "static/css/main.487cddb2.css",
+    "static/js/main.98dcabef.js"
   ]
 }
