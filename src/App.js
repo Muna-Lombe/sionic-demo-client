@@ -44,7 +44,7 @@ function App() {
     // sm:w-auto  md:w-full lg:w-full xl:w-full 
     // <div id="App" className="relative min-w-fit max-w-[100vw] h-[100vh] flex flex-col my-0 justify-between items-center ">
     // <Router>
-      <div className="min-h-screen flex flex-col justify-between"> 
+      <div className="min-w-[400px] min-h-screen flex flex-col justify-between"> 
         <div id="main" className="w-full h-auto  px-2 flex justify-between"> 
           <div id="mainbar_container" className=" w-full  h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
             
