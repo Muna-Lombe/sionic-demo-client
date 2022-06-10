@@ -55,7 +55,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
      )
      return (
         <div id="product_wrapper" 
-          className="relative w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
+          className="relative  w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
           <div id="product_item__wrapper" className="w-max  lg:w-[95%] xl:w-[95%] flex flex-col md:flex-row lg:flex-row xl:flex-row justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
             <div id="product_details" 
               className=" w-max md:w-full lg:w-full xl:w-full flex justify-start ">
