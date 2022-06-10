@@ -22,10 +22,10 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
   console.log('unOrd', unOrd)
   
   // //////////////////////////////////////////////////////////
-
+//  THE IMAGE CLASS IS JUST TO BETTER ADD IMAGE PATHS TO OTHER COMPONENTS
   // // CREATE IMAGE INSTANCE
   var img = new IMG()
-
+// /////////////////////////////////////
   const handleDelete = (id) => {
     dispatch(cartItemDeleted(id))
   }
