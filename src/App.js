@@ -41,12 +41,10 @@ function App() {
   }
   
   return (
-    // sm:w-auto  md:w-full lg:w-full xl:w-full 
-    // <div id="App" className="relative min-w-fit max-w-[100vw] h-[100vh] flex flex-col my-0 justify-between items-center ">
-    // <Router>
-      <div className="min-w-[400px] min-h-screen flex flex-col justify-between"> 
-        <div id="main" className="w-full h-auto  px-2 flex justify-between"> 
-          <div id="mainbar_container" className=" w-full  h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
+   
+      <div  id="App" className="relative min-w-[200px] m-2 w-auto max-w-7xl  min-h-screen flex flex-col justify-between"> 
+        <div id="main" className="w-auto h-auto flex justify-between"> 
+          <div id="mainbar_container" className=" w-full   h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
             
               <div id="mainbar" className="w-full min-h-[10%] sticky top-0 bg-white h-max z-10 flex items-center">
                 <Navbar />
@@ -82,7 +80,7 @@ function App() {
         <footer id="footer" className="min-h-[10%] h-auto p -4 z-10 flex   bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
           <h4>Footer</h4>
         </footer>
-        <div id="footer_nav" className="fixed bottom-4 right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
+        <div id="footer_nav" className="sticky bottom-4 left-[100%] right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
           <div id="bottom_nav_bar" className="w-full mt-2  pt-2 px-2 flex flex-col-reverse justify-around gap-2"> 
             <div id="home_ico">
               <Link to="/">
@@ -104,8 +102,7 @@ function App() {
           </div>
         </div>
       </div>
-    // </Router>
-    // </div> 
+    
     
   );
 }
