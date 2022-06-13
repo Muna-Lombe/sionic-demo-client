@@ -11,21 +11,23 @@ const OrderHistory = ({itemsOrdered}) => {
   console.log(itemsOrdered)
 
 
-
+  const copyToClipboard=(text)=>{
+      navigator.clipboard.writeText(text).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+    }
+    
   const Item = ({order})=>{
     const id = '#664-'+ order.id
     let orderDate = order.order_date
     let date = orderDate.date.toString()+'.'+orderDate.months.toString()+'.'+orderDate.years.toString()
+   
 
-    const copyNotice = ()=> {
-      return(
-        
-          <p>
-            Id Copied!
-          </p>
-        
-      )
-    }
+  
+    
+    
     return (
     <div id="item" className="  px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
       <div id="item_wrapper" className="w-full p-2 flex flex-col justify-center gap-2">
@@ -59,7 +61,7 @@ const OrderHistory = ({itemsOrdered}) => {
             </div>
             <div id="order_number">
               <p className="text-xs text-[#727280] font-medium"> Номер заказа </p>
-              <p className="flex justify-between gap-2 text-xs text-[#2967FF] font-semibold"> {id} <CopyIco /></p>
+              <p className="flex justify-between gap-2 text-xs text-[#2967FF] font-semibold" > {id} <CopyIco text={id.toString()} /> </p>
               
 
             </div>
@@ -84,6 +86,7 @@ const OrderHistory = ({itemsOrdered}) => {
       
     </div>
   )}
+
   return (
     <div id="order_history__container" className="container flex flex-col justify-center gap-2  ">
       <div id="order_history__header" className="text-xl text-black font-raleway font-semibold">
