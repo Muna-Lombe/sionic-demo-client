@@ -35,15 +35,15 @@ const Basket = () => {
     return Object.fromEntries(Object.entries(cartItems).filter(([key,value]) => value.some(inArrHaveBeenOrdered) === isOrdered));
   } 
   // pass it to the componenet
-    console.log('items', items)
-    console.log('array items', Object.keys(items).map((key)=> items[key]))
-    console.log('items sorted by store', filterByStore(Object.keys(items).map((key)=> items[key])))
-    // console.log('items not include ordered prs', filtered(filterByStore(Object.keys(items).map((key)=> items[key])), false))
-    // console.log('items include ordered prs', filtered(filterByStore(Object.keys(items).map((key)=> items[key])), true))
+    // console.log('items', items)
+    // console.log('array items', Object.keys(items).map((key)=> items[key]))
+    // console.log('items sorted by store', filterByStore(Object.keys(items).map((key)=> items[key])))
+    // // console.log('items not include ordered prs', filtered(filterByStore(Object.keys(items).map((key)=> items[key])), false))
+    // // console.log('items include ordered prs', filtered(filterByStore(Object.keys(items).map((key)=> items[key])), true))
     const unOrd = filtered(filterByStore(Object.keys(items).map((key)=> items[key])), false)
     const ord = filtered(filterByStore(Object.keys(items).map((key)=> items[key])), true)
     
-    console.log('test items', testItems)
+    // console.log('test items', testItems)
 
     return (
     <Cart items={items} unOrd={unOrd} ord={ord} inArrHaveBeenOrdered={inArrHaveBeenOrdered}/>

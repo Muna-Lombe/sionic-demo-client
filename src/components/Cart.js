@@ -15,17 +15,14 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
   const [itemsInCart, setItemsInCart] = useState([items])
   const [orderedItems, setOrderedItems] = useState(ord)
   const [unOrderedItems, setUnOrderedItems] = useState(unOrd)
-  console.log('items', items)
+  
   const dispatch = useDispatch() 
-
-  console.log('ord', ord)
-  console.log('unOrd', unOrd)
   
   // //////////////////////////////////////////////////////////
-
+  //  THE IMAGE CLASS IS JUST TO BETTER ADD IMAGE PATHS TO OTHER COMPONENTS
   // // CREATE IMAGE INSTANCE
   var img = new IMG()
-
+// /////////////////////////////////////
   const handleDelete = (id) => {
     dispatch(cartItemDeleted(id))
   }
@@ -45,29 +42,29 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
   
 
 
-   const CartItemProduct = ({isOrdered, product}) => {
-     const Line = () => (
-       <div className="absolute w-[90%] h-[0px] my-[40px] z-0 ">
+    const CartItemProduct = ({isOrdered, product}) => {
+      const Line = () => (
+        <div className="absolute w-[90%] h-[0px] my-[40px] z-0 ">
           <svg  width="552" height="2" viewBox="0 0 552 2" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="0.000905796" y1="0.500001" x2="551.001" y2="1.49819" stroke="black"/>
           </svg>
-       </div>
-     )
-     return (
+        </div>
+      )
+      return (
         <div id="product_wrapper" 
-          className="relative w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
-          <div id="product_item__wrapper" className="w-auto md:w-[70%] lg:w-[95%] xl:w-[95%] flex flex-col md:flex-row lg:flex-row xl:flex-row justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
+          className="relative  w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
+          <div id="product_item__wrapper" className="w-auto sm:w-max md:w-[99%] lg:w-[95%] xl:w-[95%] flex flex-col flex-nowrap sm:flex-row md:flex-row lg:flex-row xl:flex-row  justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
             <div id="product_details" 
-              className=" w-max md:w-full lg:w-full xl:w-full flex justify-start ">
+              className=" w-auto  md:max-w-[312px] lg:max-w-[450px] xl:w-full flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap  justify-start ">
               <div id="product_image" 
-                className=" h-[5rem] px-2 flex justify-center items-center">
+                className="w-max h-[5rem] px-2 flex justify-center items-center">
                 <img 
                   className=" w-20 h-20 md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
               </div>
               <div id="product_description" 
-                className="w-[12rem] md:w-full lg:w-full xl:w-full flex flex-col justify-between">
+                className="w-auto max-w-[352px] flex flex-col justify-between"  >
                 <p 
-                  className=" h-[3rem] md:h-[5rem] lg:h-[5rem] xl:h-[5rem] flex-wrap overflow-y-clip">
+                  className=" h-auto max-h-[5rem] flex-wrap overflow-y-clip">
                   {product.name.toString().length > 12 ? product.name.slice(0,60) + "..." : product.name}
                 </p>
                 <div id="product_tags" 
@@ -98,9 +95,10 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             </div>
             
             <div id="product_quantity" 
-              className=" w-full lg:w-[20rem] xl:w-[40rem] flex flex-row md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row justify-end gap-20 items-center lg:justify-between xl:justify-between lg:gap-4 xl:gap-4">
+            // md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row
+              className=" w-full md:w-max lg:w-max xl:w-max flex flex-wrap justify-around items-center  sm:justify-center md:justify-center    lg:justify-center xl:justify-center gap-2 sm:gap-14 md:gap-14 lg:gap-28 xl:gap-14">
               <div id="product_count" 
-                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-full h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
+                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
                   className="px-3">-</p>
                 <input  
@@ -109,7 +107,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
                   className="px-3">+</p>
               </div>
               <div id="product_price" 
-                className="w-max md:w-[7rem] lg:w-[60%] xl:w-full mx-2">
+                className="w-max  mx-2">
                 <h2 id="new_price" 
                   className=" text-[#2967FF] text-[1.2rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem] font-semibold">
                 {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] : product.price) +' ₽'}

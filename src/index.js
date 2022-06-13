@@ -7,14 +7,18 @@ import reportWebVitals from './reportWebVitals';
 import store from './js/store'
 import { Provider } from 'react-redux';
 import { fetchProducts } from './js/slices/products/productsSlice';
+import { HashRouter } from 'react-router-dom';
 
 store.dispatch(fetchProducts())
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <HashRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </HashRouter>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
