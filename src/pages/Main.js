@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react'
-import { useEffect } from 'react'
+import React from 'react'
+
 import { useSelector } from 'react-redux'
 import { Product,CategoryTag } from '../components'
 import {  filterProducts} from '../js/slices/products/productsSlice'
@@ -23,7 +23,7 @@ const Main = () => {
         </div>
         <div id="product_tags" className=" w-auto max-w-[550px] h-max py-1 mx-2 flex flex-row my-3 overflow-hidden tag  " >
             {
-                // Object.values(tags).map((tag))
+                
                 categoryTags.map((tag,idx)=>{
                     return <CategoryTag key={idx} id={tag[0]} text={tag[1]} />
                 })
