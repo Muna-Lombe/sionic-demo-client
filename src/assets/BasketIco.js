@@ -2,10 +2,10 @@
 import React from 'react'
 
 const BasketIco = ({isBurgerMenu}) => {
-  const base = "w-[21px] h-[21px]"
+  const base = "w-[21px] h-[19px]"
   const burger_menu = "min-w-[0.5rem] w-min max-w-[1.6rem] aspect-square"
   return (
-   <div>
+   <div className='w-max'>
      {/* width="26" height="26"  */}
      {/* isBurgerMenu ? burger_menu : base */}
       <svg className={isBurgerMenu ? burger_menu : base} viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">

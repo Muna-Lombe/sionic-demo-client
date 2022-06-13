@@ -11,7 +11,7 @@ const Navbar = () => {
   const GoToCartIco = ({isBurgerMenu=false,size="2.5rem"}) => (
     // max-w-[2.8rem] max-h-[2.8rem] aspect-square
     <div id="cart" className={"min-w-max w-["+size+"] max-w-[2.8rem] aspect-square  sm:flex md:flex lg:flex"}>
-      <Link to="/cart"> <CartIco isBurgerMenu={isBurgerMenu} /> </Link> 
+      <Link to="/cart"> <CartIco isBurgerMenu={isBurgerMenu} isCartBtn={true} /> </Link> 
     </div>
     
   )
