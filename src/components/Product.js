@@ -36,7 +36,8 @@ const Product = ({id,product}) => {
     // width={'180'} height={'150'}
     // md:m-w-[14rem] lg:m-w-[14rem] xl:m-w-[14rem]
     // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
-    <div id={"product_card"+id} className="min-w-[8rem] w-auto  max-w-[9rem] h-[12rem] p-2 flex  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
+    // md:h-[21rem] lg:h-[21rem] xl:h-[21rem]
+    <div id={"product_card"+id} className="min-w-[8rem] w-auto md:w-[14rem] lg:w-[14rem] xl:w-[14rem]  max-w-[14rem] md:m-w-[14rem] lg:m-w-[14rem] xl:m-w-[14rem] h-[12rem] md:h-[21rem] lg:h-[21rem] xl:h-[21rem] p-2 flex flex-nowrap  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
           <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-auto object-contain"  src={img[product.img_path_id]} alt="prd"  />
@@ -103,16 +104,16 @@ const Product = ({id,product}) => {
               active:text-[#ffffff]
               font-raleway
               font-[600]
+              
             `}
             onClick={()=> handleAddToCart({id,product})}
-          >{
-            isMobile 
-              
-            ? <BasketIco isBurgerMenu={false} />
-            :'Добавить в корзину' 
-            
-          }
-            
+          >
+             <span className='md:hidden lg:hidden xl:hidden'>
+                <BasketIco isBurgerMenu={false} />
+              </span>
+              <span className='hidden md:flex lg:flex xl:flex'>
+                Добавить в корзину
+              </span> 
           </button>
         {/* </Link>   */}
       </div>
