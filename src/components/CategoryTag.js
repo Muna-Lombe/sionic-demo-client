@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectcategories } from '../js/slices/filters/categoriesSlice'
 import {setCurrCatId } from '../js/slices/products/productsSlice'
 
 const CategoryTag = ({id=1,text='tag'})=>{
@@ -30,6 +29,39 @@ const CategoryTag = ({id=1,text='tag'})=>{
     console.log(catId)
     dispatch(setCurrCatId(catId))
     // setCatId(catId)
+  }
+  if (id === 'type_clear'){
+    return(
+      <div 
+        id={`tag tag-${text}`} 
+        className={`
+          w-max 
+          h-[1.6rem] 
+          whitespace-nowrap 
+          flex 
+          justify-center 
+          items-center 
+          rounded-2xl 
+          py-[0.2rem] 
+          mx-1 
+          px-4 
+          border-2 
+          border-gray-200 
+          text-red-600
+          text-[0.9rem] 
+          font-sans 
+          font-semibold
+          cursor-pointer
+
+        `}
+        onMouseDown={(e)=>handleScroll(e)}
+        
+      >
+        <h2 onClick={()=> handleFilter(0)}>
+        {text}
+        </h2>
+      </div>
+    )
   }
   if(text === 'День Рождения Гриши') {
     return(

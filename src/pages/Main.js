@@ -21,7 +21,8 @@ const Main = () => {
             <h3 className=" text-2xl text-black  font-raleway font-[700]">Категории товаров</h3>
             <h4 className="text-xs text-[#2967FF] flex items-baseline">Настройки</h4>
         </div>
-        <div id="product_tags" className=" w-auto max-w-[550px] h-max py-1 mx-2 flex flex-row my-3 overflow-hidden tag  " >
+        <div id="product_tags" className=" w-auto max-w-[550px] h-max py-1 mx-2 transition-all flex flex-row overflow-x-scroll tag cursor-pointer" >
+            <CategoryTag  id={'type_clear'} text={'clear'} />
             {
                 
                 categoryTags.map((tag,idx)=>{
@@ -30,7 +31,7 @@ const Main = () => {
                 
             }
         </div>
-        {/*w-[calc(100vw-30rem)] lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 */}
+        
         <div id="mainbar__content" className="w-auto h-[rem] mx-2 p-2 grid grid-flow-rows grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]  overflow-x-scroll scroll-smooth gap-[16px] justify-center justify-items-center  tag">
             {
                 products.map((i)=>(<Product key={i.id} id={i.id} product={i.product} />))

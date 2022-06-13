@@ -44,9 +44,7 @@
   width: 10px;
   height: 0px;
 }
-.tag{
-  scrollLeft: $(this).offset().top + $(this).height() / 2;
-}
+
 
 #sidebar_content::-webkit-scrollbar {
   width: 0px;
