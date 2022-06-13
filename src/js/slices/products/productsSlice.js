@@ -1,11 +1,11 @@
 import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit'
 import React from 'react'
 import Get from '../../../assets/tests/Get'
-
+import categoriesSlice from '../filters/categoriesSlice'
 
 const productsAdapter = createEntityAdapter()
 const initialState = productsAdapter.getInitialState({
-
+    currCatId: 0
 })
 
 
@@ -71,8 +71,14 @@ const productSlice = createSlice({
         //             payload: { itemId, updateData}
         //         }
         //     }
-        // }
 
+        // }
+        setCurrCatId(state,action) {
+            console.log('newState', state.ids)
+            const newCatId = action.payload
+            state.currCatId = newCatId
+    
+        }
     },
     extraReducers:(builder) => {
         builder
@@ -82,10 +88,42 @@ const productSlice = createSlice({
             })
     }
 }) 
+export const { setCurrCatId} = productSlice.actions
 export const { selectAll: selectProducts } = productsAdapter.getSelectors(state => state.products)
+
 export const selectProductIds = createSelector(
     selectProducts,
     product => product
 
 )
+export const filterProducts = (catId = 0) => createSelector(
+    selectProducts,
+    state  => state.products,
+    state => state.products.currCatId,
+    (products, state)=>{
+        let currCatId = state.currCatId
+        console.log('curr',currCatId)
+        if (currCatId === 0) return products
+        return products.filter((p)=>{
+            return p.product.category_tags.some((e)=> {
+                return Number.parseInt(e[0]) === Number.parseInt(currCatId)
+            })  && p
+    })
+    }
+) 
+// {
+//             console.log('newState', state.ids)
+//             const catId = action.payload
+//             let oldState = state.entities
+            
+//             let filtState = state.entities.keys.filter((k)=>(
+                
+//                 state.entities[k].category_tags.some((e)=> Number.parseInt(e[0]) === Number.parseInt(catId))
+//             )) 
+//             let newState = {...filtState}
+//             console.log(newState)
+
+            
+
+//         }
 export default productSlice.reducer

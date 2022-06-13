@@ -50,21 +50,12 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
           </svg>
         </div>
       )
-      const onOverflow=(e)=> {
-        e.preventDefault()
-        console.log(e)
-        e.target.addEventListener(('resize'), (ev)=>{
-          return e.target.innerText.toString().length > e.target.width ? "s" :'c'
-
-        })
-
-      }
       return (
         <div id="product_wrapper" 
           className="relative  w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
-          <div id="product_item__wrapper" className="w-max md:w-[99%] lg:w-[95%] xl:w-[95%] flex flex-wrap md:flex-row lg:flex-row xl:flex-row  justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
+          <div id="product_item__wrapper" className="w-auto sm:w-max md:w-[99%] lg:w-[95%] xl:w-[95%] flex flex-col flex-nowrap sm:flex-row md:flex-row lg:flex-row xl:flex-row  justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
             <div id="product_details" 
-              className=" w-auto  md:max-w-[312px] lg:max-w-[500px] xl:w-auto flex justify-start ">
+              className=" w-auto  md:max-w-[312px] lg:max-w-[450px] xl:w-full flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap  justify-start ">
               <div id="product_image" 
                 className="w-max h-[5rem] px-2 flex justify-center items-center">
                 <img 
@@ -105,9 +96,9 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             
             <div id="product_quantity" 
             // md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row
-              className=" w-full md:w-max lg:w-[20rem] xl:w-[40rem] flex flex-wrap justify-end  gap-14 items-center lg:justify-center xl:justify-center lg:gap-4 xl:gap-4">
+              className=" w-full md:w-max lg:w-max xl:w-max flex flex-wrap justify-around items-center  sm:justify-center md:justify-center    lg:justify-center xl:justify-center gap-2 sm:gap-14 md:gap-14 lg:gap-28 xl:gap-14">
               <div id="product_count" 
-                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-full h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
+                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
                   className="px-3">-</p>
                 <input  

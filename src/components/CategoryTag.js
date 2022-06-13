@@ -1,6 +1,7 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectcategories } from '../js/slices/filters/categoriesSlice'
+import {setCurrCatId } from '../js/slices/products/productsSlice'
 
 const CategoryTag = ({id=1,text='tag'})=>{
   const bearTag = 'bg-[#FFA601] '
@@ -11,10 +12,12 @@ const CategoryTag = ({id=1,text='tag'})=>{
   const birthdayTag = 'bg-[#FF2D87]'
   
   const tags = useSelector(state => state.categories.entities)
-
+  const dispatch = useDispatch()
+  
 
   const handleScroll = (e) =>{
     e.preventDefault();
+    e.stopPropagation();
     console.log('drag to scroll')
     console.log(e)
     e.target.scrollIntoView({
@@ -23,7 +26,11 @@ const CategoryTag = ({id=1,text='tag'})=>{
       inline: "center"
     })
   }
-
+  const handleFilter = (catId) => {
+    console.log(catId)
+    dispatch(setCurrCatId(catId))
+    // setCatId(catId)
+  }
   if(text === 'День Рождения Гриши') {
     return(
       <div 
@@ -45,10 +52,13 @@ const CategoryTag = ({id=1,text='tag'})=>{
           text-[0.9rem] 
           font-sans 
           font-semibold
+          cursor-pointer
+
         `}
         onMouseDown={(e)=>handleScroll(e)}
+        
       >
-        <h2>
+        <h2 onClick={()=> handleFilter(id)}>
         {text}
         </h2>
       </div>
@@ -72,11 +82,13 @@ const CategoryTag = ({id=1,text='tag'})=>{
         text-[0.9rem] 
         font-sans 
         font-semibold 
+        cursor-pointer
         ${tags[id]}
       `}
       onMouseDown={(e)=>handleScroll(e)}
+
     >
-      <h2>
+      <h2 onClick={()=> handleFilter(id)}>
       {text}
       </h2>
     </div>

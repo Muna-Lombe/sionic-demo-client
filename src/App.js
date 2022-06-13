@@ -42,7 +42,7 @@ function App() {
   
   return (
    
-      <div  id="App" className="relative min-w-[200px] m-2 w-auto max-w-7xl  min-h-screen flex flex-col justify-between"> 
+      <div  id="App" className="relative min-w-[200px] m-2 w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between"> 
         <div id="main" className="w-auto h-auto flex justify-between"> 
           <div id="mainbar_container" className=" w-full   h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
             
