@@ -37,12 +37,12 @@ const Product = ({id,product}) => {
     // md:m-w-[14rem] lg:m-w-[14rem] xl:m-w-[14rem]
     // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
     // md:h-[21rem] lg:h-[21rem] xl:h-[21rem]
-    <div id={"product_card"+id} className="min-w-[8rem] w-auto md:w-[14rem] lg:w-[14rem] xl:w-[14rem]  max-w-[14rem] md:m-w-[14rem] lg:m-w-[14rem] xl:m-w-[14rem] h-[12rem] md:h-[21rem] lg:h-[21rem] xl:h-[21rem] p-2 flex flex-nowrap  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
+    <div id={"product_card"+id} className="min-w-[8rem] w-full max-w-[12rem] md:max-w-[14rem] lg:max-w-[14rem] xl:max-w-[14rem] h-[14rem] md:h-[24rem] lg:h-[24rem] xl:h-[24rem] p-2 flex flex-nowrap  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
-          <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-auto object-contain"  src={img[product.img_path_id]} alt="prd"  />
+          <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-square object-contain"  src={img[product.img_path_id]} alt="prd"  />
         </div>
-        <div id="product_tag" className=" w-[90%] absolute bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
+        <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
           {
             categoryTags.map((tag,idx)=>{
               return <CategoryTag key={idx} id={tag[0]} text={tag[1]} />
@@ -51,9 +51,9 @@ const Product = ({id,product}) => {
           
         </div>
       </div>
-      <div id="product_content" className=" relative w-full h-[70%] flex flex-col justify-between ">
-        <div id="name_store_price__wrapper" className="h-[50%] flex flex-col justify-between">
-          <div id="name_store__wrapper" className="h-full flex flex-col justify-between">
+      <div id="product_content" className=" relative w-full h-[70%] flex flex-wrap md:flex-col lg:flex-col xl:flex-col justify-between gap-2 ">
+        <div id="name_store_price__wrapper" className=" w-full  h-max flex flex-col justify-between">
+          <div id="name_store__wrapper" className="w-full h-full flex flex-col justify-between">
             <h4 id='product_name' className=" text-[#2D2D2F] text-[1rem] font-normal">
               {product.name.length > 12 ? product.name.slice(0,12)+'...' : product.name}
             </h4>
@@ -68,7 +68,8 @@ const Product = ({id,product}) => {
         </div>
         
         
-        <div id="discounted_price" className="w-max flex pr-2 justify-between gap-4 ">
+        <div id="discounted_price" className="w-max h-auto flex  pr-2 justify-between items-center gap-4  ">
+          
           {product.isDiscounted[0] === true
             ?  
             discountTag(product.isDiscounted[1],product.isDiscounted[2])
@@ -79,10 +80,18 @@ const Product = ({id,product}) => {
         {/* <Link to="/cart" > */}
           <button 
             id="add_to_cart_btn" 
-            className={`
-              absolute
-              bottom-0
-              left-[5.5rem]
+            // absolute
+            //   bottom-0
+            //   left-[7.1rem]
+            //   float-right
+            //   md:relative
+            //   lg:relative
+            //   xl:relative
+            //   md:left-[0rem]
+            //   lg:left-[0rem]
+            //   xl:left-[0rem]
+            className={
+              `
               w-max
               aspect-square
               md:w-full
@@ -104,6 +113,7 @@ const Product = ({id,product}) => {
               active:text-[#ffffff]
               font-raleway
               font-[600]
+              text-center
               
             `}
             onClick={()=> handleAddToCart({id,product})}
@@ -111,7 +121,7 @@ const Product = ({id,product}) => {
              <span className='md:hidden lg:hidden xl:hidden'>
                 <BasketIco isBurgerMenu={false} />
               </span>
-              <span className='hidden md:flex lg:flex xl:flex'>
+              <span className='hidden md:flex lg:flex xl:flex justify-center text-center'>
                 Добавить в корзину
               </span> 
           </button>

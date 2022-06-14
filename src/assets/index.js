@@ -10,3 +10,6 @@ export {default as OpenIco } from './OpenIco';
 export {default as CopyIco } from './CopyIco';
 export {default as HomeIco} from './HomeIco';
 export { default as AvatarIco } from './AvatarIco';
+export { default as FbIco } from './FbIco';
+export { default as InstaIco } from './InstaIco';
+export { default as VkIco } from './VkIco';

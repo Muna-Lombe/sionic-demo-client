@@ -3,7 +3,8 @@ module.exports = {
     theme: {
       extend: {
         fontFamily:{
-          'raleway':"Raleway,sans"
+          'raleway':"Raleway,sans",
+          'monserrat':"Monserrat,sans"
         },
         backgroundImage:{
           'reel-backdrop': "url('https://i.ytimg.com/vi/C_3wBEmeNQ0/maxresdefault.jpg')",

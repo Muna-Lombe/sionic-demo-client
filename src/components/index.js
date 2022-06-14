@@ -7,3 +7,4 @@ export {default as Cart } from './Cart';
 export {default as Card } from './Card';
 export {default as Product } from './Product';
 export {default as CategoryTag } from './CategoryTag';
+export {default as Footer } from './Footer';

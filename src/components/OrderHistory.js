@@ -29,7 +29,7 @@ const OrderHistory = ({itemsOrdered}) => {
     
     
     return (
-    <div id="item" className="  px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
+    <div id="item" className="  max-w-[600px] px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
       <div id="item_wrapper" className="w-full p-2 flex flex-col justify-center gap-2">
         <div id="item_header" className="w-full  flex justify-between gap-2">
           <div id="item_img" className="w-max border-[1px] border-transparent rounded-2xl">
