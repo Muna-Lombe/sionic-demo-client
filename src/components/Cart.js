@@ -96,7 +96,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             
             <div id="product_quantity" 
             // md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row
-              className=" w-full md:w-max lg:w-max xl:w-max flex flex-wrap justify-around items-center  sm:justify-center md:justify-center    lg:justify-center xl:justify-center gap-2 sm:gap-14 md:gap-14 lg:gap-28 xl:gap-14">
+              className=" w-full md:w-max lg:w-max xl:w-max flex flex-nowrap justify-around items-center  sm:justify-center md:justify-center    lg:justify-center xl:justify-center gap-2 sm:gap-14 md:gap-14 lg:gap-28 xl:gap-14">
               <div id="product_count" 
                 className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
@@ -124,7 +124,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             {/* {isOrdered && <Line/>} */}
           </div>
           <button id="delete_btn" 
-            className="w-max px-2 py-2 flex flex-col justify-start" onClick={()=>handleDelete(product.id)}>
+            className=" absolute top-[0.3rem] right-[0rem] md:relative md:right-0 md:top-[0.3rem]  lg:relative lg:right-0 lg:top-[0.3rem]  xl:relative xl:right-0 xl:top-[0.3rem]  w-max h-max  px-2 py-2 flex flex-col justify-start" onClick={()=>handleDelete(product.id)}>
               <DeleteIco />
           </button>
           
@@ -143,13 +143,26 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
           <div id="cart_item__wrapper"
             className={"w-full flex flex-col mb-2"+(disableItem ? " filter grayscale contrast-50" : ""  ) }>
             <div id="cart_item__header" 
-              className="p-2 flex justify-around items-center  border-[1px] border-gray-300 rounded-lg text-xl font-raleway">
+              className=" flex flex-wrap p-2 justify-around items-center gap-3 border-[1px] border-gray-300 rounded-lg text-xl font-raleway">
               <div id="item_name" 
-                className="font-bold">
-                <h4>{store}</h4>           
+                className="w-full sm:w-max md:w-max lg:w-max xl:w-max  font-bold flex justify-between  items-center">
+                <h4>{store}</h4> 
+                <button id="Checkout_btn"
+                onClick={(e)=>handleItemOrdered(e,[store, products])} 
+                disabled={disableItem}
+                className="flex sm:hidden md:hidden lg:hidden xl:hidden" 
+                >
+                  <Link 
+                    to={{pathname: "/checkout"}} 
+                    state={{id:keyId, totalPrice, prCount:products}} 
+                    className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
+                  > 
+                    Оформить 
+                  </Link>
+                </button>          
               </div>
               <div id="cart_item__total_price" 
-                className="">
+                className=" flex justify-between gap-8 items-center">
                 <p 
                   className=" ">
                   Стоимость корзины:
@@ -158,22 +171,21 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
                   className=" text-black text-xl font-bold">
                   {totalPrice+' ₽'} 
                 </p>
-              </div>
-              <button id="Checkout_btn"
+                <button id="Checkout_btn"
                 onClick={(e)=>handleItemOrdered(e,[store, products])} 
-                disabled={disableItem} 
-              >
-                <Link 
-                  to={{pathname: "/checkout"}} 
-                  state={{id:keyId, totalPrice, prCount:products}} 
-                  className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-3xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
-                > 
-                  Оформить 
-                </Link>
-              </button>
-              <div id="item_ico">
-              
+                disabled={disableItem}
+                className="hidden sm:flex md:flex lg:flex xl:flex" 
+                >
+                  <Link 
+                    to={{pathname: "/checkout"}} 
+                    state={{id:keyId, totalPrice, prCount:products}} 
+                    className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
+                  > 
+                    Оформить 
+                  </Link>
+                </button>
               </div>
+              
             </div>
             {
               products.map((pr) => <CartItemProduct key= {pr.id} isOrdered={disableItem}  product = {pr}  /> )
@@ -211,7 +223,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             className="text-md text-[#FF2D87] font-raleway font-semibold">Очистить корзину</div>
         </div>
         <div id="cart_content" 
-          className="w-[98%] mx-2 flex flex-col pb-1 border-[1px] border-gray-300 rounded-lg ">
+          className="w-[98%] flex flex-col pb-1 border-[1px] border-gray-300 rounded-lg ">
           
 
 
