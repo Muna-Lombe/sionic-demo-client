@@ -4,7 +4,7 @@ import React,{useState, useEffect} from 'react';
 import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
 
 //components
-import { Navbar, Sidebar, Footer} from './components'
+import { Navbar, Sidebar, Footer, OrmReader} from './components'
 import { Main, Basket, Checkout, History } from './pages';
 
 
@@ -35,6 +35,7 @@ function App() {
   }, [])
 
   const handleTest=async ()=>{
+    
     let data = await get.SortedProductCategories();
     setTestData(data)
     console.log(data);
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/cart" exact element={<Basket />} />
                 <Route path="/checkout" exact element={<Checkout /> } />
                 <Route path="/history" exact element={<History /> } />
+                <Route path="/orm-reader" exact element={<OrmReader /> } />
                 <Route
                   path="*"
                   element={
@@ -78,7 +80,7 @@ function App() {
           </div>
         </div>
        
-        <div id="footer_nav" className="float-right sticky bottom-4 left-[90%] right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
+        <div id="footer_nav" className="float-right sticky bottom-4 left-[90%] right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex xs:hidden sm:hidden  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
           <div id="bottom_nav_bar" className="w-full mt-2  pt-2 px-2 flex flex-col-reverse justify-around gap-2"> 
             <div id="home_ico">
               <Link to="/">

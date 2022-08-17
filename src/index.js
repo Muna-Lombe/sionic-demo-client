@@ -4,17 +4,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from './js/store'
+
 import { Provider } from 'react-redux';
 import { fetchProducts } from './js/slices/products/productsSlice';
 import { HashRouter } from 'react-router-dom';
+import getStore from './js/store';
 
-store.dispatch(fetchProducts())
+getStore.reduxStore.dispatch(fetchProducts())
 
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
-      <Provider store={store}>
+      <Provider store={getStore.reduxStore}>
         <App />
       </Provider>
     </HashRouter>

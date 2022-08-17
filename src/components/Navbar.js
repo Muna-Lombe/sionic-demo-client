@@ -46,7 +46,7 @@ const Navbar = () => {
         
       </div>
       <div id="navbar_right__wrapper" className="  h-full flex md:items-start md:justify-end   lg:m-0 lg:p-0 lg:items-center lg:justify-center xl:m-0 xl:p-0 xl:items-center xl:justify-center">
-        <div id="user_content" className="hidden w-[7rem] h-max md:w-[8rem] lg:w-[8rem] lg:p-0 xl:w-[8rem] xl:p-0 md:flex lg:flex xl:flex  pt-4    justify-around items-center">
+        <div id="user_content" className="hidden w-[7rem] h-max md:w-[8rem] lg:w-[8rem] lg:p-0 xl:w-[8rem] xl:p-0 xs:flex sm:flex md:flex lg:flex xl:flex  pt-4    justify-around items-center">
           <GoToCartIco size={'2.1rem'}/>
           <GoToAvatarIco size={'2.4rem'}/>
         </div>

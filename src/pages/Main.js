@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { Product,CategoryTag } from '../components'
 import {  filterProducts} from '../js/slices/products/productsSlice'
@@ -22,6 +22,7 @@ const Main = () => {
             <h4 className="text-xs text-[#2967FF] flex items-baseline">Настройки</h4>
         </div>
         <div id="product_tags" className=" w-auto max-w-[550px] lg:max-w-4xl xl:max-w-6xl h-max py-1 mx-2 transition-all flex flex-row overflow-x-scroll tag cursor-pointer" >
+            <Link to={"/orm-reader"}>🔮</Link>
             <CategoryTag  id={'type_clear'} text={'clear'} />
             {
                 
