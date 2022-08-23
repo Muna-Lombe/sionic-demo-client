@@ -11,7 +11,7 @@ const initialState = productsAdapter.getInitialState({
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async() => {
     let get = new Get ()
-    let pd = await get.ProductsByRange(10)
+    // let pd = await get.ProductsByRange(10)
     
     let tags = [
         [6, 'День Рождения Гриши'],

@@ -9,9 +9,12 @@ import { Provider } from 'react-redux';
 import { fetchProducts } from './js/slices/products/productsSlice';
 import { HashRouter } from 'react-router-dom';
 import getStore from './js/store';
+import { loadCategories, loadProducts } from './orm/reducers/rootOrmReducer';
 
 getStore.reduxStore.dispatch(fetchProducts())
-
+getStore.reduxStore.dispatch(loadCategories())
+console.log(getStore.reduxStore.getState())
+// loadProducts()
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>

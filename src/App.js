@@ -29,11 +29,16 @@ function App() {
 
   
   // fetch products on app load
-  useEffect(() => {
-    setProducts(get.Products());
+  // useEffect(() => {
+  //   (async function (){
+  //     let data = await get.Products()
+  //     console.log("data", data)
+  //   }
+  //   )()
+  //   setProducts(get.Products());
     
-  }, [])
-
+  // }, [])
+  console.log("app products", products)
   const handleTest=async ()=>{
     
     let data = await get.SortedProductCategories();
