@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import { createDispatchHook } from 'react-redux';
 import { Link } from "react-router-dom";
-import Get from '../assets/tests/Get';
+// import db from '../assets/tests/jsonServer/db';
+
+// import Get from '../assets/tests/Get';
 // import { session } from '../orm_reducers/rootOrmReducer';
 import { productSession, orderSession, categorySession, session } from '../orm/reducers/rootOrmReducer';
 // import { productsSelector } from '../orm/selectors/modelSelectors';
@@ -82,7 +84,7 @@ const OrmReader = () => {
     return(
         <div className="">
           <div className="flex flex-col">
-
+            <p>product field</p>
             <form  id="add_books" className="w-[12rem] flex flex-col"  onSubmit={(e)=>handleAdd(e, "to_order")} >
                 <select name="" id="" className="w-full flex flex-row justify-between border border-gray-400 rounded-md ">
                   {books?.map((book,idx)=> {
@@ -160,7 +162,8 @@ const OrmReader = () => {
             <label htmlFor="cat_name">
               Enter category name
             </label>
-            <input id="cat_name" type="text" form='add_cat' className="w-max px-2  border border-gray-400 rounded-sm"  />
+            <input id="cat_name" type="text" form='add_cat' className="w-max px-2  border border-gray-400 rounded-sm" />
+            <input id="cat_type" type="text" form='add_cat' className="w-max px-2  border border-gray-400 rounded-sm"  />
             <input className="w-max px-2 self-end bg-red-500 border border-black rounded-sm cursor-pointer" type="submit" form='add_cat' value="add" />
           </form> */}
           <form id="add_to_cat" name="add_to_cat" className=" flex flex-col" onSubmit={(e) => handleAdd(e, "to_category")} >
@@ -176,7 +179,7 @@ const OrmReader = () => {
             <input form="add_to_cat" type="submit" value="submit" className=" w-max px-2 self-end bg-red-500 border border-black rounded-sm cursor-pointer" />
           </form>
         </div>
-        <div id="show_cats" className="w-full flex flex-row justify-around gap-2 overflow-x-hidden ">
+        <div id="show_cats" className="w-full flex flex-row justify-start gap-2 overflow-x-scroll ">
           {
             categories?.map((cat,idx)=>{
               return (
@@ -195,8 +198,8 @@ const OrmReader = () => {
       <p>--- OrmReader ---</p>
       {/* input form for  adding and updating to model */}
       <div className="flex flex-col-reverse gap-2 fields">
-        <ProductField/>
-        <OrderField/>
+        {/* <ProductField/> */}
+        {/* <OrderField/> */}
         <CategoryField />
       </div>
     

@@ -28,6 +28,6 @@ const ormStore = ''
 //     }
 // });
 const getStore = {
-    reduxStore, ormStore
+    reduxStore//, ormStore
 }
 export default getStore ;

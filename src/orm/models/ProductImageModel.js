@@ -3,9 +3,9 @@ import { attr,fk, many, Model, oneToOne, ORM } from "redux-orm";
 
 
 
-class Image extends Model {}
-Image.modelName = 'Image';
-Image.fields = {
+class ProductImage extends Model {}
+ProductImage.modelName = 'ProductImage';
+ProductImage.fields = {
     image_name: attr(),
     image_url: attr(),
     product_id: oneToOne('Product'),
@@ -13,4 +13,4 @@ Image.fields = {
 }
 
 
-export default Image;
+export default ProductImage;

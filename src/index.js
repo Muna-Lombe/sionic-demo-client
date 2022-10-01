@@ -9,10 +9,16 @@ import { Provider } from 'react-redux';
 import { fetchProducts } from './js/slices/products/productsSlice';
 import { HashRouter } from 'react-router-dom';
 import getStore from './js/store';
-import { loadCategories, loadProducts } from './orm/reducers/rootOrmReducer';
+import { loadCategories, loadProducts, load } from './orm/reducers/rootOrmReducer';
+import { getFromDB } from './assets/tests/jsonServer/db';
 
 getStore.reduxStore.dispatch(fetchProducts())
-getStore.reduxStore.dispatch(loadCategories())
+// getStore.reduxStore.dispatch(loadCategories())
+let modelsList = ["ProductCategories", "ProductImages", "Products", "ProductVariations", "ProductVariationsProps", "ProductVariationsPropValues", "ProductVariationsPropListValues"]
+
+modelsList.forEach((model)=>{
+  getStore.reduxStore.dispatch(load(model))
+})
 console.log(getStore.reduxStore.getState())
 // loadProducts()
 ReactDOM.render(

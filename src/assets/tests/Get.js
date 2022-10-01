@@ -1,39 +1,58 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+// import axios from 'axios'
+const { default: axios } = require('axios');
 
-export class Get {
-  static propTypes = {}
+class Get {
+  static availableFunctions = [
+    "Products"
+    ,"SortedProductCategories"
+    ,"ProductCategories"
+    ,"SortedProducts"
+    ,"ProductsByMaxRange"
+    ,"LazyLoad"
+    ,"OneProduct"
+    ,"ProductsImages"
+    ,"OneProductImage"
+    ,"ProductVariations"
+    ,"OneProductVariation"
+    ,"OneProductVariationProperties"
+    ,"ProductVariationPropertyListValues"
+    ,"OneProductVariationPropertyListValues"
+    ,"ProductVariationPropertyValues"
+  ]
   static productObj= {}
   fn=function(){};
-
+  rootpath= "https://test2.sionic.ru"
   Products = async ()=>{
-    const baseUrl = 'https://test2.sionic.ru/an pi/products';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    
+  
+    const baseUrl = encodeURI(this.rootpath+"/api/products");
+
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   SortedProductCategories = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/Categories?sort=[%22name%22,%22ASC%22]&range=[0,24]';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+"/api/Categories?sort=[\"name\",\"ASC\"]&range=[0,24]");
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
-  ProductCategories = async(range=null, prevRange=0) => {
-    const baseUrl = `https://test2.sionic.ru/api/Categories/${range ? `range=[${prevRange},${range}]`: ''}`;
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+  ProductCategories = async(range, prevRange) => {
+    const baseUrl = encodeURI(this.rootpath+"/api/Categories/range=["+ (prevRange||0) +","+ (range||10) +"]");
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   SortedProducts = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/Products?sort=["name","ASC"]&range=[0,10]&filter={" category_id":20}';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+"/api/Products?sort=[\"name\",\"ASC\"]&range=[0,10]&filter={}");
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
-  ProductsByMaxRange = async(range=null, prevRange=0) => {
-    const baseUrl = `https://test2.sionic.ru/api/Products?sort=["name","ASC"]&range=[${prevRange},${range}]&filter={" category_id":20}`;
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+  ProductsByMaxRange = async(range, prevRange) => {
+    const baseUrl = encodeURI(this.rootpath+"/api/Products?sort=[\"name\",\"ASC\"]&range=["+prevRange||0+","+range||10+"]&filter={\" category_id\":20}");
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   LazyLoad= async(fn, opt={range:0, prevRange:0, interval:0,limit:0, currentProductData:[]}) => {
@@ -68,71 +87,128 @@ export class Get {
   }
 
   OneProduct = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/Products/2001';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/Products/2001');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
 
-  ProductsImages = async(range=null, prevRange=0) => {
-    const baseUrl = `https://test2.sionic.ru/api/ProductImages?sort=["image_name","ASC"]&range=[${prevRange},${range}]]&filter={" product_id":1001}`;
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+  ProductsImages = async(range, prevRange) => {
+    const baseUrl = encodeURI(this.rootpath+"/api/ProductImages?sort=[\"image_name\",\"ASC\"]&range=["+prevRange||0+","+range||10+"]&filter={\" product_id\":1001}");
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    
     return productData;
   }
   
   OneProductImage = async(productid) => {
-    const baseUrl = `https://test2.sionic.ru/api/ProductImages/${productid}`;
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(`${this.rootpath}/api/ProductImages/${productid}`);
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   ProductVariations = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariations';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariations');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
 
   OneProductVariation = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariations/1';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariations/1');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   OneProductVariationProperties = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariationProperties/1';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariationProperties/1');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   //tags
   ProductVariationPropertyListValues = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariationPropertyListValues';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariationPropertyListValues');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   OneProductVariationPropertyListValues = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariationPropertyListValues/1';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariationPropertyListValues/1');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   ProductVariationPropertyValues = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariationPropertyValues';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariationPropertyValues');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
   }
   OneProductVariationPropertyValues = async() => {
-    const baseUrl = 'https://test2.sionic.ru/api/ProductVariationPropertyValues/1';
-    const data = await fetch(`${baseUrl}/`);
-    const productData = await data.json();
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariationPropertyValues/1');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
     return productData;
+  }
+  static allFields = async(saveToFile) => {
+    const requester = {
+      lastRequest: new Date(2000, 0, 1),
+      makeRequest: async function(request) {
+        // first check when last request was made
+        const timeSinceLast = (new Date()).getTime() - this.lastRequest.getTime();
+        this.lastRequest = new Date();
+        if (timeSinceLast < 1000) {
+          this.lastRequest = new Date(this.lastRequest.getTime() + (1000 - timeSinceLast));
+          await new Promise((resolve) => setTimeout(resolve, 1000-timeSinceLast));
+        }
+        return request;
+      },
+    };
+    let localThis = this;
+    Get.availableFunctions.forEach(async(fn)=>{
+      var fs //= require('fs');
+      var Path //= require('path')
+      if(fn === "LazyLoad") return 0;
+      if(fn.toLowerCase().includes('one')) return 0;
+      const data = await requester.makeRequest(localThis[fn]())
+      if(fn==="ProductsImages"){
+        
+        data.forEach(async(obj)=>{
+          const path = Path?.resolve(process.cwd(), 'jsonServer', 'images', obj.id+'.jpg')
+          console.log("path", path)
+          const writer = fs.createWriteStream(path)
+          const response = await requester.makeRequest(axios.get(
+            // LAST SAVE POINT, HAVE NOT TESTED  FETCHING IMAGES YET....
+            localThis.rootpath+"/"+obj["image_url"],
+            {responseType: 'stream'}
+          ))
+          
+          response.data.pipe(writer)
+
+          return new Promise((resolve, reject) => {
+            writer.on('finish', resolve)
+            writer.on('error', reject)
+          })
+        })
+        
+      }
+
+      if(saveToFile){
+        const basepath = process.cwd()
+        try {
+          fs?.writeFileSync(basepath+"/jsonServer/"+fn+".json",JSON.stringify(data))
+        } catch (error) {
+          console.log("no file exist, appending...")
+          fs?.appendFileSync(basepath+"/jsonServer/"+fn+".json",JSON.stringify(data))
+
+        }
+        
+      }
+    })
+    return "completed...!"
   }
 }
 
 
-
-export default Get;
+module.exports = Get;
+// export default Get;
