@@ -6,10 +6,13 @@ import { attr,fk, many, Model, ORM } from "redux-orm";
 class ProductVariation extends Model {}
 ProductVariation.modelName = 'ProductVariation';
 ProductVariation.fields = {
-    quantity: attr(),
+    id: attr(),
+    stock: attr(),
     price: attr(),
-    product_id: fk('Product', 'productVariations'),
+    product_id: fk('Product', 'variations'),
     
 }
-
+ProductVariation.options = {
+    idAttribute: 'id'
+}
 export default ProductVariation;

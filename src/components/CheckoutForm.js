@@ -119,7 +119,7 @@ const CheckoutForm = () => {
     </div>
   )
   return (
-    <div id="checkout_wrapper" className="w-full">
+    <div id="checkout_wrapper" className="w-full mx-2">
       <div id="checkout_header" className="text-xl text-black font-raleway font-bold">
         <p>
         Доставка

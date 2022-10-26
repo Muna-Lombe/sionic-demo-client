@@ -7,9 +7,10 @@ import
   ProductsByMaxRange,
   LazyLoad,
   OneProduct,
-  ProductsImages,
+  ProductImages,
   OneProductImage,
   ProductVariations,
+  ProductVariationProperties,
   OneProductVariation,
   OneProductVariationProperties,
   ProductVariationPropertyListValues,
@@ -18,16 +19,23 @@ import
 }
 
  from "./index" 
- export const getFromDB = {
+ export const getFrom = {
   Products,
   SortedProductCategories,
   ProductCategories,
   SortedProducts,
   ProductsByMaxRange,
-  ProductsImages,
+  ProductVariations,
+  ProductVariationProperties,
+  ProductImages,
   ProductVariationPropertyListValues,
-  ProductVariationPropertyValues
+  ProductVariationPropertyValues,
+  DB:function(prop, range){
+    if(range)return this[prop].slice(0,range-1);
+    return this[prop];
+  }
 };
+
 
 /**
  * 
@@ -37,7 +45,7 @@ import
 const db = {
   // return {
     lastRequest: new Date(2000, 0, 1),
-    makeRequest: async function(request) {
+    makeRequest: async function(request, filter) {
       // first check when last request was made
       const timeSinceLast = (new Date()).getTime() - this.lastRequest.getTime();
       this.lastRequest = new Date();
@@ -45,7 +53,7 @@ const db = {
         this.lastRequest = new Date(this.lastRequest.getTime() + (1000 - timeSinceLast));
         await new Promise((resolve) => setTimeout(resolve, 1000-timeSinceLast));
       }
-      return getFromDB[request];
+      return getFrom.DB(request,filter);
     },
   // };
   // return requester

@@ -49,8 +49,8 @@ function App() {
   return (
    
       <div  id="App" className="relative min-w-[200px] w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between"> 
-        <div id="main" className="w-auto h-auto mx-2 flex justify-between"> 
-          <div id="mainbar_container" className=" w-full   h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
+        <div id="main" className="w-auto h-auto  flex justify-between"> 
+          <div id="mainbar_container" className=" w-full  h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
             
               <div id="mainbar" className="w-full min-h-[10%] sticky top-0 bg-white h-max z-10 flex items-center">
                 <Navbar />

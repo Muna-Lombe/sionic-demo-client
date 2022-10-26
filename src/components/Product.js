@@ -10,12 +10,12 @@ import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 import CategoryTag from './CategoryTag';
 
-const Product = ({id,product}) => {
+const Product = ({id,product,image}) => {
   const [isMobile, setIsMobile] = useState(document.readyState === 'complete' ? window.innerWidth < 720 : false)
   // let isMobile = document.readyState === 'complete' ? window.innerWidth < 720 : false
   let img = new IMG()
   const dispatch = useDispatch()
-  const categoryTags = product.category_tags
+  const categoryTags = product?.category_tags || []
 
   const discountTag = (disc,old_price)=>(
       <>
@@ -44,7 +44,7 @@ const Product = ({id,product}) => {
         </div>
         <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
           {
-            categoryTags.map((tag,idx)=>{
+            categoryTags?.map((tag,idx)=>{
               return <CategoryTag key={idx} id={tag[0]} text={tag[1]} />
             })
           }

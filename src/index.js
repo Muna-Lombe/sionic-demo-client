@@ -4,21 +4,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import { Provider } from 'react-redux';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createDispatchHook, Provider } from 'react-redux';
 import { fetchProducts } from './js/slices/products/productsSlice';
 import { HashRouter } from 'react-router-dom';
 import getStore from './js/store';
-import { loadCategories, loadProducts, load } from './orm/reducers/rootOrmReducer';
-import { getFromDB } from './assets/tests/jsonServer/db';
+import {  load, ormRootReducer } from './orm/reducers/rootOrmReducer';
+import {ThunkTypes} from './orm/actions/thunkTypes';
 
 getStore.reduxStore.dispatch(fetchProducts())
 // getStore.reduxStore.dispatch(loadCategories())
-let modelsList = ["ProductCategories", "ProductImages", "Products", "ProductVariations", "ProductVariationsProps", "ProductVariationsPropValues", "ProductVariationsPropListValues"]
 
-modelsList.forEach((model)=>{
-  getStore.reduxStore.dispatch(load(model))
+
+ThunkTypes.forEach(async(model,idx)=>{
+  let thunkaction = createAsyncThunk(`orm/load${model.dataName}`, async()=>{
+    return await load(model)
+  })
+  // const updateAction = 
+  await getStore.reduxStore.dispatch(thunkaction())
+
+  // if(idx === ThunkTypes.length-1 && updateAction.type.includes('fulfilled')){
+  //   console.log('sess', updateAction)
+  //   // ormRootReducer(undefined,updateAction)
+  //   // getStore.reduxStore.dispatch(updateAction)
+  //   // await load(false, true)
+  // }
 })
+
 console.log(getStore.reduxStore.getState())
 // loadProducts()
 ReactDOM.render(

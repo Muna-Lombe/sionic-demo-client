@@ -10,10 +10,11 @@ class Get {
     ,"ProductsByMaxRange"
     ,"LazyLoad"
     ,"OneProduct"
-    ,"ProductsImages"
+    ,"ProductImages"
     ,"OneProductImage"
     ,"ProductVariations"
     ,"OneProductVariation"
+    ,"ProductVariationProperties"
     ,"OneProductVariationProperties"
     ,"ProductVariationPropertyListValues"
     ,"OneProductVariationPropertyListValues"
@@ -93,7 +94,7 @@ class Get {
     return productData;
   }
 
-  ProductsImages = async(range, prevRange) => {
+  ProductImages = async(range, prevRange) => {
     const baseUrl = encodeURI(this.rootpath+"/api/ProductImages?sort=[\"image_name\",\"ASC\"]&range=["+prevRange||0+","+range||10+"]&filter={\" product_id\":1001}");
     const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
     
@@ -115,6 +116,12 @@ class Get {
 
   OneProductVariation = async() => {
     const baseUrl = encodeURI(this.rootpath+'/api/ProductVariations/1');
+    const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
+    // const productData = await data.json();
+    return productData;
+  }
+  ProductVariationProperties = async() => {
+    const baseUrl = encodeURI(this.rootpath+'/api/ProductVariationProperties');
     const {data: productData} = await axios.get(baseUrl)//await fetch(`${baseUrl}/`);
     // const productData = await data.json();
     return productData;
@@ -171,14 +178,14 @@ class Get {
       if(fn === "LazyLoad") return 0;
       if(fn.toLowerCase().includes('one')) return 0;
       const data = await requester.makeRequest(localThis[fn]())
-      if(fn==="ProductsImages"){
+      if(fn==="ProductsImages" || saveToFile){
         
         data.forEach(async(obj)=>{
           const path = Path?.resolve(process.cwd(), 'jsonServer', 'images', obj.id+'.jpg')
           console.log("path", path)
           const writer = fs.createWriteStream(path)
           const response = await requester.makeRequest(axios.get(
-            // LAST SAVE POINT, HAVE NOT TESTED  FETCHING IMAGES YET....
+            
             localThis.rootpath+"/"+obj["image_url"],
             {responseType: 'stream'}
           ))
