@@ -1,5 +1,5 @@
 // import axios from 'axios'
-const { default: axios } = require('axios');
+import { default as axios } from 'axios';
 
 class Get {
   static availableFunctions = [
@@ -217,5 +217,5 @@ class Get {
 }
 
 
-module.exports = Get;
+export default Get;
 // export default Get;

@@ -1,9 +1,14 @@
 import { attr,fk, many, Model, ORM } from "redux-orm";
+import customReducer from "./reducer";
 
 
 
 
-class ProductVariation extends Model {}
+class ProductVariation extends Model {
+    static reducer(session, ProductVariation, action) {
+        return customReducer(session, ProductVariation, action)
+    }
+}
 ProductVariation.modelName = 'ProductVariation';
 ProductVariation.fields = {
     id: attr(),

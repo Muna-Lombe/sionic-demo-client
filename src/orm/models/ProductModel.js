@@ -3,13 +3,18 @@ import { PropTypes } from 'react';
 // import { getPropTypesMixin } from "redux-orm-proptypes";
 import { CREATE, REMOVE, UPDATE, ADD_TO,REMOVE_FROM, ASSIGN } from "../actions/actionTypes";
 import { createSlice } from "@reduxjs/toolkit";
+import customReducer from "./reducer";
 // import { session } from "../reducers/rootOrmReducer";
-
 
 
 // var ValidModel = getPropTypesMixin(Model)
 
 class Product extends Model {
+    static reducer(session, Product, action){
+        return customReducer(session,Product,action)
+    }
+    
+
     // static reducer(action, Product, session) {
     //     let product;
     //     switch (action.type) {

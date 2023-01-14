@@ -8,35 +8,23 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createDispatchHook, Provider } from 'react-redux';
 import { fetchProducts } from './js/slices/products/productsSlice';
 import { HashRouter } from 'react-router-dom';
-import getStore from './js/store';
-import {  load, ormRootReducer } from './orm/reducers/rootOrmReducer';
+import Store from './js/store';
 import {ThunkTypes} from './orm/actions/thunkTypes';
+import { asyncThunk, load, StateLoadMiddleware } from './orm/utilities/StateLoader';
+import { stateLoading, stateStatus, STATE_LOADING } from './orm/actions/actionTypes';
 
-getStore.reduxStore.dispatch(fetchProducts())
-// getStore.reduxStore.dispatch(loadCategories())
-
-
-ThunkTypes.forEach(async(model,idx)=>{
-  let thunkaction = createAsyncThunk(`orm/load${model.dataName}`, async()=>{
-    return await load(model)
-  })
-  // const updateAction = 
-  await getStore.reduxStore.dispatch(thunkaction())
-
-  // if(idx === ThunkTypes.length-1 && updateAction.type.includes('fulfilled')){
-  //   console.log('sess', updateAction)
-  //   // ormRootReducer(undefined,updateAction)
-  //   // getStore.reduxStore.dispatch(updateAction)
-  //   // await load(false, true)
-  // }
-})
-
-console.log(getStore.reduxStore.getState())
+// Store.dispatch(fetchProducts())
+// Store.dispatch(asyncThunk())
+// StateLoadMiddleware(Store)
+// Store.dispatch(createAsyncThunk(`orm/load${ThunkTypes[0].dataName}`, async () => {
+//   return await load(ThunkTypes[0])
+//   }))
+console.log("store", Store.getState())
 // loadProducts()
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
-      <Provider store={getStore.reduxStore}>
+      <Provider store={Store}>
         <App />
       </Provider>
     </HashRouter>

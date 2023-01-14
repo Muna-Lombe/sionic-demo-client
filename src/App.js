@@ -48,7 +48,7 @@ function App() {
   
   return (
    
-      <div  id="App" className="relative min-w-[200px] w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between"> 
+      <div  id="App" className="dark relative min-w-[200px] w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between"> 
         <div id="main" className="w-auto h-auto  flex justify-between"> 
           <div id="mainbar_container" className=" w-full  h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
             
@@ -57,11 +57,11 @@ function App() {
               </div>
               
               <Routes>
-                <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
+                {/* <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
                 <Route path="/cart" exact element={<Basket />} />
-                <Route path="/checkout" exact element={<Checkout /> } />
-                <Route path="/history" exact element={<History /> } />
-                <Route path="/orm-reader" exact element={<OrmReader /> } />
+                <Route path="/checkout" exact element={<Checkout /> } /> */}
+                {/* <Route path="/history" exact element={<History /> } /> */}
+                <Route path="/" exact element={<OrmReader /> } />
                 <Route
                   path="*"
                   element={

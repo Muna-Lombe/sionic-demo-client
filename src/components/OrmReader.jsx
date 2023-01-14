@@ -7,7 +7,8 @@ import { useDispatch } from 'react-redux';
 import { createDispatchHook } from 'react-redux';
 import { Link } from "react-router-dom";
 import { imagepath, imagepaths } from '../assets/images';
-import { cartItemAdded } from '../js/slices/cart/cartSlice';
+import { created, removed } from '../orm/actions/actionTypes';
+// import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 
 
@@ -15,58 +16,24 @@ import { productSession, orderSession, categorySession, imageSession, productVar
 // import { selectProducts, selectProduct } from '../orm/reducers/slices/ormProductSlice';
 import { filteredProductsFromModel, filteredCategoriesFromModel, filteredOrdersFromModel } from '../orm/selectors';
 
-import Product from './Product';
+// import Product from './Product';
 
 const OrmReader = () => {
-  // console.log(imageSession.all().toModelArray() )
-  // const [products, setProducts] = useState([
-  //   ...productSession.all().toRefArray().map((p,idx)=> { 
-  //     return {
-  //       ...p, 
-  //       orders: productSession.at(idx).orders.toRefArray(),
-  //       images: productSession.at(idx).productImages.toRefArray(),
-  //       variations: productSession.at(idx).productVariations.toRefArray().map((prop,idx)=>{
-  //         return {
-  //           ...prop,
-  //           properties: productVariationSession.at(idx).properties.toRefArray(),
-
-  //         }
-  //       })},
-
-  //     }
-  //   })
-  // ])
-  // const [orders, setOrders] = useState([...orderSession.all().toRefArray()])
-  // const [categories, setCategories] = useState([...categorySession.all().toRefArray()])
-  // console.log("state", session.state)
-  // // console.log(productSession())
-  // useEffect(()=>{
-  //   setProducts([
-  //     ...productSession.all().toRefArray().map((p,idx) => { 
-  //       return { 
-  //         ...p, 
-  //         orders: productSession.at(idx).orders.toRefArray(),
-  //         images: productSession.at(idx).productImages.toRefArray()
-  //       } 
-  //     })
-  //   ])
-  // },[orders])
   const [excludedIds, setExcludedIds] = useState([])
   const [modalContent, setModalContent]= useState({})
   const products = useSelector(filteredProductsFromModel(excludedIds))
   const categories = useSelector(filteredCategoriesFromModel(excludedIds))
   const orders = useSelector(filteredOrdersFromModel())
+
+  console.log(orders)
   const handleFilter = (type,id)=> {
-    console.log("lick",id)
+    console.log("click",id)
     if(type ==="add")setExcludedIds(prevState => prevState.includes(id)? prevState : [...prevState, id])
     if (type === "remove") setExcludedIds(prevState => prevState.filter(el=>el!==id))
     // if(id) products = products.filter(p=> p.category_id !== id)
   }
-  console.log("products", products)
-  // console.log("state", session.state)
-  console.log("categories", categories)
-  console.log("state", session.state)
-  const dispatch = useDispatch;
+
+  const dispatch = useDispatch();
   const img_root = imagepath//"/home/muna/code/Muna-Lombe/tutorials/React/sionic-test/sionic/src/assets/tests/jsonServer/images/";
   const handleAdd=(e, submitType,id)=>{
     e.preventDefault()
@@ -82,7 +49,7 @@ const OrmReader = () => {
       let year = moment().toDate().getFullYear()
       return year+"-"+month+"-"+date+","+time
     }
-    console.log(formName)
+    // console.log(formName)
     switch (submitType) {
       case "to_product":
         [...document.forms[formName]].map((i) => { if (i.tagName === "SELECT" && i.value) form["data"] = i.value })
@@ -92,6 +59,7 @@ const OrmReader = () => {
         break;
       case "to_order":
         const action = {
+          
           type: 'orm/Order_CREATE',
           payload: {
             DateCreated: momentDate(),
@@ -99,11 +67,13 @@ const OrmReader = () => {
           }
         }
         // [...document.forms[formName]].map((i) => { if (i.tagName === "SELECT" && i.value) form["data"] = i.value })
-        // dispatch(action)
+        console.log(action)
+        // created(action)
+        dispatch(action)
         
-        console.log("dispatching orders")
+        console.log("dispatching orders", )
 
-          // && setOrders([...orderSession.all().toRefArray()])
+          
         break;
       case "to_category":
         if(formName === "add_cat"){
@@ -135,21 +105,6 @@ const OrmReader = () => {
   const ProductField = () => {
     return(
       <div className="mx-2">
-          {/* <div className="flex flex-col">
-            <p>product field</p>
-            <form  id="add_products" className="w-[12rem] flex flex-col"  onSubmit={(e)=>handleAdd(e, "to_order")} >
-                <select name="" id="" className="w-full flex flex-row justify-between border border-gray-400 rounded-md ">
-                  {products?.map((product,idx)=> {
-                    return (
-                        <option key={idx} name={product.name} value={[product.id]}>
-                        {product.name} = ${product.description.toString().slice(0, 5)}
-                        </option>  
-                    )
-                  })}
-                </select>
-              <input type="submit" value="submit" className="border "/>
-            </form>
-          </div> */}
           <div>
             
             <p> products: </p>
@@ -201,10 +156,43 @@ const OrmReader = () => {
           </div>
           <div>
             <p> orders: </p>
-            <p className="flex flex gap-2">
-            {orders?.map((order,idx)=> {
-              return <span key={idx}>{order.productId}</span>
-            })}</p>
+            <span className=" flex gap-2">
+              <table className=" table w-full">
+                <thead className="outline outline-2">
+                  <tr >
+                    <th className="outline outline-1">
+                      Item
+                    </th>
+                    <th className="outline outline-1">
+                      Product Id
+                    </th>
+                    <th className="outline outline-1">
+                      Date ordered
+                    </th>
+                  </tr>
+                </thead>
+                
+                {orders?.map((order,idx)=> {
+
+                  return (
+                    <tbody>
+                      <tr className="outline outline-1">
+                        <td className="outline outline-1">
+                          {idx+1}
+                        </td>
+                        <td className="outline outline-1">
+                          {order.product_id}
+                        </td>
+                        <td className="outline outline-1">
+                          {order.DateCreated}
+                        </td>
+                      </tr>
+                    </tbody>
+                    
+                  )
+                })}
+              </table>
+            </span>
           </div>
         </div>
       )
@@ -265,9 +253,9 @@ const OrmReader = () => {
     return(
       <div className="w-full flex flex-row self-end justify-center bg-yellow-300 overflow-x-scroll scrollbar rounded-t-sm">
             {
-              images.map(image =>{
+              images.map((image, idx) =>{
                 console.log(image)
-                return <Image imagepath={img_root(+image.id)} />
+                return <Image key={idx} imagepath={img_root(+image.id)} />
               })
             }
           </div>
