@@ -37,6 +37,8 @@ const Store = configureStore({
 
         
     },
+    // middleware: [...ormMiddlewares]
+
     middleware: [asyncThunk]
 })
 

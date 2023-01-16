@@ -95,27 +95,68 @@ const dispatchMany =(props, thunkAPI)=>{
     })
   })
 }
-
-export const asyncThunk = createAsyncThunk('orm/SET_LOADING', async (arg, thunkAPI) => {
+// const payloadCreatorForMany = async (arg, thunkAPI) => {
+//     try {
+//       const compiledResponse = new Map()
+//       ThunkTypes.forEach(async (model, idx) => {
+//         const response = await load(model);
+//         compiledResponse.set(model.modelName,response)
+//         //#region 
+//         // console.log("response", response)
+//         // const action = { type: "orm/" + model.modelName + "/CREATE", payload: response }
+//         // const props = { response, actionType: "/CREATE", modelName: model.modelName }
+//         // compiledResponse.push({ [model.modelName]: response })
+//         //#endregion
+        
+        
+//       })
+//       console.log(compiledResponse)//.dispatch(action)
+//       return compiledResponse
+//     } catch (error) {
+//       thunkAPI.dispatch({ type: 'FETCH_ERROR', error });
+//       return error;
+//     }
+//   }
+const payloadCreatorForMany = async (arg, thunkAPI) => {
   try {
-    ThunkTypes.forEach(async(model, idx)=>{
-      const response = await load(model);
-      // console.log("response", response)
-      const action = {type:"orm/"+model.modelName+"/CREATE", payload: response}
-      const props = { response, actionType: "/CREATE", modelName: model.modelName }
-      thunkAPI.dispatch(action)
-
-      // dispatchMany(props, thunkAPI)
-    })
-    
-    // thunkAPI.dispatch(action)
-    // return response[0];
-    // return thunkAPI.dispatch({type:"orm/CLEAR_LOADING"})
+    const promises = ThunkTypes.map(model => load(model));
+    const responses = await Promise.all(promises);
+    const compiledResponse = new Map();
+    ThunkTypes.forEach((model, idx) => {
+      compiledResponse.set(model.modelName, responses[idx]);
+    });
+    console.log(compiledResponse);
+    thunkAPI.dispatch({ type: 'FETCH_SUCCESS', payload: compiledResponse });
+    return compiledResponse;
   } catch (error) {
     thunkAPI.dispatch({ type: 'FETCH_ERROR', error });
     return error;
   }
-});
+}
+
+const payloadCreatorForSingle =(model) =>{
+  return async (arg, thunkAPI) => {
+    try {
+      const compiledResponse = Object.create([])
+      // ThunkTypes.forEach(async (model, idx) => {
+        const response = await load(model);
+        // console.log("response", response)
+        const action = { type: "orm/" + model.modelName + "/CREATE", payload: response }
+        const props = { response, actionType: "/CREATE", modelName: model.modelName }
+        compiledResponse.push({ [model.modelName]: response })
+        // console.log(thunkAPI)//.dispatch(action)
+
+      // })
+      return compiledResponse
+    } catch (error) {
+      thunkAPI.dispatch({ type: 'FETCH_ERROR', error });
+      return error;
+    }
+  }
+}
+export const asyncThunk = createAsyncThunk('orm/FETCH_DATA', payloadCreatorForMany);
+
+export const ormMiddlewares = Array(ThunkTypes.length-5).fill().map((e,i)=> {return e = createAsyncThunk('orm/'+ThunkTypes[i].modelName+'/FETCH_DATA', payloadCreatorForSingle(ThunkTypes[i])) })
 
 export const fromType = (type) => {
   

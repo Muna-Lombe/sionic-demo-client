@@ -67,7 +67,7 @@ export const filteredProductsFromModel = (ex)=> createSelector(
       // console.log("running prods selector", state)
       let temp = waitForStateToLoad(session.Product)
       // console.log("running products selector", temp)
-      const productObject = temp//session.Product
+      const productObject = session.Product
       .all()
       .toRefArray() 
       /*.map((p,) =>{

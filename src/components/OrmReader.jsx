@@ -24,7 +24,10 @@ const OrmReader = () => {
   const products = useSelector(filteredProductsFromModel(excludedIds))
   const categories = useSelector(filteredCategoriesFromModel(excludedIds))
   const orders = useSelector(filteredOrdersFromModel())
+  const dispatch = useDispatch();
+  const img_root = imagepath//"/home/muna/code/Muna-Lombe/tutorials/React/sionic-test/sionic/src/assets/tests/jsonServer/images/";
 
+  
   console.log(orders)
   const handleFilter = (type,id)=> {
     console.log("click",id)
@@ -33,8 +36,6 @@ const OrmReader = () => {
     // if(id) products = products.filter(p=> p.category_id !== id)
   }
 
-  const dispatch = useDispatch();
-  const img_root = imagepath//"/home/muna/code/Muna-Lombe/tutorials/React/sionic-test/sionic/src/assets/tests/jsonServer/images/";
   const handleAdd=(e, submitType,id)=>{
     e.preventDefault()
     console.log(e)
@@ -59,7 +60,7 @@ const OrmReader = () => {
         break;
       case "to_order":
         const action = {
-          
+
           type: 'orm/Order_CREATE',
           payload: {
             DateCreated: momentDate(),

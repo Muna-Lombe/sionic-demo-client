@@ -15,38 +15,7 @@ class Product extends Model {
     }
     
 
-    // static reducer(action, Product, session) {
-    //     let product;
-    //     switch (action.type) {
-    //     case 'CREATE_Product':
-    //         Product.create(action.payload);
-    //         break;
-    //     case 'UPDATE_Product':
-    //         product = Product.withId(action.payload.id);
-    //         product.update(action.payload);
-    //         break;
-    //     case 'REMOVE_Product':
-    //         product = Product.withId(action.payload);
-    //         product.delete();
-    //         break;
-    //     case 'ADD_AUTHOR_TO_Product':
-    //         product = Product.withId(action.payload.ProductId);
-    //         product.authors.add(action.payload.author);
-    //         break;
-    //     case 'REMOVE_AUTHOR_FROM_Product':
-    //         product = Product.withId(action.payload.ProductId);
-    //         product.authors.remove(action.payload.authorId);
-    //         break;
-    //     case 'ASSIGN_PUBLISHER':
-    //         product = Product.withId(action.payload.ProductId);
-    //         product.publisherId = action.payload.publisherId;
-    //         break;
-    //     default: 
-    //         return session.state
-    //     }
-        
-    //     // Return value is ignored.
-    // }
+   
 }
 Product.modelName = 'Product';
 // Product.propTypes = {
