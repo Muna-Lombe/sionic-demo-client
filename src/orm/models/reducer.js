@@ -14,27 +14,55 @@ export default function customReducer(action, model, session) {
       customFn()
       :Object.keys(data).forEach((k) => {
         console.log(modelAction,data[k])
-        modelAction.create(data[k])
+        const res = modelAction.create(data[k])
+        console.log("res",res)
       })
   }
 
   // if(model.modelName !== target()) return session.state;
   switch (true){
-    case action.meta?.requestStatus.includes(consts.FULFILLED.toLocaleLowerCase()):
-      console.log("fullfilled",action ,)
-      const customDispatch = () =>{
-       for(const [m,d] of action.payload){// action.payload.forEach((m)=> {
-         // const modelName = Object.keys(m)
-          console.log(isTargetModel(m), d)  //isTargetModel(modelName))
-          // action.meta.arg.dispatch({type: "orm/"+modelName+"/CREATE", payload:{...m[modelName]}})
-          // return { type: "orm/" + modelName + "/CREATE", payload: { ...m[modelName] } }
-          const doCreate = () => Object.values(d).forEach(o => model.create(o))
-          const result = isTargetModel(m) ? doCreate() : ''
-          return result
-        }//)
-      }
-      batchDo({customFn:customDispatch})
+    case action.type.includes("FETCH_SUCCESS"):
+      // console.log("success", action, model.modelName)
+      // const doCreate = (d) => {
+      //   Object.values(d).forEach(o => {
+      //     model.create(o)
+      //     // console.log("res", res)
+      //   })
+      // }
+      // const customDispatch = () => {
+      //   for (const [m, d] of action.payload) {
+      //     if (isTargetModel(m)) {
+      //       console.log("is", m, "target model? : ", isTargetModel(m))
+      //       const result = isTargetModel(m) ? doCreate(d) : ''
+      //     }
+      //   }
+      // }
+      // batchDo({ customFn: customDispatch })
+      // // console.log("result", session.state)
+
+      // session.state = {...state, [model.modelName]:batchDo({customFn:customDispatch})}
       break;
+
+    case action.meta?.requestStatus.includes(consts.FULFILLED.toLocaleLowerCase()):
+      // console.log("fullfilled",session.state)
+      const doCreate = (d) => {
+        Object.values(d).forEach(o => {
+          model.create(o)
+          // console.log("res", res)
+        })
+      }
+      const customDispatch = () => {
+        for (const [m, d] of action.payload) {
+          if (isTargetModel(m)) {
+            console.log("is", m, "target model? : ", isTargetModel(m))
+            const result = isTargetModel(m) ? doCreate(d) : ''
+          }
+        }
+      }
+      batchDo({ customFn: customDispatch })
+      // console.log("result", session.state)
+      break;
+
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.CREATE+'_'+model.modelName):
       console.log("creating...", action)
       // model.create(action.payload);

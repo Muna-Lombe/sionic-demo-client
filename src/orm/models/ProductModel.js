@@ -27,6 +27,7 @@ Product.fields = {
     name: attr(),
     description: attr(),
     category_id: fk('ProductCategory', 'products'),
+    // status: attr()
     // productImages: many('ProductImage')
     
 }

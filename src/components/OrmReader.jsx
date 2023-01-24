@@ -11,10 +11,11 @@ import { created, removed } from '../orm/actions/actionTypes';
 // import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 
-
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationProperrtyListValueSession, productVariationProperrtySession, productVariationProperrtyValueSession, session } from '../orm/reducers/rootOrmReducer';
 // import { selectProducts, selectProduct } from '../orm/reducers/slices/ormProductSlice';
 import { filteredProductsFromModel, filteredCategoriesFromModel, filteredOrdersFromModel } from '../orm/selectors';
+import { asyncThunk } from '../orm/utilities/StateLoader';
+import Product from './Product';
 
 // import Product from './Product';
 
@@ -25,17 +26,27 @@ const OrmReader = () => {
   const categories = useSelector(filteredCategoriesFromModel(excludedIds))
   const orders = useSelector(filteredOrdersFromModel())
   const dispatch = useDispatch();
-  const img_root = imagepath//"/home/muna/code/Muna-Lombe/tutorials/React/sionic-test/sionic/src/assets/tests/jsonServer/images/";
+  const img_root = imagepath;
 
+  useEffect(() => {
+    // dispatch(asyncThunk())
   
-  console.log(orders)
+    // return () => {
+    //   second
+    // }
+  }, [dispatch])
+  
+  
+  
+  console.log(products)
   const handleFilter = (type,id)=> {
     console.log("click",id)
     if(type ==="add")setExcludedIds(prevState => prevState.includes(id)? prevState : [...prevState, id])
     if (type === "remove") setExcludedIds(prevState => prevState.filter(el=>el!==id))
     // if(id) products = products.filter(p=> p.category_id !== id)
   }
-
+  const useEmergencyShowDataHook = () => console.log("emergenvy!", productSession.all().toRefArray(), session.state.Product)
+  
   const handleAdd=(e, submitType,id)=>{
     e.preventDefault()
     console.log(e)
@@ -101,14 +112,24 @@ const OrmReader = () => {
     
   
   }
- 
-
+  const ProductLoading = () =>{
+    const a = new Array(8)
+    return(
+      <div className="loading_container">
+        {
+          a.map((i,x)=>{
+            return <Product id={x} />
+          })
+        }
+      </div>
+    )
+  }
   const ProductField = () => {
     return(
       <div className="mx-2">
           <div>
             
-            <p> products: </p>
+            <p> products: <span onClick={useEmergencyShowDataHook} className=" w-12 aspect-square p-[2px] bg-white rounded-md border border-red-500 font-monserrat text-base cursor-pointer"> ☣️</span></p>
             <div className="flex flex-wrap gap-2">
             {products?.map((product,idx)=> {
               return (

@@ -5,31 +5,12 @@ console.log(session, orm)
 
 
 const ormSelector = state => state
-const stateIsNotLoadedFor = (entity) => {
-  return entity.all().toRefArray().length < 0
-}
-const tryToCheckAfterTimeout = (entity, timeout) => {
-  let timeOutResult = entity;
-  setTimeout(() => {
-    timeOutResult = stateIsNotLoadedFor(entity) ? tryToCheckAfterTimeout(entity, timeout + 100) : entity
-  }, timeout);
-  clearTimeout()
-  return timeOutResult
-};
-const waitForStateToLoad=(entity)=>{
-  
- 
-  return tryToCheckAfterTimeout(entity, 100)
-
-}
 
 export const filteredCategoriesFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
   state => {
-    let temp = waitForStateToLoad(session.ProductCategory)
-    // console.log("running categories selector", temp)
-    let catObject;
-    catObject = temp//session.ProductCategory
+   
+    const catObject = state.ProductCategory
     .all()
     .toRefArray()
     return (ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
@@ -42,7 +23,7 @@ export const filteredListingsFromModel = (ex)=> createSelector(
   state => {
    
     // console.log("running categories selector", )
-    const catObject = session.ProductCategory
+    const catObject = state.ProductCategory//session.ProductCategory
     .all()
     .toRefArray()
     return (ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
@@ -52,8 +33,7 @@ export const filteredListingsFromModel = (ex)=> createSelector(
 export const filteredOrdersFromModel = (ex) => createSelector(
   ormSelector(session.schema),
   state => {
-   
-    const catObject = session.Order
+    const catObject = state.Order
     .all()
     .toRefArray()
     console.log("orders",catObject)
@@ -61,41 +41,43 @@ export const filteredOrdersFromModel = (ex) => createSelector(
     
   }
 )
+
 export const filteredProductsFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
     state => {
-      // console.log("running prods selector", state)
-      let temp = waitForStateToLoad(session.Product)
-      // console.log("running products selector", temp)
-      const productObject = session.Product
+      // console.log("whatsup", state.Product)
+      const productObject = state.Product
       .all()
       .toRefArray() 
-      /*.map((p,) =>{
+      .map((p,) =>{
         return {
         ...p, 
-        orders: productSession.withId(p.id).orders.toRefArray(),
-        images: productSession.withId(p.id).images.toRefArray(),
-        variations: productSession.withId(p.id).variations.toRefArray()
+        orders: state.Product.withId(p.id).orders.toRefArray(),
+        images: state.Product.withId(p.id).images.toRefArray(),
+        variations: state.Product.withId(p.id).variations.toRefArray()
           .map((v,idx)=>{
             return {
               ...v,
-              properties: productVariationPropertySession.all().toRefArray()
+              properties: state.ProductVariationProperty.all().toRefArray()
               .map((prop, idx)=>{
                 return {
                   ...prop,
-                  listValues: productVariationPropertySession.at(idx).listValues.all().toRefArray(),
+                  listValues: state.ProductVariationProperty.at(idx).listValues.all().toRefArray(),
                 }
               }),
-              values: productVariationSession.at(idx).propertyValues.all().toRefArray()
+              values: state.ProductVariation.at(idx).propertyValues.all().toRefArray()
 
 
             }
           }),
           
         }
-      })*/
-      console.log("running products selector 2", productObject)
-      return (ex.length ? productObject.filter(el=> ex.some((e)=> e=== el.category_id)) :  productObject)
+      })
+    
+      
+      
+      // console.log("running products selector 2", productObject)
+      return (ex.length ? productObject.filter(el=> ex.some((e)=> e === el.category_id)) :  productObject)
     }
   )
   

@@ -3,14 +3,14 @@ import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import { CartIco, BasketIco } from '../assets';
 import IMG from '../assets/images';
-
+import no_product_img from '../assets/images/no_product_img.png'
 // assets
 
 import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 import CategoryTag from './CategoryTag';
 
-const Product = ({id,product,image}) => {
+const Product = ({id,product,image, isLoading}) => {
   const [isMobile, setIsMobile] = useState(document.readyState === 'complete' ? window.innerWidth < 720 : false)
   // let isMobile = document.readyState === 'complete' ? window.innerWidth < 720 : false
   let img = new IMG()
@@ -32,6 +32,41 @@ const Product = ({id,product,image}) => {
   const handleAddToCart=(product)=>{
     dispatch(cartItemAdded({...product}))
   }
+  const LoadingProduct =()=> {
+
+  }
+  // const ProductCardContainer = ({...children}) => {
+  //   return (
+  //     <div id={"product_card" + id} className="min-w-[8rem] w-full max-w-[12rem] md:max-w-[14rem] lg:max-w-[14rem] xl:max-w-[14rem] h-[14rem] md:h-[24rem] lg:h-[24rem] xl:h-[24rem] p-2 flex flex-nowrap  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
+  //     {children}
+  //     </div>
+  //   )
+  // }
+  // const ProductHeader = ({...children}) => (
+  //   <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
+  //     {children}
+  //   </div>
+  // )
+  // const ProductImage = ({imgSrc=no_product_img})=>(
+  //   <div id="product_image" className="flex justify-center items-center" >
+  //     <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-square object-contain" src={imgSrc} alt="prd" />
+  //   </div>
+  // )
+  // const ProductTag = ({...children})=>(
+  //   <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
+  //     {...children}
+  //   </div>
+  // )
+  // const ProductContent =({...children}) => (
+  //   <div id="product_content" className=" relative w-full h-[70%] flex flex-wrap md:flex-col lg:flex-col xl:flex-col justify-between gap-2 ">
+  //     {...children}
+  //   </div>
+  // )
+
+  // const ProductNameStoreWrapper = ({...children}) => (
+
+  // )
+  
   return (
     // width={'180'} height={'150'}
     // md:m-w-[14rem] lg:m-w-[14rem] xl:m-w-[14rem]
@@ -40,11 +75,11 @@ const Product = ({id,product,image}) => {
     <div id={"product_card"+id} className="min-w-[8rem] w-full max-w-[12rem] md:max-w-[14rem] lg:max-w-[14rem] xl:max-w-[14rem] h-[14rem] md:h-[24rem] lg:h-[24rem] xl:h-[24rem] p-2 flex flex-nowrap  flex-col gap-y-1 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
       <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
         <div id="product_image" className="flex justify-center items-center" >
-          <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-square object-contain"  src={img[product.img_path_id]} alt="prd"  />
+          <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-square object-contain"  src={img[product.img_path_id] || no_product_img} alt="prd"  />
         </div>
         <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
           {
-            categoryTags?.map((tag,idx)=>{
+            (categoryTags||new Array(6).fill(''))?.map((tag,idx)=>{
               return <CategoryTag key={idx} id={tag[0]} text={tag[1]} />
             })
           }
@@ -55,10 +90,10 @@ const Product = ({id,product,image}) => {
         <div id="name_store_price__wrapper" className=" w-full  h-max flex flex-col justify-between">
           <div id="name_store__wrapper" className="w-full h-full flex flex-col justify-between">
             <h4 id='product_name' className=" text-[#2D2D2F] text-[1rem] font-normal">
-              {product.name.length > 12 ? product.name.slice(0,12)+'...' : product.name}
+              {product?.name.length > 12 ? product?.name.slice(0,12)+'...' : product?.name}
             </h4>
             <h1 id='store_name' className="w-full flex justify-end text-[#8f8f91] text-sm font-[600]">
-              {product.store.name.length > 12 ? product.store.name.slice(0,12)+'...' : product.store.name}
+              {product?.store.name.length > 12 ? product?.store.name.slice(0,12)+'...' : product?.store.name}
               
             </h1>
           </div>

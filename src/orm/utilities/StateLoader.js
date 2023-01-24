@@ -125,8 +125,8 @@ const payloadCreatorForMany = async (arg, thunkAPI) => {
     ThunkTypes.forEach((model, idx) => {
       compiledResponse.set(model.modelName, responses[idx]);
     });
-    console.log(compiledResponse);
-    thunkAPI.dispatch({ type: 'FETCH_SUCCESS', payload: compiledResponse });
+    await thunkAPI.dispatch({ type: 'FETCH_SUCCESS', payload: compiledResponse });
+    // console.log("compiled", compiledResponse);
     return compiledResponse;
   } catch (error) {
     thunkAPI.dispatch({ type: 'FETCH_ERROR', error });

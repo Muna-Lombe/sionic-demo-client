@@ -17,7 +17,7 @@ import { defaultUpdater } from "redux-orm/lib/redux";
 export const orm = new ORM({
     stateSelector: state => {
         // console.log("ss", state.orm)
-        return state
+        return state.orm
     }
 
 });
