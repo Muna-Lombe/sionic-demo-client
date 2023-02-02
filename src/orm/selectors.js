@@ -6,6 +6,20 @@ console.log(session, orm)
 
 const ormSelector = state => state
 
+
+export const filteredCustomModelSelector = (model, ex) =>{
+  return createSelector(
+    ormSelector(session.schema),
+    state => {
+
+      const modObject = state[model]
+        .all()
+        .toRefArray()
+      return modObject //(ex.length ? catObject.filter(el => !ex.some((e) => e === el.category_id)) : catObject)
+
+    }
+  )
+} 
 export const filteredCategoriesFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
   state => {
@@ -36,7 +50,7 @@ export const filteredOrdersFromModel = (ex) => createSelector(
     const catObject = state.Order
     .all()
     .toRefArray()
-    console.log("orders",catObject)
+    console.log("orders", catObject, state.Order.all().toModelArray())
     return (ex?.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
     
   }
@@ -72,12 +86,13 @@ export const filteredProductsFromModel = (ex)=> createSelector(
           }),
           
         }
-      })
+      });
+   
     
       
       
-      // console.log("running products selector 2", productObject)
-      return (ex.length ? productObject.filter(el=> ex.some((e)=> e === el.category_id)) :  productObject)
+      // console.log("running products selector 2",ex, productObject[1].category_id)
+      return (ex.length ? productObject.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productObject)
     }
   )
   

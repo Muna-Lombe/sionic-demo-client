@@ -13,8 +13,8 @@ import {ThunkTypes} from './orm/actions/thunkTypes';
 import { asyncThunk, load, StateLoadMiddleware } from './orm/utilities/StateLoader';
 import { stateLoading, stateStatus, STATE_LOADING } from './orm/actions/actionTypes';
 
-// Store.dispatch(fetchProducts())
-// Store.dispatch(asyncThunk())
+Store.dispatch(fetchProducts())
+Store.dispatch(asyncThunk())
 // StateLoadMiddleware(Store)
 // Store.dispatch(createAsyncThunk(`orm/load${ThunkTypes[0].dataName}`, async () => {
 //   return await load(ThunkTypes[0])

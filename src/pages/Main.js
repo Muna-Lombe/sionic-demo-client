@@ -13,7 +13,7 @@ const Main = () => {
         [2, 'Игрушка']
       ]
     let products = useSelector(filterProducts())
-    
+    console.log("...", products)
     
   return (
     <div id="products_list" className="w-full flex flex-col">

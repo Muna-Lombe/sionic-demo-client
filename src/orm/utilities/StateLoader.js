@@ -125,7 +125,7 @@ const payloadCreatorForMany = async (arg, thunkAPI) => {
     ThunkTypes.forEach((model, idx) => {
       compiledResponse.set(model.modelName, responses[idx]);
     });
-    await thunkAPI.dispatch({ type: 'FETCH_SUCCESS', payload: compiledResponse });
+    // await thunkAPI.dispatch({ type: 'FETCH_SUCCESS', payload: compiledResponse });
     // console.log("compiled", compiledResponse);
     return compiledResponse;
   } catch (error) {
@@ -154,22 +154,24 @@ const payloadCreatorForSingle =(model) =>{
     }
   }
 }
-export const asyncThunk = createAsyncThunk('orm/FETCH_DATA', payloadCreatorForMany);
+export const asyncThunk = createAsyncThunk('orm/Models/FETCH_DATA', payloadCreatorForMany);
 
 export const ormMiddlewares = Array(ThunkTypes.length-5).fill().map((e,i)=> {return e = createAsyncThunk('orm/'+ThunkTypes[i].modelName+'/FETCH_DATA', payloadCreatorForSingle(ThunkTypes[i])) })
 
 export const fromType = (type) => {
+  let orm, model, actionWord, dispatchStatus = ""; 
+
   
-  String.prototype.singular = (str) => { 
-    return str.endsWith("s") ?
-          str.slice(0, str.length - 1)
-          : str.endsWith("es") ?
-              str.slice(0, str.length - 2)
-                : str.endsWith("ies") ?
-                  str.slice(0, str.length - 3)
-                  : str
-  }
-  const [orm,model, actionWord, dispatchStatus] = type.includes("@@") ? type : type.includes("orm/") ? type.split("/",) : type.split("_")[1]
+  if(type.includes("orm/")){
+    // console.log("orm", type)
+    const arr = type.split("/")
+    orm = arr[0]; 
+    model = arr[1];
+    actionWord = arr[2];
+    dispatchStatus = arr[3] ;
+    
+ }
+  // type.startsWith("@@") ? type : type.includes("orm/") ? type.split("/",) : type.split("_")[1]
   return {
     
     getModelName: () => model,

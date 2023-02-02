@@ -15,6 +15,7 @@ class Order extends Model {
 }
 Order.modelName = 'Order';
 Order.fields = {
+    id: attr(),
     product_id: fk('Product', 'orders'),
     DateCreated: attr(),
 };

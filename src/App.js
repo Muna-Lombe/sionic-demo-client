@@ -57,11 +57,11 @@ function App() {
               </div>
               
               <Routes>
-                {/* <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
+                <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
                 <Route path="/cart" exact element={<Basket />} />
-                <Route path="/checkout" exact element={<Checkout /> } /> */}
-                {/* <Route path="/history" exact element={<History /> } /> */}
-                <Route path="/" exact element={<OrmReader /> } />
+                <Route path="/checkout" exact element={<Checkout /> } /> 
+                <Route path="/history" exact element={<History /> } />
+                <Route path="/orm-reader" exact element={<OrmReader /> } />
                 <Route
                   path="*"
                   element={

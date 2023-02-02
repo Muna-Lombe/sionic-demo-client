@@ -9,7 +9,6 @@ import cartReducer from './slices/cart/cartSlice';
 import categoriesReducer from './slices/filters/categoriesSlice';
 import ordersReducer from './slices/orders/ordersSlice';
 import productReducer, { fetchProducts } from './slices/products/productsSlice'
-
 // const dataFetchListener = createListenerMiddleware();
 // console.log("...", stateStatus)
 
@@ -39,7 +38,9 @@ const Store = configureStore({
     },
     // middleware: [...ormMiddlewares]
 
-    middleware: [asyncThunk]
+    //middleware: [fetchProducts]//,asyncThunk]
 })
 
+// const useThunkDispatch = () => Store.dispatch;
+// export {useThunkDispatch};
 export default Store ;
