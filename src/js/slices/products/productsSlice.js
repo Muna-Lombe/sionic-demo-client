@@ -6,7 +6,7 @@ import categoriesSlice from '../filters/categoriesSlice'
 const productsAdapter = createEntityAdapter()
 const initialState = productsAdapter.getInitialState({
     currCatId: 0,
-    searchedProductText: false
+    searchedProductTextArr: []
 })
 
 
@@ -76,7 +76,7 @@ const productSlice = createSlice({
         // }
         setSearchedProductId(state,action){
             console.log('searching...')
-            state.searchedProductText = action.payload
+            state.searchedProductTextArr = action.payload
         },
         setCurrCatId(state,action) {
             console.log('newState', state.ids)
@@ -107,10 +107,10 @@ const selectProductsMatching =() =>  createSelector(
     (state) => state.products,
     (products,state) => {
        
-        const arr = state.searchedProductText 
-            ? products.filter((i) => i.product.name.toString() === state.searchedProductText.toString())
+        const arr = state.searchedProductTextArr.length 
+            ? products.filter((i) => state.searchedProductTextArr.some(str => i.product.name.toString() === str.toString()) && i)
             : products
-        console.log("####", state.searchedProductText === products[0]?.product.name )
+        console.log("####", state.searchedProductTextArr)
         return arr     
     })
 

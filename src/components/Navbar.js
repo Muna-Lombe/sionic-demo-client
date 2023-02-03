@@ -16,7 +16,7 @@ const Navbar = () => {
   // memoizedId(id)
   const handleClick =(e)=>{
     e.stopPropagation()
-    dispatch( setSearchedProductId(e.target.value))
+    dispatch( setSearchedProductId([e.target.value]))
     const inp = document.querySelector('input.search')
     // console.log(inp)
     // inp.value = 
@@ -57,15 +57,28 @@ const Navbar = () => {
     // }
     
   }
-
+  
+  const handleSubmit = (arr) =>{
+    console.log("submit", arr)
+    dispatch(setSearchedProductId(arr.map((i)=> i.name)))
+  }
   const handleChange = (e) => {
     e.preventDefault()
+    // console.log("key ", e)
+    // return 0;
     const suggestions = ((str) =>
       str.toString().length > 1 ? prodNames.filter(i => 
         i.name.toLowerCase().includes(str.toLowerCase())
         ) : []
 
     );
+    if (e.key === "Enter" && e.code === "Enter") {
+      console.log("entering")
+      // return
+      handleSubmit(suggestions(e.target.value))
+      return
+    }
+
     const optgrp = document.querySelector("optgroup");
     const toggle=(classList, token) =>({
       on: ()=>{
@@ -124,7 +137,7 @@ const Navbar = () => {
     return(
       <div id="search_field" className="realtive w-[22rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
         {/* <div className="search-input relative w-full max-w-[22rem]  flex   justify-between p-[1px]"> */}
-          <input type="text"  name="search" placeholder={searchProductText||""} onChange={(e) => handleChange(e)} className=" search autofill:selectionbg-white w-full rounded-bl-3xl rounded-tl-3xl bg-transparent px-2  text-black focus:outline-none" />
+          <input type="text"  name="search" placeholder={searchProductText||""} onKeyUp={(e) => handleChange(e)} className=" search autofill:selectionbg-white w-full rounded-bl-3xl rounded-tl-3xl bg-transparent px-2  text-black focus:outline-none" />
           <button id="search_btn" className=" top-0 right-0 w-[6rem] h-full rounded-3xl m-[0.05rem] px-2 bg-[#F0F4FB] flex justify-center items-center">
             <SearchIco />
           </button>
