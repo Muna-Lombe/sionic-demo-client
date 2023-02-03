@@ -24,12 +24,13 @@ const Navbar = () => {
   }
 
   const handleBlur = (e, type) =>{
-    console.log("blur", e.target.parentElement.parentElement.id)
-    console.log("blur", e.currentTarget.id)
-    // console.log("blur", e.relatedTarget.id)
+    // console.log(e)
+    // console.log("blur target from", e.target.parentElement.id)
+    // console.log("blur action owner", e.currentTarget.id)
+    // // console.log("blur target to", e.relatedTarget.id)
     e.stopPropagation()
     
-    const hideFunc = () => {
+    const hideSuggestions = () => {
       const optgrp = document.querySelector("optgroup");
       const toggle = (classList, token) => ({
         on: () => {
@@ -39,23 +40,16 @@ const Navbar = () => {
           classList.replace(token.tar, token.curr)
         }
       });
-      optgrp.childNodes.forEach(i => optgrp.removeChild(i));
+      optgrp.replaceChildren("")
+     
+
       const toggleBoarder = toggle(optgrp.previousElementSibling.classList, { curr: "rounded-3xl", tar: "rounded-t-3xl" });
-      const toggleBoarder2 = toggle(e.target.parentElement.parentElement.classList, { curr: "border-green-500", tar: "border-red-500" });
       const toggleVisibility = toggle(optgrp.classList, { curr: "invisible", tar: "visible" });
       toggleBoarder.off()
       toggleVisibility.off()
-      toggleBoarder2.on()
     }
-    // let hideTimer = setTimeout(() => {
-    //   hideFunc()
-    // }, 500);
-    // // hideTimer
-    // clearTimeout(hideTimer)
-    // if (!e.currentTarget.contains(e.target)){
-      
-    // }
-    
+    console.log("can trigger hide", e.relatedTarget === null)
+    if(e.relatedTarget === null) hideSuggestions()
   }
   
   const handleSubmit = (arr) =>{
@@ -69,6 +63,7 @@ const Navbar = () => {
         i.name.toLowerCase().includes(str.toLowerCase())
         ) : []
     );
+    // UNCOMMENT BEFORE COMMIT
     if( e.target.value.length < 1){
       dispatch(setSearchedProductId([]))
     }
@@ -76,7 +71,7 @@ const Navbar = () => {
       handleSubmit(suggestions(e.target.value))
       return
     }
-
+    ///////////////////////////////////////////////
     const optgrp = document.querySelector("optgroup");
     const toggle=(classList, token) =>({
       on: ()=>{
@@ -91,7 +86,6 @@ const Navbar = () => {
     const toggleVisibility = toggle(optgrp.classList, { curr: "invisible", tar: "visible" });
     
     optgrp.childNodes.forEach(i=>optgrp.removeChild(i));
-    // console.log("length:", suggestions(e.target.value).length);
     if(suggestions(e.target.value).length > 0){
       
       toggleBoarder.on()
@@ -101,8 +95,7 @@ const Navbar = () => {
       toggleBoarder.off()
       toggleVisibility.off()
     };
-    // document.createElement('option').class
-    suggestions(e.target.value)?.map((prod, i) =>{
+    suggestions(e.target.value)?.forEach((prod, i) =>{
       const optElem = document.createElement('option')
       optElem.className = "hover:text-black hover:bg-slate-200";
       optElem.value = prod.name
@@ -124,7 +117,7 @@ const Navbar = () => {
   const SearchField =({})=>{
     
     return(
-      <div id="search_field" className="realtive w-[22rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
+      <div id="search_field" tabIndex={0} className="realtive w-[22rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
         {/* <div className="search-input relative w-full max-w-[22rem]  flex   justify-between p-[1px]"> */}
           <input type="text"  name="search" placeholder={searchProductText||""} onKeyUp={(e) => handleChange(e)} className=" search autofill:selectionbg-white w-full rounded-bl-3xl rounded-tl-3xl bg-transparent px-2  text-black focus:outline-none" />
           <button id="search_btn" className=" top-0 right-0 w-[6rem] h-full rounded-3xl m-[0.05rem] px-2 bg-[#F0F4FB] flex justify-center items-center">
@@ -150,11 +143,10 @@ const Navbar = () => {
             <h2 className="hidden p-2 md:flex lg:flex"> Александровск-Са...</h2>
           </div>
         </div>
-        <div id="search_field_wrapper" className="w-full max-h-14 lg:min-w-[16rem] xl:min-w-[16rem] py-2 flex flex-col justify-start items-center transition-all">
-          <div id="search_field_box" onBlur={(e) => handleBlur(e, "blur")} className="border border-green-500 rounded-3xl">
+        <div id="search_field_wrapper"  className="w-full max-h-14 lg:min-w-[16rem] xl:min-w-[16rem] py-2 flex flex-col justify-start items-center transition-all">
+          <div id="search_field_box" onBlur ={(e) => handleBlur(e, "blur")}>
             <SearchField/>
-            <optgroup name="search-suggestions" id="search-suggestions" className="w-full max-w-[22rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer invisible">
-
+            <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="w-full max-w-[22rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer invisible">
             </optgroup>
           </div>
           
