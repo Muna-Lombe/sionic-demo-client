@@ -64,17 +64,15 @@ const Navbar = () => {
   }
   const handleChange = (e) => {
     e.preventDefault()
-    // console.log("key ", e)
-    // return 0;
     const suggestions = ((str) =>
       str.toString().length > 1 ? prodNames.filter(i => 
         i.name.toLowerCase().includes(str.toLowerCase())
         ) : []
-
     );
+    if( e.target.value.length < 1){
+      dispatch(setSearchedProductId([]))
+    }
     if (e.key === "Enter" && e.code === "Enter") {
-      console.log("entering")
-      // return
       handleSubmit(suggestions(e.target.value))
       return
     }
@@ -111,21 +109,12 @@ const Navbar = () => {
       optElem.innerText = prod.name.length > 39 ? prod.name.slice(0, 36) + "..." : prod.name
       optElem.key = i
       optElem.addEventListener("click", (ev) => { handleClick(ev) })
-      optgrp.insertAdjacentElement("beforeend", optElem)
-      // optgrp.insertAdjacentHTML("beforeend", `
-      //         <option key=\"${i}\" value=\"${prod.id.toString()}\" class=\"hover:text-black hover:bg-slate-200\">
-      //           ${prod.name.length > 39 ? prod.name.slice(0, 36) + "..." : prod.name}
-      //         </option>
-      //     `)
-          
-    }
-      )//)
+      optgrp.insertAdjacentElement("beforeend", optElem)  
+    })
   };
   const GoToCartIco = ({isBurgerMenu=false,size="2.5rem"}) => (
    
       <Link id='cart' to="/cart"> <CartIco size={size} isBurgerMenu={isBurgerMenu} isCartBtn={true} /> </Link> 
-    
-    
   )
   const GoToAvatarIco = ({size})=> (
     <Link to="/history"> 
