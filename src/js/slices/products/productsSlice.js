@@ -107,9 +107,9 @@ const selectProductsMatching =() =>  createSelector(
     (state) => state.products,
     (products,state) => {
        
-         const arr = state.searchedProductId 
-             ? products.filter((i) => i.product.name.toString() === state.searchedProductText.toString())
-                : products
+        const arr = state.searchedProductText 
+            ? products.filter((i) => i.product.name.toString() === state.searchedProductText.toString())
+            : products
         console.log("####", state.searchedProductText === products[0]?.product.name )
         return arr     
     })
