@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const ImageMagnifier = ({ img_root, products, sqrW = 400 }) => {
+  const [itemsCentered,  setItemsCenter ] = useState(false)
   function magnify(imgId, zoom) {
     let img, mesh, glass, w, h, bw, maxCanHeight, minCanHeight, maxCanWidth, minCanWidth;
 
@@ -29,25 +30,26 @@ const ImageMagnifier = ({ img_root, products, sqrW = 400 }) => {
 
     function moveMagnifier(e) {
 
-      let pos, x, y;
+      let pos, x, y, whOffsetBal, bgPosOffset;
       e.preventDefault();
 
       pos = getCursorPos(e);
       x = pos.x;
       y = pos.y;
-
+      whOffsetBal =50
+      bgPosOffset = 0.919
       if (x > img.width - (w / zoom)) { x = img.width - (w/zoom); }
       if (x < w / zoom) { x = w / zoom; }
       if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
       if (y < h / zoom) { y = h / zoom; }
 
-      const left = (x - w) + "px";
-      const top = (y - h) + "px";
+      const left = (x - w+whOffsetBal) + "px";
+      const top = (y - h+whOffsetBal) + "px";
       console.log("glass", glass.offsetWidth)
       glass.style.left = left;
       glass.style.top = top;
       console.log("current bg-poz", glass.style.backgroundPosition)
-      glass.style.backgroundPosition = `-${((x * zoom*0.919) + w + bw)}px -${((y * zoom) - h + bw)}px`;
+      glass.style.backgroundPosition = `-${((x * zoom*bgPosOffset) + w + bw)}px -${((y * zoom) - h + bw)}px`;
 
       console.log("new bg-poz", glass.style.backgroundPosition)
 
@@ -126,12 +128,21 @@ const ImageMagnifier = ({ img_root, products, sqrW = 400 }) => {
 
     </div>
   )
+  const ToggleBtn = () =>(
+    <div onClick={()=> setItemsCenter(prevState => !prevState)} className={"w-[42px] border border-slate-200 flex flex-row self-end cursor-pointer items-start "+ (itemsCentered ? "justify-end ": "justify-start ") }>
+      {
+        itemsCentered ?
+        <span>🟩</span>
+        : <span>🟥</span>
+      }
+    </div>
+  )
   return (
-    <div className="img-magnifier-container relative p-3 flex flex-col  border border-green-400 " >
+    <div className={"img-magnifier-container relative p-3 flex flex-col" + (itemsCentered ? " items-center" : " ") + " border border-green-400 "} >
       {/* <img id="myimage" src="img_girl.jpg" width="600" height="400" alt="Girl"/> */}
       <CurrentImage />
       <SmallSizeImageArray />
-
+      <ToggleBtn />
     </div>
   )
 }
