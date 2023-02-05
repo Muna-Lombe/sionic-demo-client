@@ -132,10 +132,11 @@ const OrmReader = () => {
     return (
       <div className="w-full flex flex-row self-end justify-center bg-white overflow-x-scroll scrollbar rounded-t-sm">
         {
-          images.map((image, idx) => {
-            // console.log(image)
+          !hasSubItems 
+          ? images.map((image, idx) => {
             return <Image key={idx} imagepath={img_root(+image.id)} hasMaxW={(hasSubItems) ? "max-w-[5rem]" : "max-w-[10rem]"} />
           })
+        : < ImageMagnifier sqrDim={400} img_root={img_root} images={products[0]?.images} />
         }
       </div>
     )
@@ -148,12 +149,12 @@ const OrmReader = () => {
       <div id="product_to_show" className={(showDetailed ? "w-[21rem]  " : "w-auto ") +"p-0 flex flex-col bg-white shadow-lg border border-gray-200 rounded-md" + (showDetailed ? " z-50" :"")}>
         <div className="product_header flex flex-col justify-between object-scale-down rounded-md">
           <span slot={""} className={"w-5 h-5 self-end items-center text-sm cursor-pointer"} onClick={(e) => setModalContent({})}> ❎ </span>
-            <Carousel images={[product.images[0]]} />
+            
           
           {
             showDetailed ? 
               <Carousel images={product.images.concat(product.images)} hasSubItems />
-            :""
+            :<Carousel images={[product.images[0]]} />
           }
           
           
@@ -455,12 +456,12 @@ const OrmReader = () => {
       {/* input form for  adding and updating to model */}
       <div className="flex flex-col-reverse gap-2 fields">
         {/* <ProductField/> */}
-        <ImageMagnifier img_root={img_root} products={products} />
+        < ImageMagnifier sqrDim={200} img_root={img_root} images={products[0]?.images} />
         <OrderField/>
         {/* <CategoryField /> */}
         {/* <ListingsField/> */}
-        <ShowProduct/>
-        {/* <Product /> */}
+        {/* <ShowProduct/> */}
+   
       </div>
     
 
