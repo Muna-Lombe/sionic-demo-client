@@ -13,3 +13,5 @@ export { default as AvatarIco } from './AvatarIco';
 export { default as FbIco } from './FbIco';
 export { default as InstaIco } from './InstaIco';
 export { default as VkIco } from './VkIco';
+export { default as ArrowRight } from './ArrowRight';
+export { default as ArrowLeft } from './ArrowLeft';

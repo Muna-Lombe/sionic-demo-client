@@ -13,6 +13,8 @@ import { filteredProductsFromModel, filteredCategoriesFromModel, filteredOrdersF
 import Product from './Product';
 import { useDispatch } from 'react-redux';
 import { ImageMagnifier } from '.';
+import { ArrowRight, PinIco } from '../assets';
+import ShowProduct from './ShowProduct';
 
 
 
@@ -68,20 +70,15 @@ const OrmReader = () => {
           // && setProducts([...productSession.all().toRefArray()])
         break;
       case "to_order":
-        const action = {
+        
+        if(modalContent.id) setModalContent({})
 
-          // type: 'orm/Order_CREATE',
-          // payload: {
+        const action = {
             DateCreated: momentDate(),
             product_id: id
-          // }
         }
-        // [...document.forms[formName]].map((i) => { if (i.tagName === "SELECT" && i.value) form["data"] = i.value })
-        // console.log(action)
-        // created(action)
-        //(action)
+        
         dispatch(created('Order')(action))
-        // console.log("dispatching orders",dispatch() )
 
           
         break;
@@ -136,7 +133,7 @@ const OrmReader = () => {
           ? images.map((image, idx) => {
             return <Image key={idx} imagepath={img_root(+image.id)} hasMaxW={(hasSubItems) ? "max-w-[5rem]" : "max-w-[10rem]"} />
           })
-        : < ImageMagnifier sqrDim={400} img_root={img_root} images={products[0]?.images} />
+          : < ImageMagnifier sqrDim={400} img_root={img_root} images={products[0]?.images} />
         }
       </div>
     )
@@ -146,8 +143,8 @@ const OrmReader = () => {
   const ProductItem = ({product, showDetailed})=>{
     // console.log("pro", product)
     return (
-      <div id="product_to_show" className={(showDetailed ? "w-[21rem]  " : "w-auto ") +"p-0 flex flex-col bg-white shadow-lg border border-gray-200 rounded-md" + (showDetailed ? " z-50" :"")}>
-        <div className="product_header flex flex-col justify-between object-scale-down rounded-md">
+      <div id="product_to_show" className={(showDetailed ? "w-[21rem]  " : "w-auto ") +"p-0 flex flex-col items-center bg-white shadow-lg border border-gray-200 rounded-md" + (showDetailed ? " z-50" :"")}>
+        <div className="product_header w-full flex flex-col justify-between object-scale-down rounded-md">
           <span slot={""} className={"w-5 h-5 self-end items-center text-sm cursor-pointer"} onClick={(e) => setModalContent({})}> ❎ </span>
             
           
@@ -157,12 +154,13 @@ const OrmReader = () => {
             :<Carousel images={[product.images[0]]} />
           }
           
+
           
         </div>
-        <div className="product_body rounded-md">
+        <div className="product_body w-full rounded-md">
           <div className="h-[100%] flex flex-col border border-gray-400 rounded-md">
             <div className="w-full px-1 flex justify-around bg-lime-500 cursor-pointer sticky top-0">
-              <span >{product.name.toString().slice(0, 8)}</span>
+              <span >{product?.name.toString().slice(0, 8)}</span>
               <span>
                 <button type='text' onClick={()=>setModalContent(product)}>
                   🔎
@@ -177,17 +175,23 @@ const OrmReader = () => {
             <span className="w-full h-full p-1 flex flex-col self-end gap-3 rounded-md">
               {
                 showDetailed ?
-                  <span >{product.description.toString()}</span>
+                  <span >{product?.description.toString()}</span>
                   : ""
               }
               
               <span className="w-full px-2 flex flex-row justify-between gap-4 border border-gray-400 rounded-md overflow-x-scroll scrollbar">
-                <span >
-                  {/* {or.DateCreated.toString().slice(0,18)} */}
-                  ${product.variations[0]?.price} - ${product.variations?.pop().price}
-                  <br />
-                  {/* available: {prop.stock} */}
-                </span>
+                {
+                  product.variations.length
+                  ? 
+                    <span >
+                      {/* {or.DateCreated.toString().slice(0,18)} */}
+                      
+                      ${product?.variations[0]?.price} - ${product?.variations?.pop().price}
+                      <br />
+                      {/* available: {prop.stock} */}
+                    </span>
+                  : ""
+                }
                 {
                   
                   
@@ -258,13 +262,19 @@ const OrmReader = () => {
       </details>
     )
   }
-  const ShowProduct = () => {
+  const SelectedProduct = () => {
     if (!modalContent.id) return (<div className='hidden'></div>)
     return (
       <div className="modal fixed bottom-0 w-[100vw] h-[100vh] grid place-content-center z-30">
         <div className="modal-backdrop absolute w-[100%] h-[100%] top-0 left-0  bg-gray-700 opacity-70 z-40 scroll">
         </div>
-        <ProductItem  product={modalContent} showDetailed />
+        <div className="prd w-[100vw] h-[100vh] bg-white z-50 overflow-scroll">
+          <span slot={""} className={"w-5 h-5 self-end items-center text-sm cursor-pointer z-50"} onClick={(e) => setModalContent({})}> ❎ </span>
+          
+          <ShowProduct product={modalContent} img_root={img_root}/>
+        </div>
+        {/* <ProductItem  product={modalContent} showDetailed /> */}
+
       </div>
     )
   }
@@ -455,12 +465,12 @@ const OrmReader = () => {
       <p>--- OrmReader ---</p>
       {/* input form for  adding and updating to model */}
       <div className="flex flex-col-reverse gap-2 fields">
-        {/* <ProductField/> */}
-        < ImageMagnifier sqrDim={200} img_root={img_root} images={products[0]?.images} />
+        <ProductField/>
+        {/* < ImageMagnifier sqrDim={200} img_root={img_root} images={products[0]?.images} /> */}
         <OrderField/>
         {/* <CategoryField /> */}
         {/* <ListingsField/> */}
-        {/* <ShowProduct/> */}
+        <SelectedProduct/>
    
       </div>
     

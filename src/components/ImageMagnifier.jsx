@@ -89,7 +89,7 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
   }
 
   const SmallSizeImageArray = () => (
-      <div className={" w-["+sqrDim+"px] flex justify-center "}>
+      <div className={" w-["+sqrDim+"px] max-w-full flex justify-center "}>
         {
           
           images?.map(i=>
@@ -105,7 +105,7 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
       </div>
   )
   const CurrentImage = () => (
-      <div className={"mesh-magnifier-container relative w-[" +sqrDim+ "px] max-w-[350px] aspect-square border border-red-500"}>
+      <div className={"mesh-magnifier-container relative w-[" +sqrDim+ "px] max-w-full aspect-square"}>
         <div onMouseEnter={(e) => magnify("activeImage", 3)} className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
           {/* <VerticalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} />
           <HorizontalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} /> */}
@@ -129,10 +129,10 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
     </div>
   )
   return (
-    <div className={"img-magnifier-container relative p-3 flex flex-col" + (itemsCentered ? " items-center" : " ") + " border border-green-400 "} >
+    <div className={"img-magnifier-container relative max-w-full p-3 flex flex-col" + (itemsCentered ? " items-center" : " ") + " "} >
       <CurrentImage />
       <SmallSizeImageArray  />
-      <ToggleBtn />
+      {/* <ToggleBtn /> */}
     </div>
   )
 }
