@@ -42,7 +42,30 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
   
 
 
-    const CartItemProduct = ({isOrdered, product}) => {
+    const CartItemProduct = ({isOrdered, product, setTotalPrice}) => {
+      const [counter, setCounter] = useState(1)
+      const handleCounter = (type)=>{
+        if (type === "plus"){
+          setCounter(prevState => ++prevState)
+          setTotalPrice(
+            prevState => prevState + (product.isDiscounted[0] ? 
+              product.isDiscounted[2]  
+              : product.price 
+            )
+          )
+        }
+        
+        if (type === "minus") {
+          setCounter(prevState => --prevState)
+          setTotalPrice(
+            prevState => prevState - (product.isDiscounted[0] ?
+              product.isDiscounted[2] 
+              : product.price 
+            )
+          )
+        }
+        if(counter === 0) setCounter(1)
+      }
       const Line = () => (
         <div className="absolute w-[90%] h-[0px] my-[40px] z-0 ">
           <svg  width="552" height="2" viewBox="0 0 552 2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,11 +76,11 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
       return (
         <div id="product_wrapper" 
           className="relative  w-auto py-3 mx-2 md:mx-8  lg:py-6 lg:mx-8  xl:py-6 xl:mx-8 p-1 flex justify-between gap-0 md:gap-4 lg:gap-8 xl:gap-8 border-b-[1px] border-b-gray-300 ">
-          <div id="product_item__wrapper" className="w-auto sm:w-max md:w-[99%] lg:w-[95%] xl:w-[95%] flex flex-col flex-nowrap sm:flex-row md:flex-row lg:flex-row xl:flex-row  justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
+          <div id="product_item__wrapper" className="w-auto sm:w-[95%] md:w-[99%] lg:w-[95%] xl:w-[95%] flex flex-col flex-nowrap xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row  justify-between gap-1 md:gap-2 lg:gap-4 xl:gap-4">  
             <div id="product_details" 
-              className=" w-auto  md:max-w-[312px] lg:max-w-[450px] xl:w-full flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap  justify-start ">
+              className=" w-auto  md:max-w-[312px] lg:max-w-[450px] xl:w-full flex flex-wrap xs:flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap  justify-start ">
               <div id="product_image" 
-                className="w-max h-[5rem] px-2 flex justify-center items-center">
+                className="w-max max-h-[5rem] px-2 flex justify-center items-center">
                 <img 
                   className=" w-20 h-20 md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
               </div>
@@ -65,12 +88,12 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
                 className="w-auto max-w-[352px] flex flex-col justify-between"  >
                 <p 
                   className=" h-auto max-h-[5rem] flex-wrap overflow-y-clip">
-                  {product.name.toString().length > 12 ? product.name.slice(0,60) + "..." : product.name}
+                  {product.name.toString().length > 6 ? product.name.slice(0,30) + "..." : product.name}
                 </p>
                 <div id="product_tags" 
                   className="w-max mt-4 flex flex-col lg:flex-row xl:flex-row justify-between gap-2">
                   <div 
-                    className="w-max flex  lg:flex-row xl:flex-row justify-between gap-2 ">
+                    className="w-max flex  lg:flex-row xl:flex-row justify-between -gap-1 ">
                     <div 
                       className="w-max h-[2rem] p-2 flex justify-center items-center border-[1px] border-[#2967FF] rounded-r-3xl rounded-bl-xl text-md text-[#2967FF] font-raleway font-semibold" >
                       <p> 120 шт. </p>
@@ -100,17 +123,17 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
               <div id="product_count" 
                 className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
-                  className="px-3">-</p>
+                  className="px-3 cursor-pointer" onClick={()=>handleCounter("minus")}>-</p>
                 <input  
-                  className="w-[1.4rem] flex justify-center items-center  decoration-transparent bg-transparent " type="text" value="25" disabled="disabled" />
+                  className="w-[1.4rem] flex justify-center items-center text-center decoration-transparent bg-transparent " type="text" value={counter} disabled="disabled" />
                 <p 
-                  className="px-3">+</p>
+                  className="px-3 cursor-pointer" onClick={() => handleCounter("plus")}>+</p>
               </div>
               <div id="product_price" 
                 className="w-max  mx-2">
                 <h2 id="new_price" 
                   className=" text-[#2967FF] text-[1.2rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem] font-semibold">
-                {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] : product.price) +' ₽'}
+                  {'от ' + (product.isDiscounted[0] ? product.isDiscounted[2] * (counter > 0 ? counter : 1) : product.price*(counter > 0 ? counter : 1)) +' ₽'}
                 </h2>
                 <div id="discounted_price" 
                   className="w- flexauto pr-2 justify-between ">
@@ -124,7 +147,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
             {/* {isOrdered && <Line/>} */}
           </div>
           <button id="delete_btn" 
-            className=" absolute top-[0.3rem] right-[0rem] md:relative md:right-0 md:top-[0.3rem]  lg:relative lg:right-0 lg:top-[0.3rem]  xl:relative xl:right-0 xl:top-[0.3rem]  w-max h-max  px-2 py-2 flex flex-col justify-start" onClick={()=>handleDelete(product.id)}>
+            className=" relative top-[0.3rem] right-[0rem] md:relative   lg:relative   xl:relative   w-max h-min  px-2 py-2 flex flex-col justify-start" onClick={()=>handleDelete(product.id)}>
               <DeleteIco />
           </button>
           
@@ -133,10 +156,14 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
    }
 
    const CartItem = ({keyId,store,products})=> { 
-    let totalPrice = 0
-     products.forEach((pr) => {
-       totalPrice += (pr.isDiscounted[0] ? pr.isDiscounted[2] : pr.price)
-     })
+    
+    const [totalPrice, setTotalPrice] = useState(
+      products.map((pr) => {
+        return (pr.isDiscounted[0] ? pr.isDiscounted[2] : pr.price)
+      }).reduce((a,b)=> a+b)
+      
+    )
+     
      const disableItem = products.some(inArrHaveBeenOrdered)
     
      return (
@@ -188,7 +215,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
               
             </div>
             {
-              products.map((pr) => <CartItemProduct key= {pr.id} isOrdered={disableItem}  product = {pr}  /> )
+              products.map((pr) => <CartItemProduct key= {pr.id} isOrdered={disableItem}  product = {pr} setTotalPrice={setTotalPrice}  /> )
             }
              
           </div>
@@ -214,7 +241,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
     )
     return (
       <div id="cart_container" 
-        className="w-full flex flex-col justify-center ">
+        className="w-full mx-2 flex flex-col justify-center ">
         <div id="cart_header" 
           className=" flex justify-start gap-6 items-baseline">
           <div 

@@ -10,7 +10,7 @@ const CategoryTag = ({id=1,text='tag'})=>{
   const colleaguesTag = 'bg-[#FFA601]"'
   const birthdayTag = 'bg-[#FF2D87]'
   
-  const tags = useSelector(state => state.categories.entities)
+  const tags = useSelector(state => state.categories.entities) || new Array(6).fill('bg-[#aeaecb]')
   const dispatch = useDispatch()
   
 

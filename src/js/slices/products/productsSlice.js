@@ -5,13 +5,14 @@ import categoriesSlice from '../filters/categoriesSlice'
 
 const productsAdapter = createEntityAdapter()
 const initialState = productsAdapter.getInitialState({
-    currCatId: 0
+    currCatId: 0,
+    searchedProductTextArr: []
 })
 
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async() => {
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async(args, thunkApi) => {
     let get = new Get ()
-    let pd = await get.ProductsByRange(10)
+    // let pd = await get.ProductsByRange(10)
     
     let tags = [
         [6, 'День Рождения Гриши'],
@@ -73,6 +74,10 @@ const productSlice = createSlice({
         //     }
 
         // }
+        setSearchedProductId(state,action){
+            console.log('searching...')
+            state.searchedProductTextArr = action.payload
+        },
         setCurrCatId(state,action) {
             console.log('newState', state.ids)
             const newCatId = action.payload
@@ -83,12 +88,12 @@ const productSlice = createSlice({
     extraReducers:(builder) => {
         builder
             .addCase(fetchProducts.fulfilled, (state, action) => {
-                // console.log('action payload:', action)
+                console.log('action payload:', action)
                 productsAdapter.setAll(state, action.payload.products)
             })
     }
 }) 
-export const { setCurrCatId} = productSlice.actions
+export const { setCurrCatId, setSearchedProductId} = productSlice.actions
 export const { selectAll: selectProducts } = productsAdapter.getSelectors(state => state.products)
 
 export const selectProductIds = createSelector(
@@ -96,14 +101,39 @@ export const selectProductIds = createSelector(
     product => product
 
 )
-export const filterProducts = (catId = 0) => createSelector(
+
+const selectProductsMatching =() =>  createSelector(
     selectProducts,
-    state  => state.products,
-    state => state.products.currCatId,
+    (state) => state.products,
+    (products,state) => {
+       
+        const arr = state.searchedProductTextArr.length 
+            ? products.filter((i) => state.searchedProductTextArr.some(str => i.product.name.toString() === str.toString()) && i)
+            : products
+        console.log("####", state.searchedProductTextArr)
+        return arr     
+    })
+
+export const selectProductNamesThatMatch =(string) => createSelector(
+    selectProducts,
+    products => products
+    .filter((item,i)=>{
+        return string ?
+         item.product.name.includes(string)
+         : Number.isInteger(item.id)
+        // ||
+        // item.store.name === string
+    }).map(i=> {return {id: i.id, name:i.product.name}})
+)
+export const filterProducts = (catId = 0) => createSelector(
+     selectProductsMatching(), //selectProducts,
+    (state)  => state.products,
     (products, state)=>{
         let currCatId = state.currCatId
-        console.log('curr',currCatId)
+        // console.log('curr',state, currCatId, products)
+    
         if (currCatId === 0) return products
+
         return products.filter((p)=>{
             return p.product.category_tags.some((e)=> {
                 return Number.parseInt(e[0]) === Number.parseInt(currCatId)
@@ -111,19 +141,4 @@ export const filterProducts = (catId = 0) => createSelector(
     })
     }
 ) 
-// {
-//             console.log('newState', state.ids)
-//             const catId = action.payload
-//             let oldState = state.entities
-            
-//             let filtState = state.entities.keys.filter((k)=>(
-                
-//                 state.entities[k].category_tags.some((e)=> Number.parseInt(e[0]) === Number.parseInt(catId))
-//             )) 
-//             let newState = {...filtState}
-//             console.log(newState)
-
-            
-
-//         }
 export default productSlice.reducer

@@ -29,7 +29,7 @@ const OrderHistory = ({itemsOrdered}) => {
     
     
     return (
-    <div id="item" className="  max-w-[600px] px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
+    <div id="item" className="  max-w-[400px] mx-1 px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl">
       <div id="item_wrapper" className="w-full p-2 flex flex-col justify-center gap-2">
         <div id="item_header" className="w-full  flex justify-between gap-2">
           <div id="item_img" className="w-max border-[1px] border-transparent rounded-2xl">
@@ -88,7 +88,7 @@ const OrderHistory = ({itemsOrdered}) => {
   )}
 
   return (
-    <div id="order_history__container" className="container flex flex-col justify-center gap-2  ">
+    <div id="order_history__container" className="container mx-2 flex flex-col justify-center gap-2  ">
       <div id="order_history__header" className="text-xl text-black font-raleway font-semibold">
         <p>
           История заказов
@@ -96,7 +96,7 @@ const OrderHistory = ({itemsOrdered}) => {
         
       </div>
       <div id="order_history__content" className="w-full">
-        <div id="content_wrapper" className="w-full px-2 grid  grid-flow-rows grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-6">
+        <div id="content_wrapper" className="w-full grid  grid-flow-rows grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-6">
          {itemsOrdered.map((item) => <Item order={item}/>) } 
           
         </div>

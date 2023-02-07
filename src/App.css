@@ -38,8 +38,9 @@
 }
 .scrollbar::-webkit-scrollbar {
     width: 0px;
-    height: 20px;
+    height: 2px;
   }
+
 .tag::-webkit-scrollbar {
   width: 10px;
   height: 0px;

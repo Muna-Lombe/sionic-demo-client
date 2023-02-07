@@ -4,7 +4,7 @@ import React,{useState, useEffect} from 'react';
 import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
 
 //components
-import { Navbar, Sidebar, Footer} from './components'
+import { Navbar, Sidebar, Footer, OrmReader} from './components'
 import { Main, Basket, Checkout, History } from './pages';
 
 
@@ -29,12 +29,18 @@ function App() {
 
   
   // fetch products on app load
-  useEffect(() => {
-    setProducts(get.Products());
+  // useEffect(() => {
+  //   (async function (){
+  //     let data = await get.Products()
+  //     console.log("data", data)
+  //   }
+  //   )()
+  //   setProducts(get.Products());
     
-  }, [])
-
+  // }, [])
+  console.log("app products", products)
   const handleTest=async ()=>{
+    
     let data = await get.SortedProductCategories();
     setTestData(data)
     console.log(data);
@@ -42,9 +48,9 @@ function App() {
   
   return (
    
-      <div  id="App" className="relative min-w-[200px] w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between"> 
-        <div id="main" className="w-auto h-auto mx-2 flex justify-between"> 
-          <div id="mainbar_container" className=" w-full   h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
+      <div  id="App" className="dark relative min-w-[200px] w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between"> 
+        <div id="main" className="w-auto h-auto  flex justify-between"> 
+          <div id="mainbar_container" className=" w-full  h-max overflow-y-auto hover:overflow-y-scroll gap-1 scrollbar">
             
               <div id="mainbar" className="w-full min-h-[10%] sticky top-0 bg-white h-max z-10 flex items-center">
                 <Navbar />
@@ -53,8 +59,9 @@ function App() {
               <Routes>
                 <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
                 <Route path="/cart" exact element={<Basket />} />
-                <Route path="/checkout" exact element={<Checkout /> } />
+                <Route path="/checkout" exact element={<Checkout /> } /> 
                 <Route path="/history" exact element={<History /> } />
+                <Route path="/orm-reader" exact element={<OrmReader /> } />
                 <Route
                   path="*"
                   element={
@@ -78,7 +85,7 @@ function App() {
           </div>
         </div>
        
-        <div id="footer_nav" className="float-right sticky bottom-4 left-[90%] right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
+        <div id="footer_nav" className="float-right sticky bottom-4 left-[90%] right-1 min-h-[10%]  w-[60px] h-[180px] z-10 flex xs:hidden sm:hidden  md:hidden lg:hidden xl:hidden bg-white border border-gray-300 rounded-tl-lg rounded-bl-lg no_highlights">
           <div id="bottom_nav_bar" className="w-full mt-2  pt-2 px-2 flex flex-col-reverse justify-around gap-2"> 
             <div id="home_ico">
               <Link to="/">
