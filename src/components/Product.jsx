@@ -9,6 +9,7 @@ import no_product_img from '../assets/images/no_product_img.png'
 import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 import CategoryTag from './CategoryTag';
+import ShowProduct from './ShowProduct';
 
 const Product = ({id,product,image, isLoading}) => {
   const [isMobile, setIsMobile] = useState(document.readyState === 'complete' ? window.innerWidth < 720 : false)

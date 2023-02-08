@@ -44,7 +44,7 @@ const Navbar = () => {
      
 
       const toggleBoarder = toggle(optgrp.previousElementSibling.classList, { curr: "rounded-3xl", tar: "rounded-t-3xl" });
-      const toggleVisibility = toggle(optgrp.classList, { curr: "invisible", tar: "visible" });
+      const toggleVisibility = toggle(optgrp.classList, { curr: "hidden", tar: "visible" });
       toggleBoarder.off()
       toggleVisibility.off()
     }
@@ -83,7 +83,7 @@ const Navbar = () => {
     });
    
     const toggleBoarder = toggle(optgrp.previousElementSibling.classList, { curr: "rounded-3xl", tar: "rounded-t-3xl" });
-    const toggleVisibility = toggle(optgrp.classList, { curr: "invisible", tar: "visible" });
+    const toggleVisibility = toggle(optgrp.classList, { curr: "hidden", tar: "visible" });
     
     optgrp.childNodes.forEach(i=>optgrp.removeChild(i));
     if(suggestions(e.target.value).length > 0){
@@ -146,7 +146,7 @@ const Navbar = () => {
         <div id="search_field_wrapper"  className="w-full max-h-14 lg:min-w-[16rem] xl:min-w-[16rem] py-2 flex flex-col justify-start items-center transition-all">
           <div id="search_field_box" onBlur ={(e) => handleBlur(e, "blur")}>
             <SearchField/>
-            <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="w-full max-w-[22rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer invisible">
+            <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="w-full max-w-[22rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
             </optgroup>
           </div>
           
