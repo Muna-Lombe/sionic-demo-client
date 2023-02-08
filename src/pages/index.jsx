@@ -1,4 +1,4 @@
-export {default as Main} from '../pages/Main'
-export {default as Basket} from '../pages/Basket'
-export {default as Checkout} from '../pages/Checkout'
-export {default as History} from '../pages/History'
+export {default as Main} from './Main'
+export {default as Basket} from './Basket'
+export {default as Checkout} from './Checkout'
+export {default as History} from './History'

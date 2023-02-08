@@ -287,11 +287,11 @@ const OrmReader = () => {
             <div className="flex flex-wrap gap-2">
             {products?.map((product,idx)=> {
               return (
-                <>
+                <div key={idx}>
                 {/* <Product id={idx} product={product}/> */}
                   {/* <AccordionStyleProductItem key={idx} product={product} /> */}
-                <ProductItem key={idx} product={product} />
-                </>
+                <ProductItem  product={product} />
+                </div>
                
               )
             })}</div>

@@ -92,8 +92,9 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
       <div className={" w-["+sqrDim+"px] max-w-full flex justify-center "}>
         {
           
-          images?.map(i=>
+          images?.map((i,idx)=>
             <img 
+              key={idx}
               id={(activeImage.id === i.id) ? "active " : i.id} 
               alt="gallery" 
               onClick={(e) => (activeImage.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
