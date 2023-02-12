@@ -1,3 +1,15 @@
+body:has(.modal-open){
+  overflow-y: hidden;
+  
+}
+body:has(.modal-open)::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+      
+    };
+
+
+
 .App {
   text-align: center;
 }
@@ -47,12 +59,14 @@
 }
 
 
+
 #sidebar_content::-webkit-scrollbar {
   width: 0px;
   height: 0px;
   
   
 }
+
 
 .no_highlights{
   -webkit-tap-highlight-color: transparent;

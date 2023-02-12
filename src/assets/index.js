@@ -15,3 +15,4 @@ export { default as InstaIco } from './InstaIco';
 export { default as VkIco } from './VkIco';
 export { default as ArrowRight } from './ArrowRight';
 export { default as ArrowLeft } from './ArrowLeft';
+export { default as ArrowDown } from './ArrowDown';

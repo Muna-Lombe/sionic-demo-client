@@ -2,6 +2,14 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
     darkMode: 'class',
     content: ["./src/**/*.{js,jsx,ts,tsx}",],
+    plugins: [
+      function ({ addVariant }) {
+        addVariant('child', '& > *');
+        addVariant('child-hover', '& > *:hover');
+        // addVariant('child-nth', '&>')
+      }
+
+    ],
     theme: {
       screens: {
         'xs': '475px',
@@ -20,6 +28,7 @@ module.exports = {
           
         }
       },
+      
     },
   // plugins: [require("daisyui")],
   }

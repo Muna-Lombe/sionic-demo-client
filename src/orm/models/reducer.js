@@ -36,8 +36,6 @@ export default function customReducer(action, model, session) {
 
       }
       const customDispatch = () => {
-        
-
         for (const [m, d] of payload) {
           // console.log("m & d", m,d)
           if (isTargetModel(m)) {
@@ -45,26 +43,15 @@ export default function customReducer(action, model, session) {
             const result = isTargetModel(m) ? doCreate(d) : ''
           }
         }
-        
-
       }
       
 
       batchDo({ customFn: customDispatch })
       
-
-      // console.log("result", session.state)
       break;
 
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.CREATE+'_'+model.modelName):
-      // console.log("creating...", action, payload)
-      // model.create(payload);
       batchDo({modelAction:model, data:payload})
-      // Object.keys(payload).forEach((k,i)=>{
-      //   model.create(payload[k])
-      // })
-      
-      // session.reduce();
       break;
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.UPDATE+model.modelName):
       model.withId(payload.id).update(payload);

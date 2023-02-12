@@ -12,6 +12,7 @@ import { Main, Basket, Checkout, History } from './pages';
 import Get from './assets/tests/Get';
 import { HomeIco, CartIco, AvatarIco } from './assets';
 import AppWrapper from './components/AppWrapper';
+import ShowProduct from './pages/ShowProduct';
 
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
     setTestData(data)
     console.log(data);
   }
-  
+
   return (
     <AppWrapper>
       <Routes>
@@ -54,7 +55,8 @@ function App() {
         <Route path="/cart" exact element={<Basket />} />
         <Route path="/checkout" exact element={<Checkout /> } /> 
         <Route path="/history" exact element={<History /> } />
-        <Route path="/orm-reader" exact element={<OrmReader /> } />
+        <Route path="/orm-reader" exact element={<OrmReader />} />
+        <Route path="/product/:id" exact element={<ShowProduct />} />
         <Route
           path="*"
           element={

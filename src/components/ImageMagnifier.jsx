@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { imagepath } from '../assets/images'
 
-const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
+const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
   const [itemsCentered, setItemsCenter] = useState(false)
   const [activeImage, setActiveImage] = useState(false)
-
+  const img_root = imagepath
   useEffect(()=>{
     return images?.length
     ? setActiveImage(images[0])
@@ -96,8 +97,9 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
             <img 
               key={idx}
               id={(activeImage.id === i.id) ? "active " : i.id} 
-              alt="gallery" 
-              onClick={(e) => (activeImage.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
+              alt="gallery"
+              onClick={handleClick} 
+              onMouseEnter={(e) => (activeImage.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
               className={"w-[" + (sqrDim / (sqrDim / 10) * 10)+"px] aspect-square" + ((activeImage.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
               src={img_root(i.id)} 
             />

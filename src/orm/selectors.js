@@ -60,7 +60,7 @@ export const filteredProductsFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
     state => {
       // console.log("whatsup", state.Product)
-      const productObject = state.Product
+      const productsArray = state.Product
       .all()
       .toRefArray() 
       .map((p,) =>{
@@ -91,8 +91,8 @@ export const filteredProductsFromModel = (ex)=> createSelector(
     
       
       
-      // console.log("running products selector 2",ex, productObject[1].category_id)
-      return (ex.length ? productObject.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productObject)
+      // console.log("running products selector 2",ex, productsArray[1].category_id)
+      return (ex.length ? productsArray.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productsArray)
     }
   )
   
