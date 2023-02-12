@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, PinIco } from "../assets";
+import { ArrowLeft, ArrowRight, InfoIco, PinIco } from "../assets";
 import ImageMagnifier from "../components/ImageMagnifier";
 import ProductReviews from "../components/ProductReviews";
 import QAs from "../components/QAs";
 import { filteredProductsFromModel } from "../orm/selectors";
 import { useSelector } from "react-redux";
 import { Link,useParams, useNavigate} from "react-router-dom";
+import BellIco from "../assets/BellIco";
 
 
 const ShowProduct = ()=>{
@@ -48,14 +49,14 @@ const ShowProduct = ()=>{
     const [modalOpen, setModalOpen] = useState(true)
     
     return(
-      <div className="image-viewer w-auto max-w-1/3 ">
+      <div className="image-viewer p-2 w-auto xs:max-w-1/4  max-w-[400px] ">
         <ImageMagnifier images={product?.images}  />
         {/* <ViewImageModal openModal={modalOpen} modalAction={setModalOpen}/> */}
       </div>
     )
   }
   const Logo =({})=>(
-    <p> Logo </p>
+    <p> {"Logo"}</p>
   )
   const ProductSpecificationDetail = ({label, value})=>(
     <p className='flex flex-col text-slate-700 text-sm font-[arial] font-medium'>
@@ -65,7 +66,9 @@ const ShowProduct = ()=>{
   )
   const ContentViewer= ({children})=>{
     return(
-      <div className="content-viewer w-full p-2 flex flex-wrap gap-x-2 gap-y-4 ">
+      // grid - rows - [auto_minmax(0, _1fr)]
+      // lg: grid xl: grid xl: grid-cols - 1 xl: grid - rows - 2  lg: grid - rows - 2
+      <div className="content-viewer w-full sm:flex md:flex flex-wrap justify-start gap-x-2 xs:gap-x-4 sm:gap-x-8 gap-y-4 ">
         {children}
       </div>
 
@@ -73,21 +76,21 @@ const ShowProduct = ()=>{
   }
   const ContentDetails = ({ children }) => {
     return (
-      <div className="content-details p-2 w-auto max-w-1/3 flex flex-col gap-4">
+      <div className="content-details p-2 w-auto h-max xs:max-w-1/4 min-w-[372px] max-w-[400px] flex flex-col gap-4 order-2 ">
         {children}
       </div>
     )
   }
   const ContentSpecification =({children})=>{
     return(
-      <div className="content-specification">
+      <div className="content-specification w-auto max-w-[342px] ">
         <p className=' text-blue-500 text-sm font-[arial] font-medium cursor-pointer'>
-          Перейти к описанию
+          {"Перейти к описанию"}
         </p>
 
         <div className="price-decription-details p-3 bg-gray-200 rounded-sm">
           <p className='text-slate-400 text-md font-[arial]  font-medium'>
-            Пищевая ценность продукта:
+            {"Пищевая ценность продукта:"}
           </p>
           <div className="details flex gap-6">
             {children}
@@ -99,7 +102,7 @@ const ShowProduct = ()=>{
   }
   const ContentPayment = ({ children }) => {
     return (
-      <div className="content-payment w-auto max-w-1/3 px-2 flex flex-col self">
+      <div className="content-payment p-2  w-auto xs:max-w-1/4 min-w-[372px] max-w-[400px]  flex flex-col row-span-2 order-4">
         {children}
       </div>
     )
@@ -109,16 +112,18 @@ const ShowProduct = ()=>{
       <div className="price-tag my-2">
         <div className="price-details  py-2 flex flex-row-reverse justify-end gap-2 items-baseline">
           <p className="original-price text-xl text font-[arial] font-medium">
-            1060 ₽
+            {1060}₽
           </p>
           <p className="discounted-price text-4xl text-red-500 font-[arial] font-medium">
-            573 ₽
+            {573}₽
           </p>
         </div>
 
         <p className="price-note w-max px-1  flex flex-row items-center  gap-2 bg-green-500 rounded-xl text-white font-[arial] font-medium">
-          <span>562 ₽ при оплате Ozon Картой</span>
-          <span className='w-max h-max py-[2px] px-[6px] flex  bg-black rounded-lg text-white text-[12px] leading-3 cursor-pointer'>ℹ️</span>
+          <span>{562}₽ {"при оплате Ozon Картой"}</span>
+          <span className='w-max h-max py-[2px] px-[6px] flex rounded-lg hover:stroke-white hover:fill-green-500 text-white text-[12px] leading-3 cursor-pointer'>
+            <InfoIco/>
+          </span>
         </p>
       </div>
     )
@@ -127,12 +132,14 @@ const ShowProduct = ()=>{
     return (
       <div className="discount-information my-4 gap-1 flex flex-col">
         <p className="best-price-note py-3 text-blue-500 font-[arial] text-base cursor-pointer">
-          Лучшая цена на Ozon
+          {"Лучшая цена на Ozon"}
         </p>
         <p className='line-through border-b-[2px] border-slate-700'></p>
-        <p className="learn-more-tag flex flex-row gap-2  text-blue-500 font-[arial] text-base cursor-pointer">
-          <span className="text-sm text-blue-500 ">🔔</span>
-          <span>Узнать о снижении цены</span>
+        <p className="learn-more-tag flex flex-row items-baseline gap-2  text-blue-500 font-[arial] text-base cursor-pointer">
+          <span className="text-sm text-blue-500 font-bold stroke-blue-500">
+            <BellIco bold />
+          </span>
+          <span>{"Узнать о снижении цены"}</span>
         </p>
       </div>
     )
@@ -140,10 +147,10 @@ const ShowProduct = ()=>{
   const BuyBtns = ({ children }) => {
     return (
       <div className="buy-btns   my-2  py-3 flex flex-col items-center gap-5">
-        <div className="buy-now w-10/12 px-8 flex justify-center bg-blue-600 rounded-2xl text-white text-lg font-[arial] font-thin cursor-pointer">
+        <div className="buy-now w-10/12 h-max px-6 max-w-xs flex justify-center bg-blue-600 rounded-2xl text-white text-lg font-[arial] font-thin cursor-pointer">
           Добавить в корзину
         </div>
-        <div className="buy-later flex justify-center text-black text-sm font-[arial] cursor-pointer">
+        <div className="buy-later py-1 px-2 flex justify-center border-2 hover:border-orange-400 hover:bg-slate-100  rounded-xl text-black hover:text-slate-500  text-sm font-[arial] cursor-pointer">
           Доставка завтра
         </div>
       </div>
@@ -151,21 +158,27 @@ const ShowProduct = ()=>{
   }
   const PaymentType = ({ children }) => {
     return (
-      <div className="payment-type w-full p-3 flex flex-row justify-between gap-8 border-2 rounded-xl">
-        <div className="type-description flex flex-col gap-3">
-          <p className='text-lg font-[arial]'>
-            Ozon Рассрочка
-          </p>
-          <p className="installment flex gap-2 items-baseline">
-            <span className="amount p-1 bg-yellow-400 rounded-md text-base font-[arial]">
-              109 ₽
-            </span>
-            <span className="time-span text-sm font-[arial]">
-              × 6 месяцев
-            </span>
-          </p>
+      <div className="payment-type-wrapper p-2 max-w-[400px]  order-3">
+        <div className="payment-type w-full p-3 flex flex-row justify-between gap-3 border-2 rounded-xl">
+          <div className="type-description flex flex-col gap-3">
+            <p className='text-lg font-[arial]'>
+              Ozon Рассрочка
+            </p>
+            <p className="installment flex gap-2 items-baseline">
+              <span className="amount p-1 bg-yellow-400 rounded-md text-base font-[arial]">
+                109 ₽
+              </span>
+              <span className="time-span text-sm font-[arial]">
+                × 6 месяцев
+              </span>
+            </p>
+          </div>
+          <p className='px-[4px] text-blue-500 cursor-pointer'>Подробнее</p>
         </div>
-        <p className='px-[4px] text-blue-500 cursor-pointer'>Подробнее</p>
+        <div className="children-wrapper px-2">
+          {children}
+
+        </div>
       </div>
     )
   }
@@ -325,7 +338,7 @@ const ShowProduct = ()=>{
   const MiddleSection =({children})=>{
     const NoItems = () => (
       <div 
-        className="loading-product w-full flex flex-col justify-center items-center">
+        className="loading-product w-full min-w-[372px] flex flex-col justify-center items-center">
         <div id="no_items_banner__header"
           className="text-base text-black font-raleway font-semibold">
           <h3>
@@ -358,44 +371,51 @@ const ShowProduct = ()=>{
           </div>
             <MiddleSection>
               <ContentViewer>
-                <ProductImageViewer/>
-                <ContentDetails>
-                  <div className="content-description flex flex-col gap-2">
-                    <Logo/>
-                    <ProductTitle label={"Тип"} value={"Кофе растворимый" } />
-                    <ProductTitle label={"Бренд"} value={"EGOISTE"} />
-                    <ProductTitle label={"Технология производства"} value={"Сублимированный"} />
-                    <ProductTitle label={"Состав кофе"} value={"Арабика"} />
-                    <ProductTitle label={"Интенсивность вкуса"} value={"Средний"} />
-                  </div>
+                {/* <div className="view-left w-full flex justify-between gap-8"> */}
+                  <ProductImageViewer/>
+                  <ContentDetails>
+                    <div className="content-description flex flex-col gap-2">
+                      <Logo/>
+                      <ProductTitle label={"Тип"} value={"Кофе растворимый" } />
+                      <ProductTitle label={"Бренд"} value={"EGOISTE"} />
+                      <ProductTitle label={"Технология производства"} value={"Сублимированный"} />
+                      <ProductTitle label={"Состав кофе"} value={"Арабика"} />
+                      <ProductTitle label={"Интенсивность вкуса"} value={"Средний"} />
+                    </div>
 
-                  <ContentSpecification>
-                    <ProductSpecificationDetail label={"18"} value={"белки"} />
-                    <ProductSpecificationDetail label={"2.7"} value={"жиры"} />
-                    <ProductSpecificationDetail label={"42.6"} value={"углеводы"} />
-                    <ProductSpecificationDetail label={"317"} value={"ккал"}/>
-                  </ContentSpecification>
-                </ContentDetails>
-                      
-                <ContentPayment>
-                  <PriceTag/>
-                  <DiscountInfo/>
-                  <BuyBtns/>
-                  <PaymentType/>
-                  <Faqs/>
-                  <OrderInfo>
-                    <span className="order-pin py-3">
-                      <PinIco />
-                    </span>
-                    <span className="order-pin-points">
-                      <PinLocation/>
-                      <span className="courier-points flex flex-col font-[arial]">
-                        <Courier/>
-                        <PickupPoints/>
+                    <ContentSpecification>
+                      <ProductSpecificationDetail label={"18"} value={"белки"} />
+                      <ProductSpecificationDetail label={"2.7"} value={"жиры"} />
+                      <ProductSpecificationDetail label={"42.6"} value={"углеводы"} />
+                      <ProductSpecificationDetail label={"317"} value={"ккал"}/>
+                    </ContentSpecification>
+                  </ContentDetails>
+                {/* </div> */}
+                {/* <div className="view-right w-full flex justify-between gap-8"> */}
+                  <ContentPayment>
+                    <PriceTag/>
+                    <DiscountInfo/>
+                    <BuyBtns/>
+                  </ContentPayment> 
+                  <PaymentType >
+                    <Faqs />
+                    <OrderInfo>
+                      <span className="order-pin py-3">
+                        <PinIco />
                       </span>
-                    </span>
-                  </OrderInfo>
-                </ContentPayment>    
+                      <span className="order-pin-points">
+                        <PinLocation />
+                        <span className="courier-points flex flex-col font-[arial]">
+                          <Courier />
+                          <PickupPoints />
+                        </span>
+                      </span>
+                    </OrderInfo> 
+                  </PaymentType>
+
+                {/* </div> */}
+                      
+                  
               </ContentViewer>
               <ReviewsAndQuestions/>
             </MiddleSection>

@@ -1,20 +1,20 @@
 import React from 'react'
 import { image1_1, imagepath } from '../assets/images'
-import { ArrowDown } from '../assets'
+import { ArrowDown, CheckIco, ThumbIco } from '../assets'
 import { CopyIco } from '../assets'
 
 const QAs = ({}) => {
 
   const QuestionInput=({})=>{
     return(
-      <div className="question-input p-6 flex flex-col gap-2 bg-slate-200 border rounded-lg">
+      <div className="question-input p-6  flex flex-col gap-2 bg-slate-200 border rounded-lg">
         <p className="main-title text-lg font-[arial] font-medium">
           {"Some main title"}
         </p>
         <p className="sub-title text-sm font-[arial] font-normal">
           {"Some sub title"}
         </p>
-        <input type="text" name="question-input" placeholder='Write your question' id="" className="p-1 border-2 border-slate-400 rounded-lg" />
+        <input type="text" name="question-input" placeholder='Write your question' id="" className="p-1 max-w-sm border-2 border-slate-400 rounded-lg" />
       </div>
     )
   }
@@ -108,9 +108,11 @@ const QAs = ({}) => {
                   </p>
                   <div className="user-data text-slate-400 text-sm">{"The user chose to hide his data"}</div>
                   <div className="vote flex items-baseline gap-1 bg- border-1 rounded-lg cursor-pointer">
-                    <p className="rank-yes w-max py-1 px-2 bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
-                      👍
-                      <span className="vote-count">
+                    <p className="rank-yes py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
+                      <span className="text-slate-500">
+                        <ThumbIco />
+                      </span>
+                      <span className="rank-count">
                         {10}
                       </span>
                     </p>
@@ -165,24 +167,35 @@ const QAs = ({}) => {
                 <span className="text-base font-[arial] font-semibold">
                   {"Some answerer name"}
                 </span>
-                <span className="verified-tag rounded-3xl text-xs ">
-                  ☑️
+                <span className="verified-tag p-[0.8px] bg-blue-500 border rounded-3xl text-white text-xs ">
+                  <CheckIco/>
                 </span>
               </div>
               <div className="answerer-text">
-                <p className="answer-text">{"Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text Some answer text  "}</p>
+                <p className="answer-text">
+                  {`
+                    Some answer text Some answer text Some answer text 
+                    Some answer text Some answer text Some answer text 
+                    Some answer text Some answer text Some answer text 
+                    Some answer text Some answer text Some answer text
+                  `}
+                 </p>
               </div>
               <div className="helpful-answer-rank w-max flex flex-col gap-2 ">
                 <p className="title text-slate-400 text-sm ">{"Was this answer helpful?"}</p>
                 <div className="ranking flex flex-row gap-2">
-                  <p className="rank-yes w-max py-1 px-2 bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
-                    👍
+                  <p className="rank-yes py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
+                    <span className="text-slate-500">
+                      <ThumbIco />
+                    </span>
                     <span className="rank-count">
                       {10}
                     </span>
                   </p>
-                  <p className="rank-no w-max py-1 px-2 bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
-                    👎
+                  <p className="rank-no py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600  font-[arial]" role="button">
+                    <span className="text-slate-500">
+                      <ThumbIco invert />
+                    </span>
                     <span className="rank-count">
                       {10}
                     </span>

@@ -1,21 +1,35 @@
+import { CheckIco, StarIco, ThumbIco } from "../assets"
 import { image1_1, imagepath } from "../assets/images"
 
 const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
   
   const ReviewImages =({imageArray=[1,2,3,4,5]})=>(
-    <div className="review-images min-w-[370px] max-w-max flex flex-row gap-2 border-b-2 overflow-x-scroll scrollbar">
-      {
-        imageArray?.map((i,x)=>{
-          return (
-          <img key={x} src={imagepath(i.id||3001)} alt={"review-img-"+x}
-          className="w-[80px] aspect-square "
-           />
-           )
-        })
-      }
+    <div className="review-images-wrapper min-w-[370] overflow-clip">
+      <div className="review-images min-w-[370px] max-w-max flex flex-row gap-2 border-b-2 overflow-x-scroll scrollbar">
+        {
+          imageArray?.map((i,x)=>{
+            return (
+            <img key={x} src={imagepath(i.id||3001)} alt={"review-img-"+x}
+            className="w-[80px] aspect-square "
+            />
+            )
+          })
+        }
+
+      </div>
+
     </div>
   )
-
+  const Stars = ({ count, max=count }) => (
+    <p className="relative flex flex-row text-yellow-500 ">
+      {
+        new Array(max).fill("").map((i, x) => {
+          return <StarIco value={x+1} count={count} maxCount={max} />
+        })
+      }
+      
+    </p>
+  )
   const OverallRating = ({})=> {
     const GradeCount =({grade=2, maxCount=10, total=100})=>(
       <div className="rating-count flex flex-row gap-4">
@@ -39,7 +53,8 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
     const RatingTotal =()=>(
       <div className="rating-total py-2 flex flex-row justify-between items-baseline gap-4 border-b-2 text-xl">
         <div className="star-count">
-          {"⭐⭐⭐⭐⭐"}
+          {/* {"⭐⭐⭐⭐⭐"} */}
+          <Stars count={4} max={5} />
         </div>
         <div className="number-count font-[arial] font-semibold leading-snug">
           {"5/5"}
@@ -53,7 +68,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
       </div>
     )
     const ReviewBtn=()=>(
-      <input type="button" value="Review" className="p-2 w-full bg-blue-400 rounded-xl text-white text-lg font-[arial] font-semibold"/>
+      <input type="button" value="Review" className="p-2 w-full bg-blue-500 rounded-xl text-white text-lg font-[arial] font-semibold"/>
     )
     return (
       <div className="overall-rating px-2 min-w-[340px] hidden lg:flex lg:flex-col">
@@ -64,15 +79,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
     )
   }
   const Review =({review, k=1})=>{
-    const Stars =({count})=>(
-        <p>
-          {
-            new Array(count).fill("").map((i,x)=>{
-              return <span key={x}>⭐</span>
-            })
-          }
-        </p>
-      )
+    
     return(
       <div key={k} className="review-component w-full p-2 flex gap-2 justify-between">
         <div className="reviewer flex gap-3">
@@ -80,7 +87,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
             <img src={imagepath(review?.i || 3001)} alt="" className="w-[50px] min-w-[50px] aspect-square border-2 rounded-3xl" />
           </div>
           <div className="reviewer-details my-2 px-2 flex flex-col gap-8">
-            <div className="reviewer-name-date-ranking min-w-max sm:w-full sm:max-w-full xs:max-w-xs flex xs:flex-col sm:flex-row justify-between ">
+            <div className="reviewer-name-date-ranking min-w-max sm:w-full sm:max-w-full xs:max-w-xs flex xs:flex-col sm:flex-row lg:flex-col justify-between ">
               <p className="name text-lg font-medium ">
                 {"name"}
               </p>
@@ -89,13 +96,15 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
                   {"1 January 2001"}
                 </div>
                 <div className="review-rating">
-                  <Stars count={1} />
+                  <Stars count={1} max={1}/>
                 </div>
               </div>
             </div>
             <div className="purchase-platform-brief  flex flex-col gap-2 font-[arial] font-medium">
               <div className="platform w-max px-3 py-1 flex justify-around gap-2 bg-[#F2F5F9] border-1 rounded-xl text-[#5d5d5d] text-sm">
-                <p>✔️</p>
+                <p className="text-blue-500">
+                  <CheckIco/>
+                </p>
                 <p>{"purchase platform"}</p>
               </div>
               <div className="brief-outline">
@@ -128,14 +137,18 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
             <div className="helpful-review-rank w-max flex flex-col gap-2 ">
               <p className="title text-slate-400 text-sm ">{"Was this review helpful?"}</p>
               <div className="ranking flex flex-row gap-2">
-                <p className="rank-yes w-max py-1 px-2 bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
-                  👍
+                <p className="rank-yes py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
+                  <span className="text-slate-500">
+                    <ThumbIco/>
+                  </span>
                   <span className="rank-count">
                     {10}
                   </span>
                 </p>
-                <p className="rank-no w-max py-1 px-2 bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
-                  👎
+                <p className="rank-no py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600  font-[arial]" role="button">
+                  <span className="text-slate-500">
+                    <ThumbIco invert/>
+                  </span>
                   <span className="rank-count">
                     {10}
                   </span>
@@ -150,7 +163,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
   }
   return(
 
-    <div className="reviews-container w-full py-1 px-2 flex flex-row justify-between gap-3">
+    <div className="reviews-container py-1 px-2 w-full  flex flex-row justify-between gap-3">
       <div className="reviews-wrapper w-full flex flex-col">
         <ReviewImages />
         <Review />

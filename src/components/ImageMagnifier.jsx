@@ -132,7 +132,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
     </div>
   )
   return (
-    <div className={"img-magnifier-container relative max-w-full p-3 flex flex-col" + (itemsCentered ? " items-center" : " ") + " "} >
+    <div className={"img-magnifier-container relative flex flex-col" + (itemsCentered ? " items-center" : " ") + " "} >
       <CurrentImage />
       <SmallSizeImageArray  />
       {/* <ToggleBtn /> */}

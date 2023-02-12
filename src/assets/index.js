@@ -16,3 +16,8 @@ export { default as VkIco } from './VkIco';
 export { default as ArrowRight } from './ArrowRight';
 export { default as ArrowLeft } from './ArrowLeft';
 export { default as ArrowDown } from './ArrowDown';
+export { default as BellIco } from './BellIco';
+export { default as InfoIco } from './InfoIco';
+export { default as CheckIco } from './CheckIco';
+export { default as StarIco } from './StarIco';
+export { default as ThumbIco } from './ThumbIco';
