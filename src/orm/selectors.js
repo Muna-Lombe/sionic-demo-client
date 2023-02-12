@@ -1,6 +1,7 @@
 import { createSelector } from "redux-orm";
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
+import { addToProductData } from "../js/slices/products/productsSlice";
 console.log(session, orm)
 
 
@@ -60,14 +61,16 @@ export const filteredProductsFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
     state => {
       // console.log("whatsup", state.Product)
+      
       const productsArray = state.Product
       .all()
       .toRefArray() 
-      .map((p,) =>{
-        return {
+      .map((p,i) =>{
+        let p1 = {
         ...p, 
         orders: state.Product.withId(p.id).orders.toRefArray(),
         images: state.Product.withId(p.id).images.toRefArray(),
+        priceRange: state.Product.withId(p.id).variations.toRefArray().map((v)=> v.price),
         variations: state.Product.withId(p.id).variations.toRefArray()
           .map((v,idx)=>{
             return {
@@ -83,9 +86,15 @@ export const filteredProductsFromModel = (ex)=> createSelector(
 
 
             }
+          
           }),
           
         }
+        let id=i
+        if(i !== 0){ id = i%6}
+        // console.log("pr1",p1, i)
+        // return p1
+        return addToProductData(p1, id)
       });
    
     

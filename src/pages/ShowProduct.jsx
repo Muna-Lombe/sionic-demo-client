@@ -12,7 +12,7 @@ import BellIco from "../assets/BellIco";
 const ShowProduct = ()=>{
   const  id = useParams().id || 2001
   const product = useSelector(filteredProductsFromModel([])).find(i=> i.id.toString() === id.toString())
-//   const navigate = useNavigate()
+  console.log("show", product)
 // navigate()
   const ProductTitle =({label, value})=>(
     <p className='w-full flex justify-between gap-6'>
@@ -50,7 +50,7 @@ const ShowProduct = ()=>{
     
     return(
       <div className="image-viewer p-2 w-auto xs:max-w-1/4  max-w-[400px] ">
-        <ImageMagnifier images={product?.images}  />
+        <ImageMagnifier images={product?.product.images}  />
         {/* <ViewImageModal openModal={modalOpen} modalAction={setModalOpen}/> */}
       </div>
     )
@@ -68,7 +68,7 @@ const ShowProduct = ()=>{
     return(
       // grid - rows - [auto_minmax(0, _1fr)]
       // lg: grid xl: grid xl: grid-cols - 1 xl: grid - rows - 2  lg: grid - rows - 2
-      <div className="content-viewer w-full sm:flex md:flex flex-wrap justify-start gap-x-2 xs:gap-x-4 sm:gap-x-8 gap-y-4 ">
+      <div className="content-viewer w-full sm:flex md:flex flex-wrap justify-around gap-x-2 xs:gap-x-4 sm:gap-x-8 gap-y-4 ">
         {children}
       </div>
 

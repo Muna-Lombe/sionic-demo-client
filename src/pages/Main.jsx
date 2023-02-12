@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { Product,CategoryTag } from '../components'
 import {  filterProducts} from '../js/slices/products/productsSlice'
+import { filteredProductsFromModel } from '../orm/selectors';
 const Main = () => {
     const categoryTags = [
         [6, 'День Рождения Гриши'],
@@ -12,7 +13,7 @@ const Main = () => {
         [3, 'Мартышка'],
         [2, 'Игрушка']
       ]
-    let products = useSelector(filterProducts())
+    let products = useSelector(filteredProductsFromModel([]))//filterProducts())
     console.log("...", products)
     
   return (
@@ -32,10 +33,12 @@ const Main = () => {
                 
             }
         </div>
-        
-        <div id="mainbar__content" className="w-auto h-[rem] mx-2 p-2 grid grid-flow-rows grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]  overflow-x-scroll scroll-smooth gap-[16px] justify-center justify-items-center transition-all  tag">
+          {/* grid grid-flow-rows grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] */}
+        <div id="mainbar__content" className="w-auto h-[rem] mx-2 p-2  flex flex-row flex-wrap overflow-x-scroll scroll-smooth gap-[16px] justify-center justify-items-center transition-all  tag">
             {
-                products.map((i)=>(<Product key={i.id} id={i.id} product={i.product} />))
+                products.length
+                ? products.map((i)=>(<Product key={i.id} id={i.id} product={i.product} />))
+                : new Array(6).fill().map((i,x)=><Product key={x} noPrd={"true"} />)
             }   
         </div>
   </div>
