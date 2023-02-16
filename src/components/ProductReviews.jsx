@@ -24,7 +24,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
     <p className="relative flex flex-row text-yellow-500 ">
       {
         new Array(max).fill("").map((i, x) => {
-          return <StarIco value={x+1} count={count} maxCount={max} />
+          return <StarIco key={x} value={x+1} count={count} maxCount={max} />
         })
       }
       

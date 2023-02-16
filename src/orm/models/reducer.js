@@ -1,8 +1,8 @@
 import * as consts from "../actions/actionTypes";
 import { fromType } from "../utilities/StateLoader";
 
-export default function customReducer(action, model, session) {
-  // console.log("acrion", action)
+export default function customReducer({session, model,action }) {
+  // console.log("acrion", session, model.modelName, action)
   const verb =()=> fromType(action.type).getActionWord()
   const defaultTarget =() => fromType(action.type).getModelName()
   const isTargetModel = (target=defaultTarget()) => model.modelName === target

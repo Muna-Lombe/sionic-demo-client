@@ -1,8 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {setCurrCatId } from '../js/slices/products/productsSlice'
+// import {setCurrCatId } from '../js/slices/products/productsSlice'
+// import { upsertCurrCatId } from '../orm/models/ProductCategoryModel'
+import { removeAllIds, removeCatId, setCurrCatId } from '../js/slices/filters/categoriesSlice'
+import { CancelIco } from '../assets'
 
-const CategoryTag = ({id=1,text='tag'})=>{
+const CategoryTag = ({borderId=1,id,text='tag'})=>{
   const bearTag = 'bg-[#FFA601] '
   const toyTag = 'bg-[#2967FF]'
   const marmosetTag = 'bg-[#58CF18]'
@@ -11,26 +14,43 @@ const CategoryTag = ({id=1,text='tag'})=>{
   const birthdayTag = 'bg-[#FF2D87]'
   
   const tags = useSelector(state => state.categories.entities) || new Array(6).fill('bg-[#aeaecb]')
+  const ids = useSelector(state => state.categories.curCatIds) 
   const dispatch = useDispatch()
   
 
   const handleScroll = (e) =>{
     e.preventDefault();
     e.stopPropagation();
-    console.log('drag to scroll')
-    console.log(e)
     e.target.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
       inline: "center"
     })
   }
-  const handleFilter = (catId) => {
-    console.log(catId)
-    dispatch(setCurrCatId(catId))
+
+  const handleFilter = (catId, action) => {
+    // console.log("filter our",catId)
+    switch (action) {
+      case "remove":
+        // console.log(action)
+        dispatch(removeCatId(catId))
+        break;
+      case "remove_all" :
+        // console.log(action)
+        dispatch(removeAllIds())
+        break;
+    
+      case "add":
+        // console.log(action)
+
+        dispatch(setCurrCatId(catId))
+        break;
+    }
+    // dispatch(setCurrCatId(catId))
     // setCatId(catId)
   }
-  if (id === 'type_clear'){
+
+  if (borderId === 'type_clear'){
     return(
       <div 
         id={`tag tag-${text}`} 
@@ -57,7 +77,7 @@ const CategoryTag = ({id=1,text='tag'})=>{
         onMouseDown={(e)=>handleScroll(e)}
         
       >
-        <h2 onClick={()=> handleFilter(0)}>
+        <h2 onClick={()=> handleFilter(0, "remove_all")}>
         {text}
         </h2>
       </div>
@@ -90,7 +110,7 @@ const CategoryTag = ({id=1,text='tag'})=>{
         onMouseDown={(e)=>handleScroll(e)}
         
       >
-        <h2 onClick={()=> handleFilter(id)}>
+        <h2 onClick={()=> handleFilter(id||borderId)}>
         {text}
         </h2>
       </div>
@@ -100,29 +120,39 @@ const CategoryTag = ({id=1,text='tag'})=>{
     <div 
       id={`tag tag-${text}`} 
       className={`
+        mx-1 
+        py-[0.2rem] 
+        px-2 
         w-max 
         h-[1.6rem] 
-        whitespace-nowrap 
         flex 
         justify-center 
-        items-center 
+        items-center
+        gap-2
+        
+        whitespace-nowrap 
         rounded-2xl 
-        py-[0.2rem] 
-        mx-1 
-        px-4 
         text-white 
         text-[0.9rem] 
         font-sans 
         font-semibold 
         cursor-pointer
-        ${tags[id]}
+        ${tags[borderId]}
       `}
       onMouseDown={(e)=>handleScroll(e)}
 
     >
-      <h2 onClick={()=> handleFilter(id)}>
+      <h2 className="px-1" onClick={()=> handleFilter(id||borderId, "add")}>
       {text}
       </h2>
+      {
+        ids.includes(id)
+        ?  <samp onClick={() => handleFilter(id||borderId,"remove" )}>
+            <CancelIco/>
+          </samp>
+         
+        : ''
+      }
     </div>
   )
   }

@@ -66,7 +66,19 @@ body:has(.modal-open)::-webkit-scrollbar {
   
   
 }
+/* .products-grid{
+  display:grid;
+  grid-template-columns: repeat(9, minmax(9rem, 1fr));
+} */
 
+.bordered-text {
+  color: white;
+  text-shadow:
+   -1px -1px 0 #8f8f91,  
+    1px -1px 0 #8f8f91,
+    -1px 1px 0 #8f8f91,
+     1px 1px 0 #8f8f91;
+}
 
 .no_highlights{
   -webkit-tap-highlight-color: transparent;

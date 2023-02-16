@@ -21,3 +21,4 @@ export { default as InfoIco } from './InfoIco';
 export { default as CheckIco } from './CheckIco';
 export { default as StarIco } from './StarIco';
 export { default as ThumbIco } from './ThumbIco';
+export { default as CancelIco } from './CancelIco';

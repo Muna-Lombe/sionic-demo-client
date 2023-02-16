@@ -31,7 +31,7 @@ const AppWrapper = ({children}) => {
     </div>
   )
   const MainbarNav =() =>(
-    <div id="mainbar_nav" className="w-full min-h-[10%] sticky top-0 bg-white h-max z-10 flex items-center">
+    <div id="mainbar_nav" className="sticky top-0 pr-2 w-full min-h-[10%] h-max flex items-center bg-white z-10">
       <Navbar />
     </div>
   )
@@ -44,7 +44,7 @@ const AppWrapper = ({children}) => {
           {children}
           
         </div>
-        <div id="sidebar_container" className="hidden lg:flex lg:w-auto lg:max-w-[24rem] xl:flex xl:w-auto xl:max-w-[24rem] border-l-2 px-4 ">
+        <div id="sidebar_container" className="hidden lg:flex lg:w-auto lg:max-w-[24rem] xl:flex xl:w-auto xl:max-w-[24rem] border-l-2 child:mx-2 ">
           <Sidebar />
         </div>
       </div>

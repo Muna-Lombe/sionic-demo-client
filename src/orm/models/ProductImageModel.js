@@ -1,12 +1,13 @@
 import { attr,fk, many, Model, oneToOne, ORM } from "redux-orm";
 import customReducer from "./reducer";
+import { actions } from "../actions/actionTypes";
 
 
 
 
 class ProductImage extends Model {
-    static reducer(session, ProductImage, action) {
-        return customReducer(session, ProductImage, action)
+    static reducer(action, ProductImage, session) {
+        return customReducer({session, model:ProductImage, action})
     }
 }
 ProductImage.modelName = 'ProductImage';
@@ -21,4 +22,7 @@ ProductImage.fields = {
 ProductImage.options = {
     idAttribute: 'id'
 }
+
+export const [updatedProductImage, removedProductImage, addedProductImage, createdProductImage, addedProductImageTo, removedProductImageFrom,] = actions().createDefaultFor('ProductImage')
+
 export default ProductImage;

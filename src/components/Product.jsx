@@ -21,10 +21,10 @@ const Product = ({id,product,noPrd}) => {
 
   const discountTag = (disc,old_price)=>(
       <>
-        <h4 id="old_price" className="text-[#8D8D8E] text-s line-through font-extralight  text-[1rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem]">
+        <h4 id="old_price" className="text-[#8D8D8E] text-xs line-through font-extralight  text-[1.0rem] ">
           {old_price+'₽'}
         </h4>
-        <h4 id="discount" className="text-[#FF2D87] font-semibold  text-[1rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem]">
+        <h4 id="discount" className="text-[#FF2D87] font-semibold  text-[1.0rem] ">
           {'-'+disc+'%'}
         </h4>
       </>
@@ -63,7 +63,7 @@ const Product = ({id,product,noPrd}) => {
               md:py-1 md:px-4
               lg:py-1 lg:px-4
               xl:py-1 xl:px-4
-              text-base 
+              text-sm 
               text-[#2967FF] 
               active:bg-[#2967FF] 
               active:text-[#ffffff]
@@ -84,13 +84,13 @@ const Product = ({id,product,noPrd}) => {
   )
   const Carousel = ({ imagepath, hasSubItems }) => {
     const Image = ({  hasMaxW }) => (
-      <div className={" w-auto " + hasMaxW + " aspect-square p-1" +(noPrd ? " min-w-[100px] min-h-[100px] p-4 border rounded animate-pulse ": " ")}>
+      <div className={" w-auto " + hasMaxW + " aspect-square p-1" +(noPrd ? " min-w-[100px] min-h-[100px] border rounded animate-pulse ": " ")}>
         <img alt="gallery" className="w-full object-cover h-full object-center block" src={imagepath} />
       </div>
 
     )
     return (
-       <Image hasMaxW={(hasSubItems) ? "max-w-[5rem]" : "max-w-[15rem]"} />
+       <Image hasMaxW={(hasSubItems) ? "max-w-[5rem]" : "max-w-[14rem]"} />
   
     )
   }
@@ -100,9 +100,9 @@ const Product = ({id,product,noPrd}) => {
     // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
     // md:h-[21rem] lg:h-[21rem] xl:h-[21rem]
     // min - w - [8rem] w - full max - w - [12rem] md: max - w - [14rem] lg: max - w - [14rem] xl: max - w - [14rem] h - [14rem] md: h - [24rem] lg: h - [24rem] xl: h - [24rem]
-    <div id={"product_card"+id} className=" p-2 min-w-[280px] max-w-md flex flex-nowrap  flex-col gap-6 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway ">
-      <div id="product_header" className="w-[100%] h-[50%] m-1 relative justify-center items-center  ">
-        <div id="product_image" className="flex justify-center items-center" >
+    <div id={"product_card_"+id} className={(noPrd ? "w-[280px] ": " ") + " p-2 min-w-[16rem] w-auto max-w-md flex flex-nowrap  flex-col gap-2 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway "}>
+      <div id="product_header" className="relative w-[100%] h-[50%] my-1  justify-center items-center  ">
+        <div id="product_image" className="flex w-auto aspect-square justify-center items-center" >
           {
             noPrd
               ? <Carousel imagepath={no_product_img}/>
@@ -114,16 +114,16 @@ const Product = ({id,product,noPrd}) => {
         <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer">
           {
             (categoryTags||new Array(6).fill(''))?.map((tag,idx)=>{
-              return <CategoryTag key={idx} id={tag[0]} text={tag[1]} noPrd />
+              return <CategoryTag key={idx} borderId={tag[0]} text={tag[1]} noPrd />
             })
           }
           
         </div>
       </div>
-      <div id="product_content" className=" relative w-full h-[70%] flex flex-wrap md:flex-col lg:flex-col xl:flex-col justify-between gap-2 ">
+      <div id="product_content" className=" relative w-full h-[70%] flex flex-wrap md:flex-col lg:flex-col xl:flex-col justify-between gap-0 ">
         <div id="name_store_price__wrapper" className=" w-full  h-max flex flex-col justify-between">
           <div id="name_store__wrapper" className="w-full h-full flex flex-col justify-between gap-4">
-            <h4 id='product_name' className=" bg-white text-[#2D2D2F] text-lg hover:text-blue-400 font-medium">
+            <h4 id='product_name' className=" py-2 bg-white text-[#2D2D2F] text-lg hover:text-blue-400 font-medium">
               {
                 noPrd
                   ? <div className="no-prd-field w-[12rem] h-6 border rounded-md bg-gradient-to-tr from-slate-400 to-slate-500 animate-pulse opacity-30"></div>
@@ -145,7 +145,7 @@ const Product = ({id,product,noPrd}) => {
               
             </h1>
           </div>
-          <h2 id="product_price" className=" text-[#2967FF] text-[1.1rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem] font-semibold">
+          <h2 id="product_price" className=" text-[#2967FF] text-[1.2rem]  font-semibold">
             {
               noPrd
               ? <>

@@ -69,7 +69,7 @@ const OrmReader = () => {
             product_id: id
         }
         
-        dispatch(created('Order')(action))
+        // dispatch(created('Order')(action))
 
           
         break;

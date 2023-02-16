@@ -8,8 +8,14 @@ import image13_7 from './image13_7.png';
 
 // export * as imagepaths from '../tests/jsonServer/images';
 export const imagepath = (id)=> {
-    
-    const image = require('../tests/jsonServer/images/'+id+'.jpg');
+    if(id === undefined) return false;
+    let image;
+    try {
+        image = require('../tests/jsonServer/images/' + id + '.jpg');
+    } catch (error) {
+        image = require('../tests/jsonServer/images/' + id + '.png');
+    }
+    // console.log("image",id, image)
     return image;
 }
 export const image1_1 = image13_1;
