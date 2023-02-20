@@ -10,3 +10,4 @@ const BuyBtns = ({ mainText = "Добавить в корзину", subText = "�
     </div>
   )
 }
+export default BuyBtns;

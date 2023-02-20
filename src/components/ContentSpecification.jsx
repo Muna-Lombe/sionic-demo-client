@@ -17,4 +17,4 @@ const ContentSpecification = ({ mainText = "Перейти к описанию",
       </div>
     )
   }
-  
+export default ContentSpecification;

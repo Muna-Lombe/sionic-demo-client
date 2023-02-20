@@ -1,4 +1,8 @@
-const ReviewsAndQuestions = ({ reviewCount = 6298, }) => {
+import { useState } from "react";
+import ProductReviews from "./ProductReviews";
+import QAs from "./QAs";
+
+const ReviewsAndQuestions = ({ reviewCount = 6298, handleClassToggle }) => {
   const [activeTab, setActiveTab] = useState("PRs")
   return (
     <div className="review-questions-wrapper w-full p-2">
@@ -23,3 +27,4 @@ const ReviewsAndQuestions = ({ reviewCount = 6298, }) => {
     </div>
   )
 }
+export default ReviewsAndQuestions;

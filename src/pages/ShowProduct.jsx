@@ -7,7 +7,7 @@ import { filteredProductsFromModel } from "../orm/selectors";
 import { useSelector } from "react-redux";
 import { Link,useParams, useNavigate, useLocation} from "react-router-dom";
 import BellIco from "../assets/BellIco";
-import { BuyTogether, OtherOffers, Recommended } from "../components";
+import { BuyBtns, BuyTogether, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, Faqs, FullProductCharacteristics, FullProductDescription, OrderInfo, OtherOffers, PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags, Recommended, ReviewsAndQuestions } from "../components";
 import { ClassWatcher } from "../orm/utilities/classWatcher";
 
 
@@ -93,30 +93,6 @@ const ShowProduct = ()=>{
     )
   }
  
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   const MiddleSection =({children})=>{
     const NoItems = () => (
       <div 
@@ -156,43 +132,24 @@ const ShowProduct = ()=>{
           </div>
             <MiddleSection>
               <ContentViewer>
-                {/* <div className="view-left w-full flex-col justify-around gap-8"> */}
-                  <ProductImageViewer/>
-                  <ContentDetails variations={productItem?.product?.variations}>
-                      {
-                        productItem?.product?.variations.map((i,x)=>{
-                          return (
+                  <ProductImageViewer images={productItem?.product?.images}/>
+                  <ContentDetails storeName={productItem?.product?.store.name} variations={productItem?.product?.variations}>
+                      { productItem?.product?.variations.map((i,x)=>
                             <ContentDescription key={x} stock={i.stock} first={x===0} id={`${i.id}`} >
                               <ProductDescriptor key={101} id={`${i.id}${x}`} label={"In stock"} values={[i.stock]} />
-                              {
-                                i.properties.map((k,v)=>(
-                                  <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />
-
-                                ))
-                              }
-                              
+                              { i.properties.map((k,v)=> <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />) }
                             </ContentDescription>
                           )
-                        })
                       }
-                      {/* <ProductDescriptor label={"Тип"} value={"Кофе растворимый" } />
-                      <ProductDescriptor label={"Бренд"} value={"EGOISTE"} />
-                      <ProductDescriptor label={"Технология производства"} value={"Сублимированный"} />
-                      <ProductDescriptor label={"Состав кофе"} value={"Арабика"} />
-                      <ProductDescriptor label={"Интенсивность вкуса"} value={"Средний"}/> */}
                       <ContentSpecification>
                         <ProductSpecificationDetail label={"18"} value={"белки"} />
                         <ProductSpecificationDetail label={"2.7"} value={"жиры"} />
                         <ProductSpecificationDetail label={"42.6"} value={"углеводы"} />
                         <ProductSpecificationDetail label={"317"} value={"ккал"}/>
                       </ContentSpecification>
-                    
-
                   </ContentDetails >
-                {/* </div>
-                <div className="view-right w-full flex justify-around gap-8"> */}
                   <ContentPayment >
-            <PriceTag original={productItem?.product?.isDiscounted[0] ? productItem?.product?.isDiscounted[3] : productItem?.product?.priceRange.sort((a, b) => a > b).at(-1)} discounted={productItem?.product?.priceRange.sort((a,b)=> a>b).at(-1)} />
+                    <PriceTag original={productItem?.product?.isDiscounted[0] ? productItem?.product?.isDiscounted[3] : productItem?.product?.priceRange.sort((a, b) => a > b).at(-1)} discounted={productItem?.product?.priceRange.sort((a,b)=> a>b).at(-1)} />
                     <DiscountInfo/>
                     <BuyBtns/>
                   </ContentPayment> 
@@ -212,17 +169,14 @@ const ShowProduct = ()=>{
                     </OrderInfo> 
                   </PaymentType>
 
-                {/* </div> */}
-                      
-                  
               </ContentViewer>
               <Recommended/>
               <BuyTogether/>
               <OtherOffers/>
-              <FullProductDescription/>
+              <FullProductDescription description={{text: descriptiveText, tags: [descTag1, descTag2] }}/>
               <FullProductCharacteristics/>
               <ProductTags/>
-              <ReviewsAndQuestions/>
+              <ReviewsAndQuestions handleClassToggle={handleClassToggle}/>
             </MiddleSection>
           <div className="bottom w-full border "></div>
 

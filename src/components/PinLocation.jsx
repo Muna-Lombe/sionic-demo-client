@@ -1,3 +1,5 @@
+import { ArrowRight } from "../assets";
+
 const PinLocation = ({ location = { city: "Казань", state: "Татарстан республика" } }) => (
   <span className="pin-location p-2 flex flex-row gap-4 items-center ">
 
@@ -9,3 +11,5 @@ const PinLocation = ({ location = { city: "Казань", state: "Татарст
     </span>
   </span>
 )
+
+export default PinLocation;

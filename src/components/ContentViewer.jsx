@@ -8,3 +8,4 @@ const ContentViewer = ({ children }) => {
 
   )
 }
+export default ContentViewer;

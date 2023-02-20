@@ -13,6 +13,7 @@ import Get from './assets/tests/Get';
 import { HomeIco, CartIco, AvatarIco } from './assets';
 import AppWrapper from './components/AppWrapper';
 import ShowProduct from './pages/ShowProduct';
+import Search from './pages/Search';
 
 
 function App() {
@@ -51,7 +52,8 @@ function App() {
   return (
     <AppWrapper>
       <Routes>
-        <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
+        {/* <Route path="/" exact element={<Main categoryTags={categoryTags}/>} /> */}
+        <Route path="/" exact element={<Search />} />
         <Route path="/cart" exact element={<Basket />} />
         <Route path="/checkout" exact element={<Checkout /> } /> 
         <Route path="/history" exact element={<History /> } />

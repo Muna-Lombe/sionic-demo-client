@@ -11,3 +11,4 @@ const OrderInfo = ({ titleText = "Информация о доставке", chi
     </div>
   )
 }
+export default OrderInfo;

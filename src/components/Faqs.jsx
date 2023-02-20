@@ -19,3 +19,4 @@ const Faqs = ({ titleText = "Часто задаваемые вопросы", su
     </div>
   )
 }
+  export default Faqs;

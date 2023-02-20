@@ -1,3 +1,5 @@
+import { ArrowRight } from "../assets";
+
 const PickupPoints = ({ titleText = "Пункты выдачи и постаматы", points = { date: { day_tag: "завтра", date_text: "6 февраля" }, price: 0 } }) => (
   <span className="pickup-points p-2 flex flex-row justify-between gap-4 ">
     <span className='flex flex-col'>
@@ -20,3 +22,4 @@ const PickupPoints = ({ titleText = "Пункты выдачи и постама
     </span>
   </span>
 )
+export default PickupPoints;

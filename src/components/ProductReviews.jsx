@@ -166,10 +166,10 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
     <div className="reviews-container py-1 px-2 w-full  flex flex-row justify-between gap-3">
       <div className="reviews-wrapper w-full flex flex-col">
         <ReviewImages />
-        <Review />
+        {/* <Review /> */}
+        {reviewsArray?.map((r,i)=> <Review review={r} k={i}/>)}
       </div>
       <OverallRating/>
-      {/* {reviewsArray?.map((r,i)=> <Review review={r} k={i}/>)} */}
 
     </div>
   )

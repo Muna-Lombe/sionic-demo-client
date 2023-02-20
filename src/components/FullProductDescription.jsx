@@ -1,4 +1,4 @@
-const FullProductDescription = ({ description = { text: descriptiveText, tags: [descTag1, descTag2] }, children }) => {
+const FullProductDescription = ({ description, children }) => {
   return (
     <div className="full-description my-2 p-3 ">
       <div className="description-1 my-2">
@@ -22,3 +22,4 @@ const FullProductDescription = ({ description = { text: descriptiveText, tags: [
     </div>
   )
 }
+export default FullProductDescription;

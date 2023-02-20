@@ -1,3 +1,5 @@
+import { BellIco } from "../assets";
+
 const DiscountInfo = ({ titleText = "Лучшая цена на Ozon", moreText = "Узнать о снижении цены", children }) => {
     return (
       <div className="discount-information my-4 gap-1 flex flex-col">
@@ -14,4 +16,4 @@ const DiscountInfo = ({ titleText = "Лучшая цена на Ozon", moreText 
       </div>
     )
   }
-  
+export default DiscountInfo;

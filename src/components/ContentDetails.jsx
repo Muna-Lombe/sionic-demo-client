@@ -1,5 +1,7 @@
-const ContentDetails = ({ variations = [{ id: 1, name: "yellow bag" }], children }) => {
-  const [activeTab, setActiveTab] = useState("PRs")
+import Logo from "./Logo"
+
+const ContentDetails = ({storeName, variations = [{ id: 1, name: "yellow bag" }], children }) => {
+  // const [activeTab, setActiveTab] = useState("PRs")
   const handleActiveToggle = (e, set) => {
     const curAct = e.target.parentNode.querySelector(".active")
 
@@ -13,13 +15,13 @@ const ContentDetails = ({ variations = [{ id: 1, name: "yellow bag" }], children
   }
   return (
     <div className="content-details p-2 w-auto h-max   flex  flex-col gap-3 order-2 ">
-      <Logo logo={productItem.product.store.name} />
+      <Logo logo={storeName} />
 
       <div className="product-variations w-full  flex flex-row gap-2 overflow-hidden child-hover:border-blue-500 [&>.active]:text-blue-500 child child:cursor-pointer">
 
         {
           variations.map((i, x) => (
-            <div id={'var_' + i.id} onClick={(e) => handleActiveToggle(e, setActiveTab)} className={"variation-image " + (x === 0 ? " active" : "") + " py-1 px-2 w-max  flex items-baseline border-b-2 border-spacing-2 leading-[8px]  "}>
+            <div id={'var_' + i.id} onClick={(e) => handleActiveToggle(e)} className={"variation-image " + (x === 0 ? " active" : "") + " py-1 px-2 w-max  flex items-baseline border-b-2 border-spacing-2 leading-[8px]  "}>
               {i.price}
             </div>
           ))
@@ -32,3 +34,4 @@ const ContentDetails = ({ variations = [{ id: 1, name: "yellow bag" }], children
     </div>
   )
 }
+export default ContentDetails;

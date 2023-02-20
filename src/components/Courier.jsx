@@ -14,3 +14,4 @@ const Courier = ({ delivery = { courier: "Курьером Ozon", date: { day_ta
     </span>
   </span>
 )
+export default Courier;

@@ -1,3 +1,5 @@
+import ProductDescriptor from "./ProductDescriptor";
+
 const FullProductCharacteristics = ({ children }) => {
   return (
     <div className="characteristics my-2 p-3  w-full flex flex-wrap gap-4">
@@ -36,3 +38,4 @@ const FullProductCharacteristics = ({ children }) => {
     </div>
   )
 }
+export default FullProductCharacteristics;

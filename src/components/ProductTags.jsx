@@ -33,3 +33,4 @@ const ProductTags = ({ children }) => {
     </div>
   )
 }
+export default ProductTags;

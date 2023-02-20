@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react"
+import { InfoIco } from "../assets"
+import { ClassWatcher } from "../orm/utilities/classWatcher"
+
 const PriceTag = ({ original = 1060, discounted = 562 }) => {
   const [currPriceTag, setCurrPriceTag] = useState(discounted)
   useEffect(() => {
@@ -32,3 +36,4 @@ const PriceTag = ({ original = 1060, discounted = 562 }) => {
     </div>
   )
 }
+export default PriceTag;

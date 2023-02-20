@@ -1,6 +1,7 @@
 const PaymentType = ({ mainText = "Ozon Рассрочка", subText = "Подробнее", plan = { amount: 109, period: { count: 6, type: "месяцев" } }, children }) => {
   return (
-    <div className="payment-type-wrapper p-2 max-w-[400px]  order-3">
+    
+    <div className="payment-type-wrapper p-2 max-w-[400px] xl:w-[-webkit-fill-available]  flex flex-col  order-3 lg:order-4">
       <div className="payment-type w-full p-3 flex flex-col justify-between gap-3 border-2 rounded-xl">
         <div className="type-description flex flex-row gap-3">
           <p className='text-lg font-[arial]'>
@@ -24,3 +25,4 @@ const PaymentType = ({ mainText = "Ozon Рассрочка", subText = "Подр
     </div>
   )
 }
+export default PaymentType;
