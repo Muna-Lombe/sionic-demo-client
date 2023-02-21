@@ -40,16 +40,16 @@ const Recommended = ({ children }) => {
   return (
     <div className="recommended-products-wrapper relative w-full pt-10 px-6 flex flex-col gap-4 ">
       <p className="title py-2 text-2xl font-[arial font-bold ">{"Recommended products"}</p>
-      <div className="products-wrapper w-full flex flex-row border-y-2">
+      <div className="products-wrapper  w-full flex flex-row border-y-2">
         {/* grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] flex flex-row 5n-child:basis-[100%]  */}
-        <div onClick={(e)=> handleScroll(e, true)} className="click-left absolute left-0 top-1/2 py-4 px-0 w-max h-max flex justify-center items-center active:bg-gray-800 border-2 rounded-r-3xl opacity-50 z-50">
+        <div onClick={(e)=> handleScroll(e, true)} className="click-left absolute left-0 top-1/2 py-4 px-0 w-max h-max flex justify-center items-center active:bg-gray-800 border-2 rounded-r-3xl opacity-50 ">
           <ArrowLeft size={48}/>
         </div>
-        <div onClick={(e)=> handleScroll(e) } className="click-right absolute right-0 top-1/2 py-4 px-0 w-max h-max flex justify-center items-center active:bg-gray-800 border-2 rounded-l-3xl opacity-50 z-50">
+        <div onClick={(e)=> handleScroll(e) } className="click-right absolute right-0 top-1/2 py-4 px-0 w-max h-max flex justify-center items-center active:bg-gray-800 border-2 rounded-l-3xl opacity-50 ">
           <ArrowRight size={48}/>
         </div>
         {/* grid grid-flow-col grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] grid-rows-1 */}
-        <div className={"recommended-products-grid w-full flex flex-col  gap-16 overflow-scroll tag"}>
+        <div className={"recommended-products-grid py-2 w-full flex flex-col  gap-16 overflow-scroll tag"}>
           <>
             <div slot={0} className="scroll-div-1 flex flex-row gap-20">
               {

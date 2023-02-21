@@ -111,12 +111,19 @@ export const filteredProductsFromModel = (ex)=> createSelector(
         // return p1
         return addToProductData(p1, id)
       });
-   
-    
-      
+
       return productsArray
       // console.log("running products selector 2",ex, productsArray[1].category_id)
       // return (ex.length ? productsArray.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productsArray)
+    }
+  )
+
+  export const productsMatchingSearch =(searchTextArr)=> createSelector(
+    ormSelector(session.schema),
+    filteredProductsFromModel([]),
+    (state,products)=> {
+      return products.filter((i,x)=> searchTextArr.some((d,x)=>i.product.name.toString().includes(d.toString()) || d.toString().includes(i.product.name.toString())) )
+      
     }
   )
   

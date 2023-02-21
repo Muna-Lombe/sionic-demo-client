@@ -1,6 +1,6 @@
 
 import './App.css';
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, lazy, Suspense} from 'react';
 import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
 
 //components
@@ -12,8 +12,8 @@ import { Main, Basket, Checkout, History } from './pages';
 import Get from './assets/tests/Get';
 import { HomeIco, CartIco, AvatarIco } from './assets';
 import AppWrapper from './components/AppWrapper';
-import ShowProduct from './pages/ShowProduct';
-import Search from './pages/Search';
+// import ShowProduct from './pages/ShowProduct';
+// import Search from './pages/Search';
 
 
 function App() {
@@ -30,7 +30,11 @@ function App() {
 
   var get = new Get();
 
-  
+  const Main = lazy(() => import("./pages/Main"))
+  const Search = lazy(() => import("./pages/Search"))
+  const Checkout = lazy(() => import("./pages/Checkout"))
+  const History = lazy(() => import("./pages/History"))
+  const ShowProduct = lazy(()=> import("./pages/ShowProduct"))
   // fetch products on app load
   // useEffect(() => {
   //   (async function (){
@@ -48,12 +52,11 @@ function App() {
     setTestData(data)
     console.log(data);
   }
-
   return (
     <AppWrapper>
       <Routes>
-        {/* <Route path="/" exact element={<Main categoryTags={categoryTags}/>} /> */}
-        <Route path="/" exact element={<Search />} />
+        <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
+        <Route path="/search" exact element={<Search />} />
         <Route path="/cart" exact element={<Basket />} />
         <Route path="/checkout" exact element={<Checkout /> } /> 
         <Route path="/history" exact element={<History /> } />

@@ -1,3 +1,8 @@
+
+body{
+  height:100vh;
+  width: 100vw;
+}
 body:has(.modal-open){
   overflow-y: hidden;
   
@@ -48,19 +53,38 @@ body:has(.modal-open)::-webkit-scrollbar {
     transform: rotate(360deg);
   }
 }
+/* Chrome and Egde */
 .scrollbar::-webkit-scrollbar {
     width: 0px;
     height: 2px;
   }
 
+/* Chrome and Egde */
 .tag::-webkit-scrollbar {
   width: 10px;
   height: 0px;
 }
 
+#sidebar_content::-web-scrollbar {
+  width: 0px;
+  height: 0px;
+  
+  
+}
+/* moz */
+.scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 2px;
+  }
+  
+/* moz */
+.tag::-moz-scrollbar {
+  width: 10px;
+  height: 0px;
+}
 
 
-#sidebar_content::-webkit-scrollbar {
+#sidebar_content::-moz-scrollbar {
   width: 0px;
   height: 0px;
   
@@ -78,72 +102,7 @@ body:has(.modal-open)::-webkit-scrollbar {
 .range-to-right{
   direction: rtl;
 }
-/* .range-inputs>input[type="range"]{
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-  width: 24rem;
-  
-} */
-/* Chrome style */
-/* .range-inputs>input[type="range"]::-webkit-slider-runnable-track{
 
-  padding: 2px 0px;
-  height:6px;
-
-  display: flex;
-  align-items: center;
-  background-color: rgb(137, 137, 137);
-} */
-
-/* FF style */
-/* .range-inputs>input[type="range"]::-moz-range-track{
-  padding: 2px 0px;
-  height:6px;
-  display: flex;
-  align-items: center;
-  background-color: rgb(137, 137, 137);
-} */
-
-/* IE style */
-/* .range-inputs>input[type="range"]::-ms-track{
-  padding: 2px 0px;
-  height:6px;
-  display: flex;
-  align-items: center;
-  background-color: rgb(137, 137, 137);
-} */
-
-/* Chrome style */
-/* .range-inputs>input[type="range"]::-webkit-slider-thumb{
-  
-  display:none;
-  color: black;
-  height:6px;
-  display: flex;
-  align-items: center;
-} */
-
-/* FF style */
-/* .range-inputs>input[type="range"]::-moz-range-thumb{
-  
-  display:none;
-  color: black;
-  height:6px;
-  display: flex;
-  align-items: center;
-} */
-
-/* IE style */
-/* .range-inputs>input[type="range"]::-ms-thumb{
-  
-  display:none;
-  color: black;
-  height:6px;
-  display: flex;
-  align-items: center;
-} */
 
 /*********** Baseline, reset styles ***********/
 .range-inputs>input[type="range"] {

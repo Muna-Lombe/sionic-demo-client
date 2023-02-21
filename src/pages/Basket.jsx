@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
-import { Cart } from '../components'
+import { Cart, NoItems } from '../components'
 import { cartItemAdded, itemsInCart, selectCartItems } from '../js/slices/cart/cartSlice'
 import { selectProductIds } from '../js/slices/products/productsSlice'
+import { Outlet } from 'react-router-dom'
 
 const Basket = () => {
 
@@ -46,8 +47,13 @@ const Basket = () => {
     // console.log('test items', testItems)
 
     return (
-    <Cart items={items} unOrd={unOrd} ord={ord} inArrHaveBeenOrdered={inArrHaveBeenOrdered}/>
-  )
+      <>
+        <Suspense fallback={<NoItems />}>
+          <Cart items={items} unOrd={unOrd} ord={ord} inArrHaveBeenOrdered={inArrHaveBeenOrdered}/>
+          {/* <Outlet /> */}
+        </Suspense>
+      </>
+    )
 }
 
 export default Basket

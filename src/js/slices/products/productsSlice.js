@@ -2,6 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } fr
 import React from 'react'
 import Get from '../../../assets/tests/Get'
 import categoriesSlice from '../filters/categoriesSlice'
+import { filteredProductsFromModel } from '../../../orm/selectors'
 
 const productsAdapter = createEntityAdapter()
 const initialState = productsAdapter.getInitialState({
@@ -129,9 +130,16 @@ const selectProductsMatching =() =>  createSelector(
         console.log("####", state.searchedProductTextArr)
         return arr     
     })
+export const searchedProductTextArr = createSelector(
+    (state)=> state.products,
+    (products)=> {
+        // console.log("+++", products)
+        return products.searchedProductTextArr
+    }
 
+)
 export const selectProductNamesThatMatch =(string) => createSelector(
-    selectProducts,
+    filteredProductsFromModel([]),
     products => products
     .filter((item,i)=>{
         return string ?

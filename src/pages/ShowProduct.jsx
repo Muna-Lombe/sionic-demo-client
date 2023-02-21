@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, InfoIco, PinIco } from "../assets";
 import ImageMagnifier from "../components/ImageMagnifier";
 import ProductReviews from "../components/ProductReviews";
 import QAs from "../components/QAs";
 import { filteredProductsFromModel } from "../orm/selectors";
 import { useSelector } from "react-redux";
-import { Link,useParams, useNavigate, useLocation} from "react-router-dom";
+import { Link,useParams, useNavigate, useLocation, Outlet} from "react-router-dom";
 import BellIco from "../assets/BellIco";
-import { BuyBtns, BuyTogether, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, Faqs, FullProductCharacteristics, FullProductDescription, OrderInfo, OtherOffers, PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags, Recommended, ReviewsAndQuestions } from "../components";
+import { BuyBtns, BuyTogether, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, Faqs, FullProductCharacteristics, FullProductDescription, NoItems, OrderInfo, OtherOffers, PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags, Recommended, ReviewsAndQuestions } from "../components";
 import { ClassWatcher } from "../orm/utilities/classWatcher";
 
 
@@ -123,7 +123,8 @@ const ShowProduct = ()=>{
     )
   }
   return(
-       <>
+    <>
+        <Suspense fallback={<NoItems />}>
           <div className="top w-full flex border hide-sidebar gap-2 ">
             <BackBtn/>
             <p>
@@ -179,7 +180,9 @@ const ShowProduct = ()=>{
               <ReviewsAndQuestions handleClassToggle={handleClassToggle}/>
             </MiddleSection>
           <div className="bottom w-full border "></div>
-
+      
+            {/* <Outlet /> */}
+          </Suspense>
        </>   
     )
   

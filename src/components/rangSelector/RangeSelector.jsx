@@ -57,6 +57,7 @@ const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
         value={stateUpdaters.min.val}
         step={(1)}
         ref={minValRef}
+        name="range-left"
         onChange={(event) => {
           const value = Math.min(+event.target.value, stateUpdaters.max.val - 1);
           console.log("minv---", value)
@@ -73,6 +74,7 @@ const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
         value={stateUpdaters.max.val}
         step={(1)}
         ref={maxValRef}
+        name="range-right"
         onChange={(event) => {
           const value = Math.max(+event.target.value, stateUpdaters.min.val + 1);
           console.log("maxv---",value)

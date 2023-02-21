@@ -38,4 +38,5 @@ export { default as FullProductDescription } from './FullProductDescription';
 export { default as FullProductCharacteristics } from './FullProductCharacteristics';
 export { default as ProductTags } from './ProductTags';
 export { default as FilterSearchResults } from './FilterSearchResults';
+export { default as FilterIco } from './FilterIco';
 // export { default as SearchResults } from './SearchResults';
