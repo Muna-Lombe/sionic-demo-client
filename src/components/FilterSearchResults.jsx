@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from "react"
 import { ToggleIco } from "../assets"
 import RangeSelector from "./rangSelector/RangeSelector"
-import FilterIco from "./FilterIco"
+import FilterIco from "../assets/FilterIco"
 
 const FilterSearchResults = ({ children }) => {
 
@@ -128,7 +128,7 @@ const FilterSearchResults = ({ children }) => {
   const ApplyFiltersBtn = ({ text = "Apply Filters" }) => (
     <button
       id="apply_filters_btn"
-      className={` py-[3px] px-1 w-full text-base h-max flex flex-row-reverse justify-center border-[#2967FF]  rounded-lg border-[1px] active:bg-[#2967FF] stroke-blue-500`}
+      className={` py-[3px] px-8 w-max text-base h-max flex flex-row-reverse justify-center border-[#2967FF]  rounded-lg border-[1px] active:bg-[#2967FF] stroke-blue-500`}
       onClick={() => handleApplyFilters()}
     >
       <span className='px-1 md:flex lg:flex xl:flex   text-sm  text-[#2967FF]    active:text-[#ffffff] font-raleway font-[600] text-center'>
@@ -137,7 +137,7 @@ const FilterSearchResults = ({ children }) => {
     </button>
   )
   const FilterComponent = ()=>(
-    <div id="filter-search-results" className="filter-search-results hidden absolute greater-than-sm:relative top-5 left-0 w-full  py-2 mx-4 greater-than-md:w-52 greater-than-sm:flex greater-than-sm:flex-col gap-4 bg-white font-[arial]  z-10" >
+    <div id="filter-search-results" className="filter-search-results hidden absolute greater-than-sm:relative top-5 left-0 w-full h-auto py-2 mx-1 greater-than-md:w-52 greater-than-sm:flex greater-than-sm:flex-col gap-4 bg-white font-[arial] z-[5] overflow-y-clip scrollbar" >
       <h4 className="title text-lg font-[arial] font-semibold underline underline-offset-1">{"Filters"}</h4>
       <Categories/>
       <FilterInput inputType={ "toggle" } />
@@ -155,7 +155,7 @@ const FilterSearchResults = ({ children }) => {
 
   )
   return (
-    <div className="filter-search-results-wrapper mx-1 w-full greater-than-sm:w-max flex gap-1">
+    <div className="filter-search-results-wrapper mx-1 w-full greater-than-sm:w-max flex gap-1 ">
       <span className="flex greater-than-sm:hidden">
         <FilterIco onClick={handleToggleFilters}/>
       </span>

@@ -1,19 +1,19 @@
 import React from 'react'
 
-const NoItems = () => {
+const NoItems = ({ mainText = "😃 Waiting for products to load 😃", subText ="🙅 looks like no items here 👀"}) => {
   return (
     <div
       className="loading-product w-full min-w-[372px] flex flex-col justify-center items-center">
       <div id="no_items_banner__header"
-        className="text-base text-black font-raleway font-semibold">
-        <h3>
-          🙅 looks like no items here 👀
-        </h3>
+        className="text-lg text-black font-raleway font-semibold">
+        <h4>
+          {subText}
+        </h4>
       </div>
       <div id="no_items_banner__footer"
-        className="text-lg text-black font-raleway font-bold">
+        className="text-base text-black font-raleway font-bold">
         <h3>
-          😃 Waiting for products to load 😃
+          {mainText}
         </h3>
       </div>
     </div>

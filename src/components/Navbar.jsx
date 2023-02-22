@@ -127,7 +127,7 @@ const Navbar = () => {
       return createSearchParams({ query: JSON.stringify([curtext]) })
     }
     return(
-      <div id="search_field" tabIndex={0} className="relative min-w-[18rem] w-auto max-w-[28rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
+      <div id="search_field" tabIndex={0} className="relative min-w-[22rem] greater-than-md:min-w-[28rem] w-auto max-w-[28rem] greater-than-md:max-w-[32rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
         {/* <div className="search-input relative w-full max-w-[22rem]  flex   justify-between p-[1px]"> */}
           <input type="text" ref={ref}  name="search" defaultValue={curtext} placeholder={searchProductText||""} onKeyUp={(e) => {handleChange(e); setCurtext(e.target.value)}} className=" search autofill:selection bg-white w-full rounded-bl-3xl rounded-tl-3xl bg-transparent px-2  text-black focus:outline-none" />
     
@@ -143,7 +143,7 @@ const Navbar = () => {
       <nav className=" relative w-full h-full flex justify-center gap-2 items-start  lg:items-center xl:items-center ">
         <div id="navbar_left__wrapper" className=" w-full block md:block  lg:gap-6 lg:flex lg:flex-row xl:flex xl:flex-row justify-start items-center transition-all">
           <div id="logo_location" className="min-w-max w-full lg:w-auto xl:auto flex justify-start  p-4 gap-8">
-            <div id="logo" className="text-[2.4rem] leading-10 font-raleway font-bold">
+            <div id="logo" className="p-1 border-[4px] border-black border-spacing-2 rounded-[4px] text-[2.4rem] leading-10 font-raleway font-bold">
               <Link to="" > Katundu </Link> 
             </div>
             
@@ -153,10 +153,10 @@ const Navbar = () => {
               <h2 className="hidden p-2 md:flex lg:flex"> Александровск-Са...</h2>
             </div>
           </div>
-          <div id="search_field_wrapper"  className="w-full max-h-14 lg:min-w-[16rem] xl:min-w-[16rem] py-2 flex flex-col justify-start items-start transition-all">
+          <div id="search_field_wrapper"  className="w-full greater-than-md:w-max max-h-14 lg:min-w-[2rem] xl:min-w-[2rem] py-2 flex flex-col justify-start items-start transition-all">
             <div id="search_field_box" className='w-full flex flex-col items-center' onBlur ={(e) => handleBlur(e, "blur")}>
               <SearchField/>
-              <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="min-w-[18rem] w-auto max-w-[28rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
+              <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="min-w-[22rem] greater-than-md:min-w-[28rem] w-auto max-w-[28rem] greater-than-md:max-w-[32rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
               </optgroup>
             </div>
             

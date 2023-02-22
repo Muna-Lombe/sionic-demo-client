@@ -42,11 +42,11 @@ const AppWrapper = ({children}) => {
   return (
     <Suspense fallback={<NoItems />}>
 
-      <div id="App" className="dark relative min-w-[200px] w-auto max-w-[2528px]  min-h-screen flex flex-col justify-between gap-4 ">
+      <div id="App" className="dark relative min-w-[200px] w-auto max-w-[2528px] min-h-screen flex flex-col justify-between gap-4 ">
 
         <MainbarNav/>
         <div id="main" className="w-auto min-h-[76rem] h-auto  flex first:flex-col justify-between">
-          <div id="mainbar_container_wrapper" className=" w-full  h-max overflow-y-auto gap-1 scrollbar">
+          <div id="mainbar_container_wrapper" className=" w-full  h-auto overflow-y-auto gap-1 scrollbar">
             {children}
             
           </div>

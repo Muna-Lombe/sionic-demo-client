@@ -6,7 +6,7 @@ import cartImg from '../assets/images/cart_item.png'
 import { DeleteIco } from '../assets'
 import { selectProductIds, selectProducts } from '../js/slices/products/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import IMG from '../assets/images';
+import IMG, { imagepath } from '../assets/images';
 import { cartItemDeleted, cartItemOrdered, selectCartItems } from '../js/slices/cart/cartSlice';
 
 
@@ -18,11 +18,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
   
   const dispatch = useDispatch() 
   
-  // //////////////////////////////////////////////////////////
-  //  THE IMAGE CLASS IS JUST TO BETTER ADD IMAGE PATHS TO OTHER COMPONENTS
-  // // CREATE IMAGE INSTANCE
-  var img = new IMG()
-// /////////////////////////////////////
+ 
   const handleDelete = (id) => {
     dispatch(cartItemDeleted(id))
   }
@@ -82,7 +78,7 @@ const Cart = ({items, unOrd, ord, inArrHaveBeenOrdered}) => {
               <div id="product_image" 
                 className="w-max max-h-[5rem] px-2 flex justify-center items-center">
                 <img 
-                  className=" w-20 h-20 md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={img[product.img_path_id]} alt="IGM" />
+                  className=" w-20 h-20 md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={imagepath(product.images[0].image_url)} alt="IGM" />
               </div>
               <div id="product_description" 
                 className="w-auto max-w-[352px] flex flex-col justify-between"  >

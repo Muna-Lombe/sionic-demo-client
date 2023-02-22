@@ -1,14 +1,9 @@
-import { Suspense, useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, InfoIco, PinIco } from "../assets";
-import ImageMagnifier from "../components/ImageMagnifier";
-import ProductReviews from "../components/ProductReviews";
-import QAs from "../components/QAs";
+import { Suspense, } from "react";
+import { ArrowLeft,  PinIco } from "../assets";
 import { filteredProductsFromModel } from "../orm/selectors";
 import { useSelector } from "react-redux";
-import { Link,useParams, useNavigate, useLocation, Outlet} from "react-router-dom";
-import BellIco from "../assets/BellIco";
-import { BuyBtns, BuyTogether, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, Faqs, FullProductCharacteristics, FullProductDescription, NoItems, OrderInfo, OtherOffers, PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags, Recommended, ReviewsAndQuestions } from "../components";
-import { ClassWatcher } from "../orm/utilities/classWatcher";
+import { Link,useParams, useLocation, } from "react-router-dom";
+import { BuyBtns, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, EmbeddedProducts, Faqs, FullProductCharacteristics, FullProductDescription, NoItems, OrderInfo,  PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags,  ReviewsAndQuestions } from "../components";
 
 
 const ShowProduct = ()=>{
@@ -92,7 +87,9 @@ const ShowProduct = ()=>{
       </div>
     )
   }
- 
+  const RecommendedProducts = () => (<EmbeddedProducts title={"Recommended Products"} tagname="recommended-products"/>)
+  const OfferedProducts = () => (<EmbeddedProducts title={"Offered Products"} tagname="offered-products" />)
+  const BuyTogetherProducts = () => (<EmbeddedProducts title={"Buy Together"} tagname="buy-matching-products" />)
   const MiddleSection =({children})=>{
     const NoItems = () => (
       <div 
@@ -171,9 +168,9 @@ const ShowProduct = ()=>{
                   </PaymentType>
 
               </ContentViewer>
-              <Recommended/>
-              <BuyTogether/>
-              <OtherOffers/>
+              <RecommendedProducts/>
+              <BuyTogetherProducts/>
+              <OfferedProducts/>
               <FullProductDescription description={{text: descriptiveText, tags: [descTag1, descTag2] }}/>
               <FullProductCharacteristics/>
               <ProductTags/>

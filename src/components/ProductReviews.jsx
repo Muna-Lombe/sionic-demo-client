@@ -1,6 +1,6 @@
 import { CheckIco, StarIco, ThumbIco } from "../assets"
 import { image1_1, imagepath } from "../assets/images"
-
+import no_img_path from '../assets/images/no_product_img.png'
 const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
   
   const ReviewImages =({imageArray=[1,2,3,4,5]})=>(
@@ -9,7 +9,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
         {
           imageArray?.map((i,x)=>{
             return (
-            <img key={x} src={imagepath(i.id||3001)} alt={"review-img-"+x}
+              <img key={x} src={imagepath(i.image_url) || no_img_path} alt={"review-img-"+x}
             className="w-[80px] aspect-square "
             />
             )
@@ -84,7 +84,7 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
       <div key={k} className="review-component w-full p-2 flex gap-2 justify-between">
         <div className="reviewer flex gap-3">
           <div className="reviewer-avtr justify-self-start">
-            <img src={imagepath(review?.i || 3001)} alt="" className="w-[50px] min-w-[50px] aspect-square border-2 rounded-3xl" />
+            <img src={imagepath(review?.i) || no_img_path} alt="" className="w-[50px] min-w-[50px] aspect-square border-2 rounded-3xl" />
           </div>
           <div className="reviewer-details my-2 px-2 flex flex-col gap-8">
             <div className="reviewer-name-date-ranking min-w-max sm:w-full sm:max-w-full xs:max-w-xs flex xs:flex-col sm:flex-row lg:flex-col justify-between ">
