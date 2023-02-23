@@ -1,10 +1,10 @@
 
 export const ThunkTypes = [
-  {dataName: "Products", modelName: "Product", range: 18 },
+  {dataName: "Products", modelName: "Product",}, // range: 18 
   {dataName:"ProductCategories",modelName:"ProductCategory"},
-  {dataName:"ProductImages",modelName:"ProductImage",range:50},
-  {dataName:"ProductVariations",modelName:"ProductVariation", range:50},
+  {dataName:"ProductImages",modelName:"ProductImage",}, //range:50
+  {dataName:"ProductVariations",modelName:"ProductVariation"},
   {dataName:"ProductVariationProperties",modelName:"ProductVariationProperty"},
-  {dataName:"ProductVariationPropertyValues",modelName:"ProductVariationPropertyValue", range:50},
+  {dataName:"ProductVariationPropertyValues",modelName:"ProductVariationPropertyValue"},
   {dataName:"ProductVariationPropertyListValues",modelName:"ProductVariationPropertyListValue"},
 ];

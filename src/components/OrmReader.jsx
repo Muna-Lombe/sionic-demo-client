@@ -6,7 +6,7 @@ import { connect, useSelector } from 'react-redux';
 import { createDispatchHook } from 'react-redux';
 import { Link } from "react-router-dom";
 import { imagepath, imagepaths } from '../assets/images';
-import { created, removed } from '../orm/actions/actionTypes';
+import { created, removed, selectedProduct } from '../orm/actions/actionTypes';
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationProperrtyListValueSession, productVariationProperrtySession, productVariationProperrtyValueSession, session } from '../orm/reducers/rootOrmReducer';
 import { filteredProductsFromModel, filteredCategoriesFromModel, filteredOrdersFromModel, filteredCustomModelSelector } from '../orm/selectors';
@@ -14,7 +14,7 @@ import Product from './Product';
 import { useDispatch } from 'react-redux';
 import { ImageMagnifier } from '.';
 import { ArrowRight, PinIco } from '../assets';
-import ShowProduct from './ShowProduct';
+import ShowProduct from '../pages/ShowProduct';
 
 
 
@@ -28,15 +28,6 @@ const OrmReader = () => {
   const dispatch = useDispatch();
   const img_root = imagepath;
 
-  // useEffect(() => {
-  //   // dispatch(asyncThunk())
-  
-  //   // return () => {
-  //   //   second
-  //   // }
-  // }, [dispatch])
-  
-  
   
   console.log("returned products", products, excludedIds)
   const handleFilter = (type,id)=> {
@@ -78,7 +69,7 @@ const OrmReader = () => {
             product_id: id
         }
         
-        dispatch(created('Order')(action))
+        // dispatch(created('Order')(action))
 
           
         break;
@@ -106,6 +97,12 @@ const OrmReader = () => {
     
     
   
+  }
+
+  const viewProduct=(e)=>{
+    console.log("selected product", e)
+    dispatch({type:"orm/Product/SelectedProduct", payload: e})
+    setModalContent(products.find((i)=> i.id ===e))
   }
   const ProductLoading = () =>{
     const a = new Array(8)
@@ -162,9 +159,8 @@ const OrmReader = () => {
             <div className="w-full px-1 flex justify-around bg-lime-500 cursor-pointer sticky top-0">
               <span >{product?.name.toString().slice(0, 8)}</span>
               <span>
-                <button type='text' onClick={()=>setModalContent(product)}>
-                  🔎
-                </button>
+                <Link to={"/product/"+product?.id} >🔎</Link>
+                
               </span>
               <span>
                 <button type='text' onClick={(e) => handleAdd(e, 'to_order', product.id)}>
@@ -262,22 +258,7 @@ const OrmReader = () => {
       </details>
     )
   }
-  const SelectedProduct = () => {
-    if (!modalContent.id) return (<div className='hidden'></div>)
-    return (
-      <div className="modal fixed bottom-0 w-[100vw] h-[100vh] grid place-content-center z-30">
-        <div className="modal-backdrop absolute w-[100%] h-[100%] top-0 left-0  bg-gray-700 opacity-70 z-40 scroll">
-        </div>
-        <div className="prd w-[100vw] h-[100vh] bg-white z-50 overflow-scroll">
-          <span slot={""} className={"w-5 h-5 self-end items-center text-sm cursor-pointer z-50"} onClick={(e) => setModalContent({})}> ❎ </span>
-          
-          <ShowProduct product={modalContent} img_root={img_root}/>
-        </div>
-        {/* <ProductItem  product={modalContent} showDetailed /> */}
-
-      </div>
-    )
-  }
+  
   const ProductField = () => {
     return(
       <div className="mx-2">
@@ -287,11 +268,11 @@ const OrmReader = () => {
             <div className="flex flex-wrap gap-2">
             {products?.map((product,idx)=> {
               return (
-                <>
+                <div key={idx}>
                 {/* <Product id={idx} product={product}/> */}
                   {/* <AccordionStyleProductItem key={idx} product={product} /> */}
-                <ProductItem key={idx} product={product} />
-                </>
+                <ProductItem  product={product} />
+                </div>
                
               )
             })}</div>
@@ -469,9 +450,7 @@ const OrmReader = () => {
         {/* < ImageMagnifier sqrDim={200} img_root={img_root} images={products[0]?.images} /> */}
         <OrderField/>
         {/* <CategoryField /> */}
-        {/* <ListingsField/> */}
-        <SelectedProduct/>
-   
+        {/* <ListingsField/> */}   
       </div>
     
 

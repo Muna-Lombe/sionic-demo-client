@@ -1,6 +1,7 @@
 import { createSelector } from "redux-orm";
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
+import { addToProductData } from "../js/slices/products/productsSlice";
 console.log(session, orm)
 
 
@@ -23,10 +24,10 @@ export const filteredCustomModelSelector = (model, ex) =>{
 export const filteredCategoriesFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
   state => {
-   
     const catObject = state.ProductCategory
     .all()
     .toRefArray()
+
     return (ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
     
   }
@@ -60,98 +61,69 @@ export const filteredProductsFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
     state => {
       // console.log("whatsup", state.Product)
-      const productObject = state.Product
-      .all()
-      .toRefArray() 
-      .map((p,) =>{
-        return {
+      const catId =  0//state.ProductCategory.initialState.currCatId
+      // console.log("catid", ex)
+      const filteredProdsByCat = ex.length  
+                                  ? state.ProductCategory
+                                    .filter(cat => ex.some(i => i === cat.id))
+                                    .all().toModelArray()
+                                    .flatMap(i => i.products.all().toRefArray())
+                                  : state.Product.all().toRefArray()
+     
+      const productsArray = filteredProdsByCat.map((p,i) =>{
+        let p1 = {
         ...p, 
         orders: state.Product.withId(p.id).orders.toRefArray(),
         images: state.Product.withId(p.id).images.toRefArray(),
+        priceRange: state.Product.withId(p.id).variations.toRefArray().map((v)=> v.price),
         variations: state.Product.withId(p.id).variations.toRefArray()
-          .map((v,idx)=>{
+          .map((v,vidx)=>{
             return {
               ...v,
               properties: state.ProductVariationProperty.all().toRefArray()
-              .map((prop, idx)=>{
+              .map((prop, pidx)=>{
+                const value = state.ProductVariationProperty.withId(prop.id) //{ value_string, value_float, value_int }
+                  .propertyValues.all()
+                  .filter(val => (val.product_variation_id === v.id && val.product_variation_property_id === prop.id))
+                  .toRefArray()[0]
+                const listValues = state.ProductVariationProperty.withId(prop.id)
+                                  .listValues.all()
+                                  .filter(lv=> lv.product_variation_property_id === prop.id)
+                                  .toRefArray().map(t=> ({title:t.title, value:t.value}))
                 return {
                   ...prop,
-                  listValues: state.ProductVariationProperty.at(idx).listValues.all().toRefArray(),
+                  values: [(value?.value_string || value?.value_float || value?.value_int || listValues)].flat()  ,
+                  // listValues: state.ProductVariationProperty.withId(prop.id).listValues.all().toRefArray(),
                 }
               }),
-              values: state.ProductVariation.at(idx).propertyValues.all().toRefArray()
+            
+
 
 
             }
+          
           }),
           
         }
+        let id=i
+        if(i !== 0){ id = i%6}
+        // console.log("pr1",p1, i)
+        // return p1
+        return addToProductData(p1, id)
       });
-   
-    
+
+      return productsArray
+      // console.log("running products selector 2",ex, productsArray[1].category_id)
+      // return (ex.length ? productsArray.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productsArray)
+    }
+  )
+
+  export const productsMatchingSearch =(searchTextArr)=> createSelector(
+    ormSelector(session.schema),
+    filteredProductsFromModel([]),
+    (state,products)=> {
+      return products.filter((i,x)=> searchTextArr.some((d,x)=>i.product.name.toString().includes(d.toString()) || d.toString().includes(i.product.name.toString())) )
       
-      
-      // console.log("running products selector 2",ex, productObject[1].category_id)
-      return (ex.length ? productObject.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productObject)
     }
   )
   
-  
-  // const selectProds = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Product)
-  //     const products = state.orm.Product
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-  // const selectCats = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Category)
-  //     const products = state.orm.Category
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-  // const selectImgs = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Product)
-  //     const products = state.orm.Product
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-  
-  // const selectVars = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Product)
-  //     const products = state.orm.Product
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-  // const selectVarProps = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Product)
-  //     const products = state.orm.Product
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-  // const selectVarPropListVals = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Product)
-  //     const products = state.orm.Product
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-  // const selectVarPropVals = createSelector(
-  //   orm,
-  //   state => {
-  //     console.log("say", state.orm.Product)
-  //     const products = state.orm.Product
-  //     return products.items.map(i => ({...products.itemsById[i]}) )
-  //   }
-  // )
-

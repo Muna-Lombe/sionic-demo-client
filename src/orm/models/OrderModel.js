@@ -1,6 +1,6 @@
 import { attr,fk, many, Model, ORM } from "redux-orm";
 
-import { CREATE, REMOVE, UPDATE, ADD_TO,REMOVE_FROM, ASSIGN } from "../actions/actionTypes";
+import {  actions } from "../actions/actionTypes";
 import customReducer from "./reducer";
 
 // import { createStore, combineReducers } from "redux";
@@ -8,8 +8,8 @@ import customReducer from "./reducer";
 // import moment from "moment";
 
 class Order extends Model {
-    static reducer(session, Order, action) {
-        return customReducer(session, Order, action)
+    static reducer(action, Order, session) {
+        return customReducer({session, model:Order, action})
     }
 //   
 }
@@ -19,5 +19,5 @@ Order.fields = {
     product_id: fk('Product', 'orders'),
     DateCreated: attr(),
 };
-
+export const [updatedOrder, removedOrder, addedOrder, createdOrder, addedOrderTo, removedOrderFrom,] = actions().createDefaultFor('Order')
 export default Order;

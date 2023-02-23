@@ -1,8 +1,8 @@
 import * as consts from "../actions/actionTypes";
 import { fromType } from "../utilities/StateLoader";
 
-export default function customReducer(action, model, session) {
-  // console.log("acrion", action)
+export default function customReducer({session, model,action }) {
+  // console.log("acrion", session, model.modelName, action)
   const verb =()=> fromType(action.type).getActionWord()
   const defaultTarget =() => fromType(action.type).getModelName()
   const isTargetModel = (target=defaultTarget()) => model.modelName === target
@@ -36,8 +36,6 @@ export default function customReducer(action, model, session) {
 
       }
       const customDispatch = () => {
-        
-
         for (const [m, d] of payload) {
           // console.log("m & d", m,d)
           if (isTargetModel(m)) {
@@ -45,26 +43,15 @@ export default function customReducer(action, model, session) {
             const result = isTargetModel(m) ? doCreate(d) : ''
           }
         }
-        
-
       }
       
 
       batchDo({ customFn: customDispatch })
       
-
-      // console.log("result", session.state)
       break;
 
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.CREATE+'_'+model.modelName):
-      // console.log("creating...", action, payload)
-      // model.create(payload);
       batchDo({modelAction:model, data:payload})
-      // Object.keys(payload).forEach((k,i)=>{
-      //   model.create(payload[k])
-      // })
-      
-      // session.reduce();
       break;
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.UPDATE+model.modelName):
       model.withId(payload.id).update(payload);

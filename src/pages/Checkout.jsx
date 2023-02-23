@@ -1,9 +1,15 @@
-import React from 'react'
-import { CheckoutForm } from '../components'
+import React, { Suspense } from 'react'
+import { CheckoutForm, NoItems } from '../components'
+import { Outlet } from 'react-router-dom'
 
 const Checkout = () => {
   return (
-    <CheckoutForm />
+    <>
+      <Suspense fallback={<NoItems />}>
+        <CheckoutForm />
+        {/* <Outlet /> */}
+      </Suspense>
+    </>
   )
 }
 

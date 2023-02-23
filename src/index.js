@@ -13,6 +13,9 @@ import {ThunkTypes} from './orm/actions/thunkTypes';
 import { asyncThunk, load, StateLoadMiddleware } from './orm/utilities/StateLoader';
 import { stateLoading, stateStatus, STATE_LOADING } from './orm/actions/actionTypes';
 
+
+// export const cachedProduct = new Cache()
+
 Store.dispatch(fetchProducts())
 Store.dispatch(asyncThunk())
 // StateLoadMiddleware(Store)

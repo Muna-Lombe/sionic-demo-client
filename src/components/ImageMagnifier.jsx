@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { imagepath } from '../assets/images'
+import no_img_path from '../assets/images/no_product_img.png'
 
-const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
+const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
   const [itemsCentered, setItemsCenter] = useState(false)
   const [activeImage, setActiveImage] = useState(false)
-
+   
   useEffect(()=>{
     return images?.length
     ? setActiveImage(images[0])
@@ -26,8 +28,8 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
     glass.addEventListener("mousemove", moveMagnifier);
     mesh.addEventListener("mousemove", moveMagnifier);
 
-    glass.addEventListener("touchmove", moveMagnifier);
-    img.addEventListener("touchmove", moveMagnifier);
+    glass.addEventListener("touchmove", ()=>console.log("touchmove"));//moveMagnifier);
+    img.addEventListener("touchmove", () => console.log("touchmove")); //moveMagnifier);
 
     function moveMagnifier(e) {
 
@@ -88,17 +90,21 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
       if(activeImage.id !== id) setActiveImage(images.find((i) => i.id === id ))
   }
 
-  const SmallSizeImageArray = () => (
+  const SmallSizeImageArray = ({imgArr=[1,2,3,4]}) => (
       <div className={" w-["+sqrDim+"px] max-w-full flex justify-center "}>
         {
           
-          images?.map(i=>
+          imgArr?.map((i,idx)=>
             <img 
-              id={(activeImage.id === i.id) ? "active " : i.id} 
-              alt="gallery" 
-              onClick={(e) => (activeImage.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
-              className={"w-[" + (sqrDim / (sqrDim / 10) * 10)+"px] aspect-square" + ((activeImage.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
-              src={img_root(i.id)} 
+              key={idx}
+              id={(activeImage?.id === i.id) ? "active " : i.id||idx} 
+              alt="gallery"
+              onClick={handleClick} 
+              onMouseEnter={(e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
+              onTouchStart={((e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")))}
+              className={"min-w-[70px] w-[" + (sqrDim / (sqrDim / 10) * 10)+"px] max-w-[120px] aspect-square" + ((activeImage?.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
+              src={imagepath(i?.image_url)||no_img_path}
+               
             />
           )
         }
@@ -112,11 +118,11 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
 
         </div>
           {
-            images?.length ?
-            <img id="activeImage" alt="gallery" className={"w-full aspect-square object-cover object-center block"} src={img_root(activeImage.id || images[0].id)} />
-              : ""
+            // images?.length ?
+            <img id="activeImage" alt="gallery" className={"w-full aspect-square object-cover object-center block"} src={imagepath(activeImage?.image_url || images[0]?.image_url)||no_img_path} />
+              // : ""
           }
-      <div className={"img-magnifier-glass absolute bottom-0 right-0 w-[100px] aspect-square border-[3px] border-slate-600  rounded-md cursor-none"}></div>
+      <div className={"img-magnifier-glass absolute bottom-0 right-0 w-[100px] aspect-square hover:bg-white border-[3px] border-slate-600  rounded-md cursor-none"}></div>
       </div>
   )
   const ToggleBtn = () =>(
@@ -129,9 +135,9 @@ const ImageMagnifier = ({ img_root, images, sqrDim = 400 }) => {
     </div>
   )
   return (
-    <div className={"img-magnifier-container relative max-w-full p-3 flex flex-col" + (itemsCentered ? " items-center" : " ") + " "} >
+    <div className={"img-magnifier-container relative flex flex-col" + (itemsCentered ? " items-center" : " ") + " "} >
       <CurrentImage />
-      <SmallSizeImageArray  />
+      <SmallSizeImageArray imgArr={images}  />
       {/* <ToggleBtn /> */}
     </div>
   )

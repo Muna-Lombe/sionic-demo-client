@@ -174,6 +174,7 @@ class Get {
     let localThis = this;
     Get.availableFunctions.forEach(async(fn)=>{
       var fs //= require('fs');
+      
       var Path //= require('path')
       if(fn === "LazyLoad") return 0;
       if(fn.toLowerCase().includes('one')) return 0;
@@ -199,7 +200,7 @@ class Get {
         })
         
       }
-
+      
       if(saveToFile){
         const basepath = process.cwd()
         try {
@@ -214,8 +215,7 @@ class Get {
     })
     return "completed...!"
   }
+  
 }
-
-
-export default Get;
 // export default Get;
+export default Get;

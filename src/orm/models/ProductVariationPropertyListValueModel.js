@@ -1,12 +1,13 @@
 import { attr,fk, many, Model, ORM } from "redux-orm";
 import customReducer from "./reducer";
+import { actions } from "../actions/actionTypes";
 
 
 
 
 class ProductVariationPropertyListValue extends Model {
-    static reducer(session, ProductVariationPropertyListValue, action) {
-        return customReducer(session, ProductVariationPropertyListValue, action)
+    static reducer(action, ProductVariationPropertyListValue, session) {
+        return customReducer({session, model:ProductVariationPropertyListValue, action})
     }
 }
 ProductVariationPropertyListValue.modelName = 'ProductVariationPropertyListValue';
@@ -19,4 +20,6 @@ ProductVariationPropertyListValue.fields = {
 ProductVariationPropertyListValue.options = {
     idAttribute: 'id'
 }
+export const [updatedProductVariationPropertyListValue, removedProductVariationPropertyListValue, addedProductVariationPropertyListValue, createdProductVariationPropertyListValue, addedProductVariationPropertyListValueTo, removedProductVariationPropertyListValueFrom,] = actions().createDefaultFor('ProductVariationPropertyListValue')
+
 export default ProductVariationPropertyListValue;

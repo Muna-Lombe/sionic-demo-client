@@ -2,15 +2,12 @@ import {createSelector, ORM } from "redux-orm";
 import Order from "../models/OrderModel";
 import Product from "../models/ProductModel";
 import { createReducer } from "redux-orm";
-import { combineReducers } from "redux";
-import Get from "../../assets/tests/Get";
 import ProductCategory from "../models/ProductCategoryModel";
 import ProductImage from "../models/ProductImageModel";
 import ProductVariation from "../models/ProductVariationModel";
 import ProductVariationProperty from "../models/ProductVariationPropertyModel";
 import ProductVariationPropertyValue from "../models/ProductVariationPropertyValueModel";
 import ProductVariationPropertyListValue from "../models/ProductVariationPropertyListValueModel";
-import { customStateUpdater } from "../utilities/StateLoader";
 import { defaultUpdater } from "redux-orm/lib/redux";
 
 

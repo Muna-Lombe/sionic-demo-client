@@ -2,7 +2,7 @@ import React from 'react'
 
 const DiscountIco = () => {
   return (
-    <svg width="322" height="143" viewBox="0 0 322 143" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="310" height="143" viewBox="0 0 322 143" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="11.5" y="0.5" width="310" height="142" rx="19.5" fill="white" stroke="#FF2D87"/>
       <g clipPath="url(#clip0_1_39159)">
       <path d="M90.9999 114H37.9092L45.1892 54.4449H83.6311L90.9999 114Z" fill="#FF2D87"/>

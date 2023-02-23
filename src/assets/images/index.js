@@ -7,9 +7,15 @@ import image13_6 from './image13_6.png';
 import image13_7 from './image13_7.png';
 
 // export * as imagepaths from '../tests/jsonServer/images';
-export const imagepath = (id)=> {
-    
-    const image = require('../tests/jsonServer/images/'+id+'.jpg');
+export const imagepath = (path)=> {
+    if(path === undefined) return false;
+    let image;
+    try {
+        image = require('../tests/jsonServer' + path);
+    } catch (error) {
+        image = require('../tests/jsonServer' + path);
+    }
+    // console.log("image",id, image)
     return image;
 }
 export const image1_1 = image13_1;
