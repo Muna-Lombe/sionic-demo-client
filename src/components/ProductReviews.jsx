@@ -1,11 +1,13 @@
 import { CheckIco, StarIco, ThumbIco } from "../assets"
 import { image1_1, imagepath } from "../assets/images"
 import no_img_path from '../assets/images/no_product_img.png'
-const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
-  
-  const ReviewImages =({imageArray=[1,2,3,4,5]})=>(
-    <div className="review-images-wrapper min-w-[370] overflow-clip">
-      <div className="review-images min-w-[370px] max-w-max flex flex-row gap-2 border-b-2 overflow-x-scroll scrollbar">
+
+const ProductReviews=({prs})=>{
+
+ 
+  const ReviewImages =({imageArray})=>(
+    <div className="review-images-wrapper w-auto max-w-[570px] overflow-clip">
+      <div className="review-images w-full max-w-max flex flex-row gap-2 border-b-2 overflow-x-scroll scrollbar">
         {
           imageArray?.map((i,x)=>{
             return (
@@ -30,19 +32,20 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
       
     </p>
   )
-  const OverallRating = ({})=> {
+  const OverallRating = ({summary})=> {
+    
     const GradeCount =({grade=2, maxCount=10, total=100})=>(
       <div className="rating-count flex flex-row gap-4">
-        <div className="star-grade flex flex-row gap-1 text-slate-300 text-sm font-raleway font-semibold align-bottom text-end">
+        <div className="star-grade w-11 flex flex-row gap-1 text-slate-300 text-sm font-raleway font-semibold align-bottom text-end">
           <span className="grade-value text-[20px] leading-6">
             {grade}
           </span>
-          <span className="grade-text h-8 flex items-baseline leading-[30px] align-bottom">
+          <span className="grade-text  h-8 flex items-baseline leading-[30px] align-bottom">
             {" star" + (grade > 1 ? "s" : "")}
           </span>
         </div>
         <div className="progress-visual mx-2 ">
-          <progress value={maxCount} max={total} color="yellow" className="[&]:appearance-none [&]:w-52 [&]:h-2 [&]:rounded-xl [&::-webkit-progress-bar]:bg-slate-300 [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:bg-yellow-300 [&::-webkit-progress-value]:rounded-xl  "></progress>
+          <progress value={maxCount} max={total} color="yellow" className="[&]:appearance-none [&]:w-52 [&]:h-2 [&]:rounded-xl [&::-webkit-progress-bar]:bg-slate-300 [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:bg-yellow-400 [&::-webkit-progress-value]:rounded-xl  "></progress>
         </div>
         <div className="grade-count">
           {maxCount}
@@ -50,21 +53,29 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
       </div>
     )
 
-    const RatingTotal =()=>(
-      <div className="rating-total py-2 flex flex-row justify-between items-baseline gap-4 border-b-2 text-xl">
-        <div className="star-count">
-          {/* {"⭐⭐⭐⭐⭐"} */}
-          <Stars count={4} max={5} />
+    const RatingAverage =()=>{
+      const summaryValues = summary.ratings.summary.map(s=> s.value)
+      const avg = (summaryValues.reduce((a, b) => a + b) / summaryValues.sort((a, b) => b-a)[0]).toFixed(1)
+      const total = summaryValues.length
+      return (
+        <div className="rating-total py-2 flex flex-row justify-between items-baseline gap-4 border-b-2 text-xl">
+          <div className="star-count">
+            {/* {"⭐⭐⭐⭐⭐"} */}
+            <Stars count={avg} max={total} />
+          </div>
+          <div className="number-count font-[arial] font-semibold leading-snug">
+            {avg+"/"+total}
+          </div>
         </div>
-        <div className="number-count font-[arial] font-semibold leading-snug">
-          {"5/5"}
-        </div>
-      </div>
-    )
+      )
+      }
 
-    const VariedTotals=()=>(
+    const RatingsSummary=()=>(
       <div className="varied-rating-grade-totals my-5">
-        <GradeCount />
+        {
+          summary.ratings.summary.map((s,x)=> <GradeCount key={x} grade={s.grade} maxCount={s.value} total={summary.reviewTotal} />)
+        }
+        
       </div>
     )
     const ReviewBtn=()=>(
@@ -72,104 +83,110 @@ const ProductReviews=({reviewsArray=[1,2,3,4,5]})=>{
     )
     return (
       <div className="overall-rating px-2 min-w-[340px] hidden lg:flex lg:flex-col">
-        <RatingTotal/>
-        <VariedTotals/>
+        <RatingAverage/>
+        <RatingsSummary/>
         <ReviewBtn/>
       </div>
     )
   }
-  const Review =({review, k=1})=>{
-    
-    return(
-      <div key={k} className="review-component w-full p-2 flex gap-2 justify-between">
+  const Review =({review})=>{
+    return (
+      <div className="review-component w-full p-2 flex gap-2 justify-between">
         <div className="reviewer flex gap-3">
           <div className="reviewer-avtr justify-self-start">
-            <img src={imagepath(review?.i) || no_img_path} alt="" className="w-[50px] min-w-[50px] aspect-square border-2 rounded-3xl" />
+            <img src={imagepath(review?.i) || review.reviewer.avtr_url || no_img_path} alt="" className="w-[50px] min-w-[50px] aspect-square border-2 rounded-3xl" />
           </div>
           <div className="reviewer-details my-2 px-2 flex flex-col gap-8">
-            <div className="reviewer-name-date-ranking min-w-max sm:w-full sm:max-w-full xs:max-w-xs flex xs:flex-col sm:flex-row lg:flex-col justify-between ">
+            <div className="reviewer-name-date-ranking min-w-max sm:w-full sm:max-w-full xs:max-w-xs flex flex-col xs:flex-col sm:flex-row lg:flex-col justify-between ">
               <p className="name text-lg font-medium ">
-                {"name"}
+                {review.reviewer.name}
               </p>
               <div className="review-date-rating min-w-max  flex flex-col float-left">
                 <div className="review-date text-slate-400 text-base font-[arial]">
-                  {"1 January 2001"}
+                  {review.datePosted}
                 </div>
-                <div className="review-rating">
-                  <Stars count={1} max={1}/>
+                <div className="review-rating flex flex-row">
+                  {
+                    new Array(review.reviewRanking).fill(1).map((i, x) => <Stars key={x} count={i} max={i} />)
+                  }
                 </div>
+
               </div>
             </div>
             <div className="purchase-platform-brief  flex flex-col gap-2 font-[arial] font-medium">
-              <div className="platform w-max px-3 py-1 flex justify-around gap-2 bg-[#F2F5F9] border-1 rounded-xl text-[#5d5d5d] text-sm">
+              <div className="platform w-max px-3 py-1 flex justify-around gap-2 bg-[#F2F5F9] border-1 rounded-xl text-[#5d5d5d] text-sm font-raleway font-semibold">
                 <p className="text-blue-500">
-                  <CheckIco/>
+                  <CheckIco />
                 </p>
-                <p>{"purchase platform"}</p>
+                <p>{"purchased on Katundu"}</p>
               </div>
               <div className="brief-outline">
                 <p>{"brief description"}</p>
-                <p className="flex flex-row gap-1">
-                  <span className="quantifier-name text-slate-400 text-base">{"some quatifier name"}:</span>
-                  <span className="quantifier-value text-base">{"some quantifier value"}</span>
-                </p>
-                <p className="flex flex-row gap-1">
-                  <span className="quantifier-name text-slate-400 text-base">{"some quatifier name"}:</span>
-                  <span className="quantifier-value text-base">{"some quantifier value"}</span>
-                </p>
-                <p className="flex flex-row gap-1">
-                  <span className="quantifier-name text-slate-400 text-base">{"some quatifier name"}:</span>
-                  <span className="quantifier-value text-base">{"some quantifier value"}</span>
-                </p>
-                <p className=" my-3 flex flex-col gap-1 ">
-                  <span className="quantifier-name text-lg font-medium">{"Some emphasised quatifier name"}</span>
-                  <span className="quantifier-value text-base font-[arial] font-[470]">{"some emphasised quantifier value"}</span>
-                </p>
+                {
+                  review.quantifiers.map((q, x) =>
+                    <p className="flex flex-col xs:flex-col sm:flex-row lg:flex-col gap-1">
+                      <span className="quantifier-name text-slate-400 text-base">{q.quantifier}:</span>
+                      <span className="quantifier-value text-base">{q.value}</span>
+                    </p>
+
+                  )
+                }
+
               </div>
             </div>
+            {
+              review.images
+              ? <ReviewImages imageArray={review.images}/>
+              :""
+            }
             <div className="reviewer-comment">
               <p className=" my-3 flex flex-col gap-1 ">
                 <span className="comment-title text-slate-400 text-lg">{"Comment"}</span>
-                <span className="comment-text text-base">{"some long comment with space for adding images or videos can it go longer than "}</span>
+                <span className="comment-text whitespace-normal text-base">{review.comment}</span>
               </p>
-              
+
             </div>
             <div className="helpful-review-rank w-max flex flex-col gap-2 ">
               <p className="title text-slate-400 text-sm ">{"Was this review helpful?"}</p>
               <div className="ranking flex flex-row gap-2">
                 <p className="rank-yes py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600 font-[arial]" role="button">
                   <span className="text-slate-500">
-                    <ThumbIco/>
+                    <ThumbIco />
                   </span>
                   <span className="rank-count">
-                    {10}
+                    {review.rating.upvotes}
                   </span>
                 </p>
                 <p className="rank-no py-1 px-2 w-max flex flex-row items-baseline bg-slate-300 rounded-3xl text-slate-600  font-[arial]" role="button">
                   <span className="text-slate-500">
-                    <ThumbIco invert/>
+                    <ThumbIco invert />
                   </span>
                   <span className="rank-count">
-                    {10}
+                    {review.rating.downvotes}
                   </span>
                 </p>
               </div>
             </div>
           </div>
         </div>
-        
+
       </div>
+    )
+  }
+  const Reviews =({reviews, k=1})=>{
+    
+    return(
+      reviews?.map((r, x) => <Review key={x} review={r} />) 
     )
   }
   return(
 
     <div className="reviews-container py-1 px-2 w-full  flex flex-row justify-between gap-3">
       <div className="reviews-wrapper w-full flex flex-col">
-        <ReviewImages />
-        {/* <Review /> */}
-        {reviewsArray?.map((r,i)=> <Review review={r} k={i}/>)}
+        <ReviewImages imageArray={prs.reviewsSummary.reviewsImages} />
+        <Reviews reviews={prs.reviews}/>
       </div>
-      <OverallRating/>
+      <OverallRating summary={prs.reviewsSummary}/>
 
     </div>
   )

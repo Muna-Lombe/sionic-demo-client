@@ -147,7 +147,7 @@ const ShowProduct = ()=>{
                       </ContentSpecification>
                   </ContentDetails >
                   <ContentPayment >
-                    <PriceTag original={productItem?.product?.isDiscounted[0] ? productItem?.product?.isDiscounted[3] : productItem?.product?.priceRange.sort((a, b) => a > b).at(-1)} discounted={productItem?.product?.priceRange.sort((a,b)=> a>b).at(-1)} />
+                    <PriceTag original={productItem?.product?.isDiscounted[0] ? productItem?.product?.isDiscounted[3] : productItem?.product?.priceRange.sort((a, b) => b-a).at(-1)} discounted={productItem?.product?.priceRange.sort((a,b)=> b-a).at(-1)} />
                     <DiscountInfo/>
                     <BuyBtns/>
                   </ContentPayment> 

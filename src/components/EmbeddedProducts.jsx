@@ -48,12 +48,12 @@ const EmbeddedProducts = ({title, tagname}) => {
       </div>
       <div className={tagname+"-grid py-2 px-1 w-full flex flex-col  gap-12 overflow-scroll tag "}>
         <>
-          <div slot={0} className="scroll-div-1 flex flex-row gap-12">
+          <div slot={0} className="scroll-div-1 flex flex-row gap-8">
             {
               products.filter((i, x) => x + 1 <= (Number.parseInt(products.length / 2))).map((i) => (<Product key={i.id} id={i.id} product={i.product} minW={11} />))
             }
           </div>
-          <div className="scroll-div-2 flex flex-row gap-12">
+          <div className="scroll-div-2 flex flex-row gap-8">
             {
               products.filter((i, x) => x + 1 > (Number.parseInt(products.length / 2))).map((i) => (<Product key={i.id} id={i.id} product={i.product} minW={11} />))
             }

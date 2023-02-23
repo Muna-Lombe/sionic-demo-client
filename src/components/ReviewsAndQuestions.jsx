@@ -1,17 +1,24 @@
 import { useState } from "react";
 import ProductReviews from "./ProductReviews";
 import QAs from "./QAs";
+import prs from "../assets/tests/jsonServer/ProductReviews.json"
+import qas from "../assets/tests/jsonServer/QandAs.json"
 
 const ReviewsAndQuestions = ({ reviewCount = 6298, handleClassToggle }) => {
   const [activeTab, setActiveTab] = useState("PRs")
+  // let prs = 
+  // const qas = 
   return (
-    <div className="review-questions-wrapper w-full p-2">
-      <p className="title h-max flex gap-1 items-start">
-        <span className="text-2xl font-medium">
+    <div className="review-questions-wrapper p-2  w-full">
+      <p className="title h-max text-2xl">
           Reviews and questions about the product
-        </span>
-        <span className="reviews-total-count text-gray-400 text-sm font-medium">
-          {reviewCount}
+          <b className="reviews-total-count px-2 align-super text-sm text-gray-400  font-medium">
+            {prs.reviewsSummary.reviewTotal}
+
+          </b>
+        <span className="flex gap-1 items-start text-2xl font-medium">
+        {/* <span className="reviews-total-count ordinal text-gray-400  font-medium">
+        </span> */}
         </span>
       </p>
       <div className="review-questions-toggle max-w-max py-2 flex  cursor-pointer  ">
@@ -21,8 +28,8 @@ const ReviewsAndQuestions = ({ reviewCount = 6298, handleClassToggle }) => {
       {/* {children} */}
       {
         activeTab === "PRs"
-          ? <ProductReviews />
-          : <QAs />
+          ? <ProductReviews prs={prs}/>
+          : <QAs qas={qas}/>
       }
     </div>
   )

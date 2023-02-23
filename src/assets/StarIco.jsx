@@ -20,11 +20,12 @@ const StarIco = ({value, count, maxCount}) => {
           ? <Full />
           : value < count
             ? <Full/>
-            : count % value === 0 
-              ? <Half/>
-                : count < maxCount
-                  ? <Empty />
-                  : <Full/>
+            : (value> count && value < maxCount)
+              ? (maxCount%count === 0)
+                ? <Half/> 
+                : <Empty />//|| !Number.isInteger(count))
+                // : 
+              : <Empty />
         
       }
     </>

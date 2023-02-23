@@ -70,7 +70,7 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
     // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
     // md:h-[21rem] lg:h-[21rem] xl:h-[21rem]
     // min - w - [8rem] w - full max - w - [12rem] md: max - w - [14rem] lg: max - w - [14rem] xl: max - w - [14rem] h - [14rem] md: h - [24rem] lg: h - [24rem] xl: h - [24rem]
-    <div id={"product_card_"+id} className={(noPrd ? " ": " ") + " p-2 greater-than-md:min-w-[10rem] greater-than-lg:min-w-[13rem] w-auto max-w-[15rem] h-full max-h-[20rem] flex flex-nowrap  flex-col justify-between gap-2 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway "}>
+    <div id={"product_card_" + id} className={(noPrd ? " " : " ") + " p-2 min-w-[10rem] greater-than-md:min-w-[10rem] greater-than-lg:min-w-[13rem] w-auto max-w-[15rem] h-full max-h-[18rem] flex flex-nowrap  flex-col justify-between gap-2 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway "}>
       <div id="product_header" className="relative w-[100%] h-[50%] my-1  justify-center items-end  ">
         <div id="product_image" className="flex  justify-center items-end" >
           {
@@ -90,7 +90,7 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
           
         </div>
         {
-          isSearchOrMain ?
+          // isSearchOrMain ?
             <h1 id='store_name' className="absolute left-0 top-0 py-1  px-2 w-max  flex justify-end rounded-[4px] bg-slate-500 text-white [#8f8f91] text-xs greater-than-md:text-sm font-[600]">
               {
                 noPrd
@@ -100,14 +100,14 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
                   </span>
               }
             </h1>
-            : ""
+            // : ""
 
         }
       </div>
       <div id="product_content" className=" relative w-full max-h-[50%] flex flex-wrap  justify-between gap-0 bg-white">
         <div id="name_store_price__wrapper" className=" py-1 w-full  h-max flex flex-col justify-between">
           <div id="name_store__wrapper" className="w-full h-full flex flex-col justify-between gap-1">
-            <h4 id='product_name' className=" h-14 bg-white text-[#2D2D2F] text-sm greater-than-md:text-lg hover:text-blue-400 font-medium">
+            <h4 id='product_name' className=" h-12 bg-white text-[#2D2D2F] text-sm greater-than-md:text-lg hover:text-blue-400 font-medium">
               {
                 noPrd
                   ? <div className="no-prd-field w-[70%] h-6 border rounded-md bg-gradient-to-tr from-slate-400 to-slate-500 animate-pulse opacity-30"></div>
@@ -117,7 +117,7 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
               }
                 
             </h4>
-            {
+            {/* {
               !isSearchOrMain
                 ? <h1 id='store_name' className=" w-full flex justify-end text-slate-400 [#8f8f91] text-xs greater-than-md:text-sm font-[600]">
                   {
@@ -131,7 +131,7 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
 
                 </h1>
                 : ""
-            }
+            } */}
           </div>
         </div>
         <h2 id="product_price" className=" text-[#2967FF] text-sm greater-than-md:text-[1.2rem]  font-semibold">
@@ -143,18 +143,20 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
               </>
             : <>
                 <span>
-                  {'от ' + product.priceRange.sort((a, b) => a < b)[0] + ' ₽'}
+                  {'от ' + product.priceRange.sort((a, b) => a -b)[0] + ' ₽'}
                 </span>
                 <span id="discounted_price" className="w-max h-[25px] flex  pr-2 justify-between items-center gap-4  ">
                   {
                     noPrd
                       ? <span className="no-prd-field w-[100%] h-2 border rounded-md bg-gradient-to-tr from-slate-400 to-slate-500 animate-pulse opacity-30"></span>
-                      : <>
-                          {product.isDiscounted[0] === true
-                            ? discountTag(product.isDiscounted[1],product.isDiscounted[2])
-                            : ''
-                          }
-                        </>
+                      : isSearchOrMain
+                        ? <>
+                            {product.isDiscounted[0] === true
+                              ? discountTag(product.isDiscounted[1],product.isDiscounted[2])
+                              : ''
+                            }
+                          </>
+                        :""
                   }
                   
                 </span>
