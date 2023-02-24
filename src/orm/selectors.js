@@ -48,11 +48,13 @@ export const filteredListingsFromModel = (ex)=> createSelector(
 export const filteredOrdersFromModel = (ex) => createSelector(
   ormSelector(session.schema),
   state => {
-    const catObject = state.Order
-    .all()
-    .toRefArray()
-    console.log("orders", catObject, state.Order.all().toModelArray())
-    return (ex?.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
+    // const catObject = state.Order
+    // .all()
+    // .toRefArray()
+    // console.log("orders", catObject, state.Order.all().toModelArray())
+    // return (ex?.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
+    // console.log("orders",))
+    return state.Order.all().toModelArray().map(i => ({ ...i.ref, product: i.product.ref }))
     
   }
 )
@@ -96,12 +98,7 @@ export const filteredProductsFromModel = (ex)=> createSelector(
                   // listValues: state.ProductVariationProperty.withId(prop.id).listValues.all().toRefArray(),
                 }
               }),
-            
-
-
-
             }
-          
           }),
           
         }

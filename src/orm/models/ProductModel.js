@@ -24,7 +24,7 @@ Product.fields = {
     id: attr(),
     name: attr(),
     description: attr(),
-    category_id: fk('ProductCategory', 'products'),
+    categoryIds: fk({to:'ProductCategory', as:'category_tags', relatedName: 'products'}),
     // status: attr()
     // productImages: many('ProductImage')
     
@@ -33,7 +33,7 @@ Product.fields = {
 Product.options = {
     idAttribute: 'id'
 }
-export const [updatedProduct, removedProduct, addedProduct, createdProduct, addedProductTo, removedProductFrom,] = actions().createDefaultFor('Product')
+export const { UPDATE: updatedProduct, REMOVE: removedProduct, ADD: addedProduct, CREATE: createdProduct, ADD_TO: addedProductTo, REMOVE_FROM: removedProductFrom } = actions().createDefaultFor('Product')
 
 export default Product;
 

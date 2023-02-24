@@ -4,17 +4,20 @@ import { useDispatch, useSelector } from 'react-redux'
 // import { upsertCurrCatId } from '../orm/models/ProductCategoryModel'
 import { removeAllIds, removeCatId, setCurrCatId } from '../js/slices/filters/categoriesSlice'
 import { CancelIco } from '../assets'
+import { removedAllCatActive, removedCatActive, setCatActive } from '../orm/models/ProductCategoryModel'
+import { filteredCategoriesFromModel } from '../orm/selectors'
 
 const CategoryTag = ({borderId=1,id,text='tag'})=>{
-  const bearTag = 'bg-[#FFA601] '
-  const toyTag = 'bg-[#2967FF]'
-  const marmosetTag = 'bg-[#58CF18]'
-  const giftTag = 'bg-[#FF7CB4]'
-  const colleaguesTag = 'bg-[#FFA601]"'
-  const birthdayTag = 'bg-[#FF2D87]'
+  // const bearTag = 'bg-[#FFA601] '
+  // const toyTag = 'bg-[#2967FF]'
+  // const marmosetTag = 'bg-[#58CF18]'
+  // const giftTag = 'bg-[#FF7CB4]'
+  // const colleaguesTag = 'bg-[#FFA601]"'
+  // const birthdayTag = 'bg-[#FF2D87]'
   
   const tags = useSelector(state => state.categories.entities) || new Array(6).fill('bg-[#aeaecb]')
-  const ids = useSelector(state => state.categories.curCatIds) 
+  let cat = useSelector(filteredCategoriesFromModel([])).find(c=> c.id === id)
+
   const dispatch = useDispatch()
   
 
@@ -33,17 +36,16 @@ const CategoryTag = ({borderId=1,id,text='tag'})=>{
     switch (action) {
       case "remove":
         // console.log(action)
-        dispatch(removeCatId(catId))
+        dispatch(removedCatActive({id:catId, set:{active:false}}))
         break;
       case "remove_all" :
         // console.log(action)
-        dispatch(removeAllIds())
+        dispatch(removedAllCatActive({active:false}))
         break;
     
       case "add":
         // console.log(action)
-
-        dispatch(setCurrCatId(catId))
+        dispatch(setCatActive({ id: catId, set: { active: true } }))
         break;
     }
     // dispatch(setCurrCatId(catId))
@@ -146,7 +148,7 @@ const CategoryTag = ({borderId=1,id,text='tag'})=>{
       {text}
       </h2>
       {
-        ids.includes(id)
+        cat.active
         ?  <samp onClick={() => handleFilter(id||borderId,"remove" )}>
             <CancelIco/>
           </samp>

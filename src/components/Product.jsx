@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { CartIco, BasketIco } from '../assets';
 import IMG, { image1_1, imagepath } from '../assets/images';
@@ -10,14 +10,18 @@ import { cartItemAdded } from '../js/slices/cart/cartSlice';
 
 import CategoryTag from './CategoryTag';
 import ShowProduct from '../pages/ShowProduct';
+import { addedOrder, createdOrder } from '../orm/models/OrderModel';
+import { momentDate } from '../orm/utilities';
+import { filteredCategoriesFromModel } from '../orm/selectors';
 
 
 const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
   const [isMobile, setIsMobile] = useState(document.readyState === 'complete' ? window.innerWidth < 720 : false)
   // let isMobile = document.readyState === 'complete' ? window.innerWidth < 720 : false
+  console.log("prod", product)
   let img = new IMG()
   const dispatch = useDispatch()
-  const categoryTags = product?.category_tags || []
+  // let cats = useSelector(filteredCategoriesFromModel(product?.categoryIds))
   const textStyle = {
     maxWidth: '100%',
     display: '-webkit-box',
@@ -38,7 +42,13 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
   )
   
   const handleAddToCart=(product)=>{
-    dispatch(cartItemAdded({...product}))
+    dispatch(cartItemAdded({ ...product }))
+    
+    // dispatch(createdOrder({
+    //   DateCreated: momentDate(),
+    //   product_id: id
+    //   }))
+
   }
   
   const BuyBtn=({text="в корзину"})=>(
@@ -81,14 +91,14 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
           
           {/* <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-square object-contain"  src={imagepath(product.images[0].id)|| img[product.img_path_id] || no_product_img} alt="prd"  /> */}
         </div>
-        <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer z-0">
+        {/* <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer z-0">
           {
-            (categoryTags||new Array(6).fill(''))?.map((tag,idx)=>{
-              return <CategoryTag key={idx} borderId={tag[0]} text={tag[1]} noPrd />
+            cats?.map((tag, idx) => {
+              return <CategoryTag key={idx} borderId={tag.id % 6 || 3} id={tag.id} text={tag.name} />
             })
           }
           
-        </div>
+        </div> */}
         {
           // isSearchOrMain ?
             <h1 id='store_name' className="absolute left-0 top-0 py-1  px-2 w-max  flex justify-end rounded-[4px] bg-slate-500 text-white [#8f8f91] text-xs greater-than-md:text-sm font-[600]">

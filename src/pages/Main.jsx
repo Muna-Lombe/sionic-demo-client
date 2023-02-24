@@ -22,7 +22,7 @@ const Main = () => {
                 <h4 className="text-xs text-[#2967FF] flex items-baseline">{"Настройки"}</h4>
             </div>
             <div id="product_tags" className=" w-auto max-w-[550px] md:max-w-3xl lg:max-w-4xl xl:max-w-6xl h-max py-1 mx-2 transition-all flex flex-row overflow-x-scroll tag cursor-pointer" >
-                <Link to={"/orm-reader"}>🔮</Link>
+                {/* <Link to={"/orm-reader"}>🔮</Link> */}
                 <CategoryTag  borderId={'type_clear'} text={'clear'} />
                 {
                     

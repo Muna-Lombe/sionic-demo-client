@@ -41,11 +41,8 @@ export const addToProductData = (product,id) =>{
         id: product.id,
         product: {
             ...product,
-            // img_path_id: i[0],
-            // name: i[1],
-            category_tags: sampleData[id][2],
+            // category_tags: sampleData[id][2],
             store: sampleData[id][3],
-            // price: i[4],
             isDiscounted: sampleData[id][5]
         }
 

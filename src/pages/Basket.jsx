@@ -4,13 +4,14 @@ import { Cart, NoItems } from '../components'
 import { cartItemAdded, itemsInCart, selectCartItems } from '../js/slices/cart/cartSlice'
 import { selectProductIds } from '../js/slices/products/productsSlice'
 import { Outlet } from 'react-router-dom'
+import { filteredOrdersFromModel } from '../orm/selectors'
 
 const Basket = () => {
 
   // recieve the state
   const items = useSelector(state => state.cart.entities)
-  const testItems = useSelector(selectCartItems)
-  
+  const testItems = useSelector(filteredOrdersFromModel([]))
+  console.log("test", testItems)
   // convert received state to array of state
   
   // filter it by store

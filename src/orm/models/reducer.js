@@ -14,9 +14,9 @@ export default function customReducer({session, model,action }) {
     customFn ? 
       customFn()
       :(function(){
-        console.log("somn",modelAction.modelName,)
+        // console.log("somn",modelAction.modelName,)
         const res = modelAction.create(data)
-        console.log("res",res)
+        // console.log("res",res)
       })()
   }
 
@@ -53,24 +53,38 @@ export default function customReducer({session, model,action }) {
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.CREATE+'_'+model.modelName):
       batchDo({modelAction:model, data:payload})
       break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.UPDATE+model.modelName):
-      model.withId(payload.id).update(payload);
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.ADD_TO+'_'+model.modelName):
+      model.withId(payload.id)[payload.target].add(payload.target.data);
       // session.reduce();
       break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE+model.modelName):
-      model.withId(payload.id).delete();
-      // session.reduce();
-      break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.ADD_TO+model.modelName):
-      model.withId(payload.productId).orders.add(payload.order);
-      // session.reduce();
-      break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE_FROM+model.modelName):
-      model.withId(payload.productId).orders.remove(payload.orderId);
-      // session.reduce();
-      break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.ASSIGN+model.modelName):
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.ASSIGN+'_'+model.modelName):
       model.withId(payload.productId).categoryId = payload.categoryId;
+      // session.reduce();
+      break;
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.UPDATE+'_'+model.modelName):
+      model.withId(payload.id).update(payload.set);
+      console.log("update", payload)
+      // session.reduce();
+      break;
+    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE + '_' + model.modelName):
+      // model.withId(payload.id).delete();
+      model.withId(payload.id).update(payload.set);
+
+      console.log("remove", payload)
+
+      // session.reduce();
+      break;
+    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE_FROM + '_' + model.modelName):
+      model.withId(payload.id)[payload.target].remove(payload.target.id);
+      // session.reduce();
+      break;
+    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE_ALL_OF + '_' + model.modelName):
+      model.all().update(payload.mergeObj)
+      model.withId(payload.id)[payload.target].remove(payload.target.id);
+      // session.reduce();
+      break;
+    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.DELETE + '_' + model.modelName):
+      model.withId(payload.id).delete();
       // session.reduce();
       break;
     default:
