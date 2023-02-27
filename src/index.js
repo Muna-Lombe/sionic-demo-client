@@ -4,19 +4,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createDispatchHook, Provider } from 'react-redux';
-import { fetchProducts } from './js/slices/products/productsSlice';
+import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import Store from './js/store';
-import {ThunkTypes} from './orm/actions/thunkTypes';
-import { asyncThunk, load, StateLoadMiddleware } from './orm/utilities/StateLoader';
-import { stateLoading, stateStatus, STATE_LOADING } from './orm/actions/actionTypes';
+import { asyncThunk,} from './orm/utilities/StateLoader';
 
 
 // export const cachedProduct = new Cache()
 
-Store.dispatch(fetchProducts())
 Store.dispatch(asyncThunk())
 // StateLoadMiddleware(Store)
 // Store.dispatch(createAsyncThunk(`orm/load${ThunkTypes[0].dataName}`, async () => {

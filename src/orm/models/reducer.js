@@ -1,4 +1,4 @@
-import * as consts from "../actions/actionTypes";
+import types from "../actions/actionTypes";
 import { fromType } from "../utilities/StateLoader";
 
 export default function customReducer({session, model,action }) {
@@ -25,7 +25,7 @@ export default function customReducer({session, model,action }) {
     case type.includes("FETCH_SUCCESS"):
       break;
 
-    case verb()=== "FETCH_DATA" && meta?.requestStatus?.includes(consts.FULFILLED.toLocaleLowerCase()):
+    case verb()=== "FETCH_DATA" && meta?.requestStatus?.includes(types.FULFILLED.toLocaleLowerCase()):
       const doCreate = (d) => {
 
         Object.values(d).forEach(o => {
@@ -50,18 +50,22 @@ export default function customReducer({session, model,action }) {
       
       break;
 
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.CREATE+'_'+model.modelName):
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (types.CREATE+'_'+model.modelName):
       batchDo({modelAction:model, data:payload})
       break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.ADD_TO+'_'+model.modelName):
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (types.ADD_TO+'_'+model.modelName):
       model.withId(payload.id)[payload.target].add(payload.target.data);
       // session.reduce();
       break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.ASSIGN+'_'+model.modelName):
+    case (isTargetModel() && verb() + '_' + model.modelName) === (types.ADD + '_' + model.modelName):
+      model.upsert(payload);
+      // session.reduce();
+      break;
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (types.ASSIGN+'_'+model.modelName):
       model.withId(payload.productId).categoryId = payload.categoryId;
       // session.reduce();
       break;
-    case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.UPDATE+'_'+model.modelName):
+    case ( isTargetModel() && verb() + '_' + model.modelName) === (types.UPDATE+'_'+model.modelName):
 
       if(!Number.isInteger(payload.id) && payload.id === "all"){
         model.all().update(payload.set)
@@ -72,7 +76,7 @@ export default function customReducer({session, model,action }) {
       }
       // session.reduce();
       break;
-    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE + '_' + model.modelName):
+    case (isTargetModel() && verb() + '_' + model.modelName) === (types.REMOVE + '_' + model.modelName):
       // model.withId(payload.id).delete();
       model.withId(payload.id).update(payload.set);
 
@@ -80,16 +84,16 @@ export default function customReducer({session, model,action }) {
 
       // session.reduce();
       break;
-    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE_FROM + '_' + model.modelName):
+    case (isTargetModel() && verb() + '_' + model.modelName) === (types.REMOVE_FROM + '_' + model.modelName):
       model.withId(payload.id)[payload.target].remove(payload.target.id);
       // session.reduce();
       break;
-    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE_ALL_OF + '_' + model.modelName):
+    case (isTargetModel() && verb() + '_' + model.modelName) === (types.REMOVE_ALL_OF + '_' + model.modelName):
       model.all().update(payload.mergeObj)
       // model.withId(payload.id)[payload.target].remove(payload.target.id);
       // session.reduce();
       break;
-    case (isTargetModel() && verb() + '_' + model.modelName) === (consts.DELETE + '_' + model.modelName):
+    case (isTargetModel() && verb() + '_' + model.modelName) === (types.DELETE + '_' + model.modelName):
       model.withId(payload.id).delete();
       // session.reduce();
       break;

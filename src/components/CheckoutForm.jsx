@@ -62,20 +62,20 @@ const CheckoutForm = () => {
           <input id="d_time" className="w-min px-2 focus:outline-none"  form="checkout_form"  type="text" name="delivery_time" placeholder="Выберите время" ref={timeRef} onFocus={() => (timeRef.current.type = "time")} onBlur={() => (timeRef.current.type = "text")} required ></input>
         </div>
       </div>
-      <div id="address__wrapper" className="w-[15rem] py-2 flex flex-col justify-center font-raleway">
+      <div id="address__wrapper" className="min-w-[15rem] py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="delivery_address" className="text-md font-semibold">Куда доставить?</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <LocationIco />
           <input id="d_addr" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="delivery_address"  placeholder="Выберите адрес доставки" required />
         </div>
       </div>
-      <div id="name__wrapper" className="w-[15rem]  py-2 flex flex-col justify-center font-raleway">
+      <div id="name__wrapper" className="min-w-[15rem]  py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="receiver_name" className="text-md font-semibold">Имя</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <input id="rcv_name" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver" required />
         </div>
       </div>
-      <div id="phone__wrapper" className="w-[15rem] py-2 flex flex-col justify-center font-raleway">
+      <div id="phone__wrapper" className="min-w-[15rem] py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="receiver_phone" className=" text-md font-semibold">Телефон</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <input id="rcv_phone" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver_phone" required />
@@ -85,9 +85,9 @@ const CheckoutForm = () => {
   )
 
   const CheckoutOrder = () =>(
-    <div className="w-full flex flex-col justify-center gap-4 lg:p-4">
-      <div id="order_details" className="w-auto p-2 lg:p-4 flex flex-col justify-start md:justify-center lg:justify-center xl:justify-center items-center border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
-        <div id="order_cost__wrapper" className="w-full lg:w-full xl:w-full  py-1 px-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between  items-center text-xl text-[#727280]  font-raleway">
+    <div className=" mt-14 w-full flex flex-col justify-center gap-6 lg:p-4">
+      <div id="order_details" className="w-auto p-2 lg:p-4 flex flex-col justify-start md:justify-center lg:justify-center xl:justify-center items-center gap-6 border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
+        <div id="order_cost__wrapper" className="w-full   py-1 px-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between  items-center text-xl text-[#727280]  font-raleway">
           <label htmlFor="order_cost">
             Стоимость товаров:
           </label>
@@ -95,7 +95,7 @@ const CheckoutForm = () => {
             
           
         </div>
-        <div id="delivery_cost__wrapper" className="w-full lg:w-full xl:w-full py-1 px-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between items-center text-xl text-[#727280] font-raleway">
+        <div id="delivery_cost__wrapper" className="w-full  py-1 px-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between items-center text-xl text-[#727280] font-raleway">
           <label className="" htmlFor="delivery_cost">
             Стоимость доставки:
           </label>
@@ -103,7 +103,7 @@ const CheckoutForm = () => {
             
           
         </div>
-        <div id="total_cost__wrapper" className="w-full lg:w-full xl:w-full p-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between items-center text-2xl text-[#727280] font-raleway font-medium">
+        <div id="total_cost__wrapper" className="w-full  p-2 flex-col md:flex  md:flex-row lg:flex  lg:flex-row xl:flex xl:flex-row justify-start md:justify-between lg:justify-between xl:justify-between items-center text-2xl text-[#727280] font-raleway font-medium">
           <label className="bg-transparent" htmlFor="total_cost">
             Итого:
           </label>
@@ -126,9 +126,9 @@ const CheckoutForm = () => {
         </p>
       </div>
       <form id="checkout_form" name="checkout_form" action="/#" method='POST'  onSubmit={(e)=>handleSubmit(e)} >
-        <div id="checkout_content" className="w-auto min-w-[20rem] flex flex-col justify-center items-center md:flex-row lg:flex lg:flex-row lg:justify-start lg:gap-8">
+        <div id="checkout_content" className="w-auto min-w-[20rem] flex flex-col justify-center items-center sm:flex-row md:flex-row lg:flex lg:flex-row lg:justify-start lg:gap-8">
           
-            <div id="checkout_form__wrapper" className="w-auto min-w-[18rem] lg:w-[30%] p-4 flex flex-col justify-center align-middle gap-3 ">
+            <div id="checkout_form__wrapper" className="w-auto min-w-[18rem] lg:w-[33%] p-4 flex flex-col justify-center align-middle gap-3 ">
               <CheckoutForm />
             </div>
             <div id="checkout_order__wrapper" className="w-auto min-w-[18rem] max-w-[30rem] flex-grow sm:w-auto  md:w-auto lg:w-[45%] xl:w-[45%]   flex flex-col justify-center items-center gap-2">

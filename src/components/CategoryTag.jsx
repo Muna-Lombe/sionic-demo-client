@@ -4,17 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CancelIco } from '../assets'
 import {updatedCatActive } from '../orm/models/ProductCategoryModel'
 import { categories } from '../orm/selectors'
+import { colorTags } from '../orm/utilities'
 
 const CategoryTag = ({borderId=1,id,text='tag'})=>{
-  // const bearTag = 'bg-[#FFA601] '
-  // const toyTag = 'bg-[#2967FF]'
-  // const marmosetTag = 'bg-[#58CF18]'
-  // const giftTag = 'bg-[#FF7CB4]'
-  // const colleaguesTag = 'bg-[#FFA601]"'
-  // const birthdayTag = 'bg-[#FF2D87]'
-  
-  const tags = useSelector(state => state.categories.entities) || new Array(6).fill('bg-[#aeaecb]')
-  let cat = useSelector(categories).find(c=> c.id === id)
+
+ let cat = useSelector(categories).find(c=> c.id === id)
 
   const dispatch = useDispatch()
   
@@ -137,7 +131,7 @@ const CategoryTag = ({borderId=1,id,text='tag'})=>{
         font-sans 
         font-semibold 
         cursor-pointer
-        ${tags[borderId]}
+        ${colorTags[borderId]}
       `}
       onMouseDown={(e)=>handleScroll(e)}
 

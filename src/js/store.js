@@ -3,15 +3,15 @@ import { ormRootReducer as orm } from '../orm/reducers/rootOrmReducer';
 import cartReducer from './slices/cart/cartSlice';
 import categoriesReducer from './slices/filters/categoriesSlice';
 import ordersReducer from './slices/orders/ordersSlice';
-import productReducer from './slices/products/productsSlice'
+import searchesReducer from './slices/products/productsSlice'
 
 
 const Store = configureStore({
     reducer: {
-        products: productReducer,
-        categories: categoriesReducer,
-        cart: cartReducer,
-        orderHistory: ordersReducer,
+        // searches: searchesReducer,
+        // categories: categoriesReducer,
+        // cart: cartReducer,
+        // orderHistory: ordersReducer,
         orm//: combineReducers({orm, entitiesReducer})
 
         
@@ -21,5 +21,5 @@ const Store = configureStore({
     //middleware: [fetchProducts]//,asyncThunk]
 })
 
-
+console.log("store",Store)
 export default Store ;

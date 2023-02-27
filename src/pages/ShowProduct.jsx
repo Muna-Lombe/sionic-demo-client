@@ -130,9 +130,9 @@ const ShowProduct = ()=>{
           </div>
             <MiddleSection>
               <ContentViewer>
-                  <ProductImageViewer images={productItem?.product?.images}/>
-                  <ContentDetails storeName={productItem?.product?.store.name} variations={productItem?.product?.variations}>
-                      { productItem?.product?.variations.map((i,x)=>
+                  <ProductImageViewer images={productItem?.images}/>
+                  <ContentDetails storeName={productItem?.store.name} variations={productItem?.variations}>
+                      { productItem?.variations.map((i,x)=>
                             <ContentDescription key={x} stock={i.stock} first={x===0} id={`${i.id}`} >
                               <ProductDescriptor key={101} id={`${i.id}${x}`} label={"In stock"} values={[i.stock]} />
                               { i.properties.map((k,v)=> <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />) }
@@ -147,9 +147,9 @@ const ShowProduct = ()=>{
                       </ContentSpecification>
                   </ContentDetails >
                   <ContentPayment >
-                    <PriceTag original={productItem?.product?.isDiscounted[0] ? productItem?.product?.isDiscounted[3] : productItem?.product?.priceRange.sort((a, b) => b-a).at(-1)} discounted={productItem?.product?.priceRange.sort((a,b)=> b-a).at(-1)} />
+                    <PriceTag original={productItem?.priceRange.sort((a, b) => b - a).at(-1)} discount={productItem?.isDiscounted[0] ? productItem?.isDiscounted[1] : false} />
                     <DiscountInfo/>
-                    <BuyBtns/>
+                    <BuyBtns id={productItem.id}/>
                   </ContentPayment> 
                   <PaymentType >
                     <Faqs />

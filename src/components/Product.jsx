@@ -1,24 +1,22 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { Link } from "react-router-dom";
-import { CartIco, BasketIco } from '../assets';
-import IMG, { image1_1, imagepath } from '../assets/images';
+import { BasketIco } from '../assets';
+import IMG, { imagepath } from '../assets/images';
 import no_product_img from '../assets/images/no_product_img.png'
 // assets
 
-import { cartItemAdded } from '../js/slices/cart/cartSlice';
-
-import CategoryTag from './CategoryTag';
-import ShowProduct from '../pages/ShowProduct';
-import { addedOrder, createdOrder } from '../orm/models/OrderModel';
-import { momentDate } from '../orm/utilities';
-import { filteredCategoriesFromModel } from '../orm/selectors';
+import { createdOrder } from '../orm/models/OrderModel';
+import { calcDisc, momentDate } from '../orm/utilities';
+import types from '../orm/actions/actionTypes';
+import { isAlreadyOrdered } from '../orm/selectors';
 
 
-const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
+const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
   
   let img = new IMG()
   const dispatch = useDispatch()
+  const isOrdered = useSelector(isAlreadyOrdered(product?.id))
   // let cats = useSelector(filteredCategoriesFromModel(product?.categoryIds))
   const textStyle = {
     maxWidth: '100%',
@@ -39,27 +37,30 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
       </>
   )
   
-  const handleAddToCart=(product)=>{
-    dispatch(cartItemAdded({ ...product }))
-    
-    // dispatch(createdOrder({
-    //   DateCreated: momentDate(),
-    //   product_id: id
-    //   }))
+  const handleAddToCart=(id)=>{
+    dispatch(createdOrder({
+      DateCreated: momentDate(),
+      product: id,
+      OrderStatus:types.IN_CART
+      }))
 
   }
   
   const BuyBtn=({text="в корзину"})=>(
     <button
       id="add_to_cart_btn"
-      className={` py-[3px] px-1 w-full h-max flex flex-row-reverse justify-center border-[#2967FF] rounded-lg border-[1px] stroke-blue-500`}
-      onClick={() => handleAddToCart({ id:id, product:product })}
+      className={(isOrdered ? "relative " : " group   hover:bg-blue-500   hover:text-white ") + "  py-[3px] px-1 w-full h-max flex flex-row-reverse justify-center border-[#2967FF] rounded-lg border-[1px] text-blue-500 stroke-blue-500 cursor-pointer"}
+      disabled={isOrdered}
+      onClick={() => handleAddToCart(product.id)}
     >
-      <span className=''>
+      <span className={(isOrdered ? "peer " : " ")}>
         <BasketIco isBurgerMenu={false} />
       </span>
-      <span className='px-1 md:flex lg:flex xl:flex   text-sm  text-[#2967FF]  active:bg-[#2967FF]  active:text-[#ffffff] font-raleway font-[600] text-center'>
+      <span className={(isOrdered ? "peer ": " ") +' px-1 h-full md:flex lg:flex xl:flex   text-sm  font-raleway font-[600] text-center'}>
         {text}
+      </span>
+      <span className="is-ordered-tooltip peer-hover:flex absolute hidden -top-5 -right-2  px-1 rounded-lg text-xs text-slate-500 font-raleway font-[600] text-center transition-transform ease-in-out delay-500">
+        {"Item already in cart"}
       </span>
     </button>
   )
@@ -78,7 +79,7 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
     // md:w-[14rem] lg:w-[14rem] xl:w-[14rem]
     // md:h-[21rem] lg:h-[21rem] xl:h-[21rem]
     // min - w - [8rem] w - full max - w - [12rem] md: max - w - [14rem] lg: max - w - [14rem] xl: max - w - [14rem] h - [14rem] md: h - [24rem] lg: h - [24rem] xl: h - [24rem]
-    <div id={"product_card_" + id} className={(noPrd ? " " : " ") + " p-2 min-w-[10rem] greater-than-md:min-w-[10rem] greater-than-lg:min-w-[13rem] w-auto max-w-[15rem] h-full max-h-[18rem] flex flex-nowrap  flex-col justify-between gap-2 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway "}>
+    <div id={"product_card_" + product?.id} className={(noPrd ? " " : " ") + " p-2 min-w-[10rem] greater-than-md:min-w-[10rem] greater-than-lg:min-w-[13rem] w-auto max-w-[15rem] h-full max-h-[20rem] flex flex-nowrap  flex-col justify-between gap-2 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway "}>
       <div id="product_header" className="relative w-[100%] h-[50%] my-1  justify-center items-end  ">
         <div id="product_image" className="flex  justify-center items-end" >
           {
@@ -151,7 +152,11 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
               </>
             : <>
                 <span>
-                  {'от ' + product.priceRange.sort((a, b) => a -b)[0] + ' ₽'}
+
+                  {product.isDiscounted[0] === true
+                    ? 'от ' + calcDisc(product.priceRange.sort((a, b) => a - b)[0], product.isDiscounted[1] ) + ' ₽'
+                    : 'от ' + product.priceRange.sort((a, b) => a -b)[0] + ' ₽'
+                  }
                 </span>
                 <span id="discounted_price" className="w-max h-[25px] flex  pr-2 justify-between items-center gap-4  ">
                   {
@@ -160,7 +165,7 @@ const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
                       : isSearchOrMain
                         ? <>
                             {product.isDiscounted[0] === true
-                              ? discountTag(product.isDiscounted[1],product.isDiscounted[2])
+                            ? discountTag(product.isDiscounted[1], product.priceRange.sort((a, b) => a - b)[0])
                               : ''
                             }
                           </>

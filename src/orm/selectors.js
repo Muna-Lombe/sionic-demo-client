@@ -1,9 +1,8 @@
 import { createSelector } from "redux-orm";
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
-import { addToProductData } from "../js/slices/products/productsSlice";
+import { addToProductData } from "./utilities";
 console.log(session, orm)
-
 
 const ormSelector = state => state
 
@@ -45,40 +44,24 @@ export const filteredListingsFromModel = (ex)=> createSelector(
     
   }
 )
-export const filteredOrdersFromModel = (ex) => createSelector(
-  ormSelector(session.schema),
-  state => {
-    // const catObject = state.Order
-    // .all()
-    // .toRefArray()
-    // console.log("orders", catObject, state.Order.all().toModelArray())
-    // return (ex?.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
-    // console.log("orders",))
-    return state.Order.all().toModelArray().map(i => ({ ...i.ref, product: i.product.ref }))
-    
-  }
-)
-
 export const filteredProductsFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
     state => {
-      // console.log("whatsup", state.Product)
-      let catId =  0//state.ProductCategory.initialState.currCatId
-      console.log("catis", ex)
-      const filteredProdsByCat = state.ProductCategory.filter(c => c.active && (()=>{catId=c.id; return true})())?.all()?.toModelArray()?.flatMap(i=>i.products?.all()?.toRefArray())
       
-      // console.log("set", Array.from(new Set(filteredProdsByCat)), "id: "+catId)
+      // console.log("catis", ex)
+      const filteredProdsByCat = state.ProductCategory.filter(c => c.active)?.all()?.toModelArray()?.flatMap(i=>i.products?.all()?.toRefArray())
+      
       const arr = filteredProdsByCat.length ? Array.from(new Set(filteredProdsByCat)) : state.Product.all().toRefArray()
-      const productsArray = arr
+      const productsArray = (ex.length ? arr.filter(ar=> ex.some(x=> x=== ar.id)): arr)
       .map((p,i) =>{
         let p1 = {
-        ...p, 
-        orders: state.Product.withId(p.id).orders.toRefArray(),
+          ...p, 
+          orders: state.Product.withId(p.id).orders.toRefArray(),
         images: state.Product.withId(p.id).images.toRefArray(),
         priceRange: state.Product.withId(p.id).variations.toRefArray().map((v)=> v.price),
         variations: state.Product.withId(p.id).variations.toRefArray()
-          .map((v,vidx)=>{
-            return {
+        .map((v,vidx)=>{
+          return {
               ...v,
               properties: state.ProductVariationProperty.all().toRefArray()
               .map((prop, pidx)=>{
@@ -87,11 +70,11 @@ export const filteredProductsFromModel = (ex)=> createSelector(
                   .filter(val => (val.product_variation_id === v.id && val.product_variation_property_id === prop.id))
                   .toRefArray()[0]
                 const listValues = state.ProductVariationProperty.withId(prop.id)
-                                  .listValues.all()
+                .listValues.all()
                                   .filter(lv=> lv.product_variation_property_id === prop.id)
                                   .toRefArray().map(t=> ({title:t.title, value:t.value}))
-                return {
-                  ...prop,
+                                  return {
+                                    ...prop,
                   values: [(value?.value_string || value?.value_float || value?.value_int || listValues)].flat()  ,
                   // listValues: state.ProductVariationProperty.withId(prop.id).listValues.all().toRefArray(),
                 }
@@ -106,19 +89,54 @@ export const filteredProductsFromModel = (ex)=> createSelector(
         // return p1
         return addToProductData(p1, id)
       });
-
+      
       return productsArray
       // console.log("running products selector 2",ex, productsArray[1].category_id)
       // return (ex.length ? productsArray.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productsArray)
     }
-  )
-
-  export const productsMatchingSearch =(searchTextArr)=> createSelector(
-    ormSelector(session.schema),
-    filteredProductsFromModel([]),
-    (state,products)=> {
-      return products.filter((i,x)=> searchTextArr.some((d,x)=>i.product.name.toString().includes(d.toString()) || d.toString().includes(i.product.name.toString())) )
+    )
+    
+    export const productsMatchingSearch =(searchTextArr)=> createSelector(
+      ormSelector(session.schema),
+      filteredProductsFromModel([]),
+      (state,products)=> {
+        
+        return products.filter((i,x)=> searchTextArr.some((d,x)=>i.name.toString().includes(d.toString()) || d.toString().includes(i.name.toString())) )
+        
+      }
+      )
       
-    }
-  )
-  
+      export const filteredOrdersFromModel =()=>  createSelector(
+        ormSelector(session.schema),
+        filteredProductsFromModel([]),
+        (state,products) => {
+        
+          // console.log("p", products)
+          const findProd = (id)=> {
+            const prod = products.find(p=> p.id === id)
+            console.log("p", prod)
+            return {id:prod.id, name:prod.name, store:prod.store, price: prod.priceRange.sort((a,b)=>a-b)[0],isDiscounted: prod.isDiscounted, images:[prod.images[0]] }
+          }
+          // 
+          console.log("rods", state.Order.all().toModelArray().products)
+          const ordersObj = state.Order.all().toModelArray().map((i,x,arr) => {
+            const p = findProd(i.product.ref.id)
+       
+            return { ...i.ref, product: p }
+
+          })
+          return ordersObj.filter(i=>i!==undefined)
+          
+        }
+      )
+      export const cartItemsCount =()=> createSelector(
+        ormSelector(session.schema),
+        // filteredOrdersFromModel(),
+        (state,orders)=>   state.Order.all().count()
+      )
+    export const isAlreadyOrdered = (id) => createSelector(
+      ormSelector(session.schema),
+      // filteredOrdersFromModel(),
+      (state, orders) => state.Order.all().toModelArray().some(o=> o.product.ref.id === id)
+    )
+          

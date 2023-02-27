@@ -2,7 +2,7 @@ import { BellIco } from "../assets";
 
 const DiscountInfo = ({ titleText = "Лучшая цена на Ozon", moreText = "Узнать о снижении цены", children }) => {
     return (
-      <div className="discount-information my-4 gap-1 flex flex-col">
+      <div className="discount-information py-1 gap-1 flex flex-col">
         <p className="best-price-note py-3 text-blue-500 font-[arial] text-base cursor-pointer">
           {titleText}
         </p>
