@@ -16,9 +16,7 @@ import { filteredCategoriesFromModel } from '../orm/selectors';
 
 
 const Product = ({ id, product, noPrd, isSearchOrMain, minW =8}) => {
-  const [isMobile, setIsMobile] = useState(document.readyState === 'complete' ? window.innerWidth < 720 : false)
-  // let isMobile = document.readyState === 'complete' ? window.innerWidth < 720 : false
-  console.log("prod", product)
+  
   let img = new IMG()
   const dispatch = useDispatch()
   // let cats = useSelector(filteredCategoriesFromModel(product?.categoryIds))

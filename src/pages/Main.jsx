@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { Product,CategoryTag, NoItems } from '../components'
 import {  filterProducts} from '../js/slices/products/productsSlice'
-import { filteredProductsFromModel, filteredCategoriesFromModel } from '../orm/selectors';
+import { filteredProductsFromModel, categories } from '../orm/selectors';
 import { selectCatIds, selectCurCatId } from '../js/slices/filters/categoriesSlice';
 const Main = () => {
-    let curCatIds = useSelector(state => state.categories.curCatIds)
-    let products = useSelector(filteredProductsFromModel(curCatIds))//filterProducts())
+    let cats = useSelector(categories)
+    let products = useSelector(filteredProductsFromModel([]))
     // console.log("curCatId", curCatId)
-    let cats = useSelector(filteredCategoriesFromModel([]))//filterProducts())
-    // console.log("...", products)
+    console.log("...", products)
   const bigScreens = "grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-8"
   const smallScreens = "grid-cols-[repeat(auto-fit,minmax(10rem,12rem))] gap-2"
   return (

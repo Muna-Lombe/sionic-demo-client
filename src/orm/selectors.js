@@ -21,14 +21,14 @@ export const filteredCustomModelSelector = (model, ex) =>{
     }
   )
 } 
-export const filteredCategoriesFromModel = (ex)=> createSelector(
+export const categories=  createSelector(
   ormSelector(session.schema),
   state => {
     const catObject = state.ProductCategory
     .all()
     .toRefArray()
 
-    return (ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
+    return catObject//(ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
     
   }
 )
@@ -63,16 +63,14 @@ export const filteredProductsFromModel = (ex)=> createSelector(
   ormSelector(session.schema),
     state => {
       // console.log("whatsup", state.Product)
-      const catId =  0//state.ProductCategory.initialState.currCatId
-      // console.log("catid", ex)
-      const filteredProdsByCat = ex.length  
-                                  ? state.ProductCategory
-                                    .filter(cat => ex.some(i => i === cat.id))
-                                    .all().toModelArray()
-                                    .flatMap(i => i.products.all().toRefArray())
-                                  : state.Product.all().toRefArray()
-     
-      const productsArray = filteredProdsByCat.map((p,i) =>{
+      let catId =  0//state.ProductCategory.initialState.currCatId
+      console.log("catis", ex)
+      const filteredProdsByCat = state.ProductCategory.filter(c => c.active && (()=>{catId=c.id; return true})())?.all()?.toModelArray()?.flatMap(i=>i.products?.all()?.toRefArray())
+      
+      // console.log("set", Array.from(new Set(filteredProdsByCat)), "id: "+catId)
+      const arr = filteredProdsByCat.length ? Array.from(new Set(filteredProdsByCat)) : state.Product.all().toRefArray()
+      const productsArray = arr
+      .map((p,i) =>{
         let p1 = {
         ...p, 
         orders: state.Product.withId(p.id).orders.toRefArray(),

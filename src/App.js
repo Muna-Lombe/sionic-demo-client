@@ -56,12 +56,12 @@ function App() {
     <AppWrapper>
       <Routes>
         <Route path="/" exact element={<Main categoryTags={categoryTags}/>} />
+        <Route path="/product/:id" exact element={<ShowProduct />} />
         <Route path="/search" exact element={<Search />} />
         <Route path="/cart" exact element={<Basket />} />
         <Route path="/checkout" exact element={<Checkout /> } /> 
         <Route path="/history" exact element={<History /> } />
-        <Route path="/orm-reader" exact element={<OrmReader />} />
-        <Route path="/product/:id" exact element={<ShowProduct />} />
+        {/* <Route path="/orm-reader" exact element={<OrmReader />} /> */}
         <Route
           path="*"
           element={

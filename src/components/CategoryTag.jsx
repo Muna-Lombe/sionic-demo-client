@@ -1,11 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import {setCurrCatId } from '../js/slices/products/productsSlice'
-// import { upsertCurrCatId } from '../orm/models/ProductCategoryModel'
-import { removeAllIds, removeCatId, setCurrCatId } from '../js/slices/filters/categoriesSlice'
+
 import { CancelIco } from '../assets'
-import { removedAllCatActive, removedCatActive, setCatActive } from '../orm/models/ProductCategoryModel'
-import { filteredCategoriesFromModel } from '../orm/selectors'
+import {updatedCatActive } from '../orm/models/ProductCategoryModel'
+import { categories } from '../orm/selectors'
 
 const CategoryTag = ({borderId=1,id,text='tag'})=>{
   // const bearTag = 'bg-[#FFA601] '
@@ -16,7 +14,7 @@ const CategoryTag = ({borderId=1,id,text='tag'})=>{
   // const birthdayTag = 'bg-[#FF2D87]'
   
   const tags = useSelector(state => state.categories.entities) || new Array(6).fill('bg-[#aeaecb]')
-  let cat = useSelector(filteredCategoriesFromModel([])).find(c=> c.id === id)
+  let cat = useSelector(categories).find(c=> c.id === id)
 
   const dispatch = useDispatch()
   
@@ -36,16 +34,16 @@ const CategoryTag = ({borderId=1,id,text='tag'})=>{
     switch (action) {
       case "remove":
         // console.log(action)
-        dispatch(removedCatActive({id:catId, set:{active:false}}))
+        dispatch(updatedCatActive({ id: catId, set: { active: false} }))
         break;
       case "remove_all" :
         // console.log(action)
-        dispatch(removedAllCatActive({active:false}))
+        dispatch(updatedCatActive({id: 'all',set:{active:false}}))
         break;
     
       case "add":
         // console.log(action)
-        dispatch(setCatActive({ id: catId, set: { active: true } }))
+        dispatch(updatedCatActive({ id: catId, set: { active: true } }))
         break;
     }
     // dispatch(setCurrCatId(catId))

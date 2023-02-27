@@ -24,9 +24,8 @@ Product.fields = {
     id: attr(),
     name: attr(),
     description: attr(),
-    categoryIds: fk({to:'ProductCategory', as:'category_tags', relatedName: 'products'}),
-    // status: attr()
-    // productImages: many('ProductImage')
+    categoryIds: many({to:'ProductCategory', as:'categoryIds', relatedName: 'products'}),
+   
     
 }
 

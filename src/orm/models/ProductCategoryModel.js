@@ -32,15 +32,13 @@ ProductCategory.modelName = 'ProductCategory';
 ProductCategory.fields = {
     id: attr(),
     name: attr(),
-    active: attr()
-    // productIds: fk({to:'Product',  relatedName:'Productcategory'}),
-    
+    active: attr()  
 }
 
 ProductCategory.options = {
     idAttribute: 'id'
 }
-export const { UPDATE: setCatActive, REMOVE: removedCatActive, REMOVE_ALL_OF:  removedAllCatActive } = actions().createDefaultFor('ProductCategory')
+export const { UPDATE: updatedCatActive} = actions().createDefaultFor('ProductCategory')
 // export const [updatedProductCategory, removedProductCategory, addedProductCategory, createdProductCategory, addedProductCategoryTo, removedProductCategoryFrom,] = actions().createDefaultFor('ProductCategory')
 // export const setCatActive = actions().createCustomFor('ProductCategory', 'setCatActive')
 // export const removedCatActive = actions().createCustomFor('ProductCategory', 'removedCatActive')

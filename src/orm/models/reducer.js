@@ -62,15 +62,21 @@ export default function customReducer({session, model,action }) {
       // session.reduce();
       break;
     case ( isTargetModel() && verb() + '_' + model.modelName) === (consts.UPDATE+'_'+model.modelName):
-      model.withId(payload.id).update(payload.set);
-      console.log("update", payload)
+
+      if(!Number.isInteger(payload.id) && payload.id === "all"){
+        model.all().update(payload.set)
+      }
+      if(Number.isInteger(payload.id)){
+        model.withId(payload.id).update(payload.set);
+        console.log("update", payload)
+      }
       // session.reduce();
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE + '_' + model.modelName):
       // model.withId(payload.id).delete();
       model.withId(payload.id).update(payload.set);
 
-      console.log("remove", payload)
+      // console.log("remove", payload)
 
       // session.reduce();
       break;
@@ -80,7 +86,7 @@ export default function customReducer({session, model,action }) {
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (consts.REMOVE_ALL_OF + '_' + model.modelName):
       model.all().update(payload.mergeObj)
-      model.withId(payload.id)[payload.target].remove(payload.target.id);
+      // model.withId(payload.id)[payload.target].remove(payload.target.id);
       // session.reduce();
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (consts.DELETE + '_' + model.modelName):
