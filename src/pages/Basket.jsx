@@ -4,13 +4,14 @@ import { Cart, NoItems } from '../components'
 import { cartItemAdded, itemsInCart, selectCartItems } from '../js/slices/cart/cartSlice'
 import { selectProductIds } from '../js/slices/products/productsSlice'
 import { Outlet } from 'react-router-dom'
-import { filteredOrdersFromModel } from '../orm/selectors'
+import { filteredCartItemsFromModel, filteredOrdersFromModel } from '../orm/selectors'
 import types from '../orm/actions/actionTypes'
+import { calcDisc } from '../orm/utilities'
 
 const Basket = () => {
 
   // recieve the state
-  const items = useSelector(filteredOrdersFromModel()) //useSelector(state => state.cart.entities)
+  const items = useSelector(filteredCartItemsFromModel()) //useSelector(state => state.cart.entities)
   // const testItems = useSelector(filteredOrdersFromModel([]))
   console.log("test", items)
   // convert received state to array of state
@@ -32,9 +33,21 @@ const Basket = () => {
 
   // seperate it by ordered and not ordered status
 
-  
-  const sortBy = (cartItems, orderStatus) => {
-    const matchingStatus = (i) => i.OrderStatus.toString().includes(orderStatus)
+  const addTotalCost = (store)=>{
+    if(Object.keys(store).length < 1) return []
+    return Object.keys(store).map(storeName => (
+          { storeName:storeName, 
+            orders: store[storeName],
+        currentCummulativeTotal: store[storeName].map((orderItem) => {
+                            return (orderItem.product.isDiscounted? orderItem.product.isDiscounted * orderItem.productCount : orderItem.product.price * orderItem.productCount)
+            }).reduce((a, b) => a + b).toFixed(1)
+          })
+    )
+    // return { ...store, totalPrice: totalPrice }
+  }
+
+  const sortBy = (cartItems, orderStatuses) => {
+    const matchingStatus = (i) => orderStatuses.some(os => os.includes(i.ItemStatus.toString()))
     const filterByStatus =([k,v])=>{
       const itm = v.filter(matchingStatus)
       if (itm.length) return [k,itm]
@@ -43,11 +56,26 @@ const Basket = () => {
     return Object.entries(cartItems).map(filterByStatus).filter(noUndefined) 
   } 
 
-    const unOrd = Object.fromEntries(sortBy(filterByStore(Object.values(items)), types.IN_CART))
-  const ord = Object.fromEntries(sortBy(filterByStore(Object.values(items)), types.ORDERED))
+  const unOrd = addTotalCost(
+                  Object.fromEntries(
+                    sortBy(
+                      filterByStore(
+                        Object.values(items)
+                      ), [types.IN_CART, types.ORDERED_PENDING]
+                    )
+                  )
+                )
+  const ord = addTotalCost(
+                Object.fromEntries(
+                    sortBy(
+                      filterByStore(
+                        Object.values(items)
+                      ),[types.ORDERED_COMPLETE]
+                    )
+                )
+              )
     
-    console.log('test items',unOrd,'\n',ord)
-
+  console.log('test items',unOrd,'\n',ord)
     return (
       <>
         <Suspense fallback={<NoItems />}>

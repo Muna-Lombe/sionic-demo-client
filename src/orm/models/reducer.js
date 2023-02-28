@@ -66,21 +66,19 @@ export default function customReducer({session, model,action }) {
       // session.reduce();
       break;
     case ( isTargetModel() && verb() + '_' + model.modelName) === (types.UPDATE+'_'+model.modelName):
+      console.log("update", payload, model.modelName, model.withId(payload.id))
 
-      if(!Number.isInteger(payload.id) && payload.id === "all"){
+      model.withId(payload.id).update(payload.set);
+      // session.reduce();
+      break;
+    case (isTargetModel() && verb() + '_' + model.modelName) === (types.UPDATE_ALL + '_' + model.modelName):
         model.all().update(payload.set)
-      }
-      if(Number.isInteger(payload.id)){
-        model.withId(payload.id).update(payload.set);
-        console.log("update", payload)
-      }
       // session.reduce();
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (types.REMOVE + '_' + model.modelName):
       // model.withId(payload.id).delete();
-      model.withId(payload.id).update(payload.set);
+      model.withId(payload.id).delete();
 
-      // console.log("remove", payload)
 
       // session.reduce();
       break;
@@ -89,14 +87,14 @@ export default function customReducer({session, model,action }) {
       // session.reduce();
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (types.REMOVE_ALL_OF + '_' + model.modelName):
-      model.all().update(payload.mergeObj)
+      model.all().delete()
       // model.withId(payload.id)[payload.target].remove(payload.target.id);
       // session.reduce();
       break;
-    case (isTargetModel() && verb() + '_' + model.modelName) === (types.DELETE + '_' + model.modelName):
-      model.withId(payload.id).delete();
-      // session.reduce();
-      break;
+    // case (isTargetModel() && verb() + '_' + model.modelName) === (types.DELETE + '_' + model.modelName):
+    //   model.withId(payload.id).delete();
+    //   // session.reduce();
+    //   break;
     default:
       return session.state
   }

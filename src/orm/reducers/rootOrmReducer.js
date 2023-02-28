@@ -9,7 +9,7 @@ import ProductVariationProperty from "../models/ProductVariationPropertyModel";
 import ProductVariationPropertyValue from "../models/ProductVariationPropertyValueModel";
 import ProductVariationPropertyListValue from "../models/ProductVariationPropertyListValueModel";
 import { defaultUpdater } from "redux-orm/lib/redux";
-
+import CartItem from "../models/CartModel";
 
 export const orm = new ORM({
     stateSelector: state => {
@@ -19,7 +19,7 @@ export const orm = new ORM({
 
 });
 // getFromDB
-orm.register(Product, Order,ProductCategory,  ProductImage, ProductVariation, ProductVariationProperty,ProductVariationPropertyValue,ProductVariationPropertyListValue);
+orm.register(Product,CartItem, Order,ProductCategory,  ProductImage, ProductVariation, ProductVariationProperty,ProductVariationPropertyValue,ProductVariationPropertyListValue);
 
 export const ormRootReducer = createReducer(orm, defaultUpdater) //customStateUpdater) 
 

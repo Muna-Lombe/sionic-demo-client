@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import IMG, { imagepath } from '../assets/images';
 import { cartItemDeleted, cartItemOrdered, selectCartItems } from '../js/slices/cart/cartSlice';
 import { calcDisc } from '../orm/utilities';
+import { checkedOutCartItem, removedCartItem, updatedCartItem } from '../orm/models/CartModel';
+import types from '../orm/actions/actionTypes';
 
 
 
@@ -21,7 +23,7 @@ const Cart = ({ unOrd, ord, }) => {
   
  
   const handleDelete = (id) => {
-    dispatch(cartItemDeleted(id))
+    dispatch(removedCartItem({id}))
   }
 
   const handleItemOrdered = (e, item) => {
@@ -29,39 +31,28 @@ const Cart = ({ unOrd, ord, }) => {
     // there is some kind of delay between dispatch and update
     e.preventDefault()
 
-    const cartItemProductsIds = item[1].map((pr) => Object.assign({id:pr.id, changes: {isOrdered: true}}) )
+    item[1].forEach(ci => dispatch(checkedOutCartItem( Object.assign({id:ci.id, set: {ItemStatus: types.ORDERED_PENDING}}))) )
     // console.log('dispatching', cartItemProductsIds)
    
-    dispatch(cartItemOrdered(cartItemProductsIds))
-
-    
+    // dispatch(checkedOutCartItem(cartItemProductsIds))
   }
   
 
 
-    const CartOrderItem = ({isOrdered, orderItem, setTotalPrice}) => {
-      const [counter, setCounter] = useState(1)
+    const CartOrderItem = ({isOrdered, orderItem}) => {
+      // const [counter, setCounter] = useState(1)
       const handleCounter = (type)=>{
         if (type === "plus"){
-          setCounter(prevState => ++prevState)
-          setTotalPrice(
-            prevState => prevState + (orderItem.product.isDiscounted[0] 
-              ? calcDisc(orderItem.product.price, orderItem.product.isDiscounted[1])  
-              : orderItem.product.price 
-            )
-          )
+          
+          dispatch(updatedCartItem({id:orderItem.id, set:{productCount: orderItem.productCount + 1}}))
         }
         
         if (type === "minus") {
-          setCounter(prevState => --prevState)
-          setTotalPrice(
-            prevState => prevState - (orderItem.product.isDiscounted[0] 
-              ? calcDisc(orderItem.product.price, orderItem.product.isDiscounted[1]) 
-              : orderItem.product.price 
-            )
-          )
+          
+          dispatch(updatedCartItem({ id: orderItem.id, set: { productCount: (orderItem.productCount > 1 ? orderItem.productCount - 1:1) } }))
+
         }
-        if(counter === 0) setCounter(1)
+        // if(counter === 0) setCounter(1)
       }
       const Line = () => (
         <div className="absolute w-[90%] h-[0px] my-[40px] z-0 ">
@@ -121,8 +112,9 @@ const Cart = ({ unOrd, ord, }) => {
                 className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
                   className="px-3 cursor-pointer" onClick={()=>handleCounter("minus")}>-</p>
-                <input  
-                  className="w-[1.4rem] flex justify-center items-center text-center decoration-transparent bg-transparent " type="text" value={counter} disabled="disabled" />
+                <input 
+                  type="text" value={orderItem.productCount} disabled="disabled" 
+                  className="w-[1.4rem] flex justify-center items-center text-center decoration-transparent bg-transparent "  />
                 <p 
                   className="px-3 cursor-pointer" onClick={() => handleCounter("plus")}>+</p>
               </div>
@@ -133,24 +125,25 @@ const Cart = ({ unOrd, ord, }) => {
                     
                   {
                     
-                    orderItem.product.isDiscounted[0] === true
-                      ? 'от ' + calcDisc(orderItem.product.price,orderItem.product.isDiscounted[1]) * (counter > 0 ? counter : 1)+' ₽'
-                      : 'от ' + orderItem.product.price*(counter > 0 ? counter : 1) +' ₽'
+                    orderItem.product.isDiscounted
+                      ? 'от ' + ( orderItem.product.isDiscounted * orderItem.productCount).toFixed(1) +' ₽'
+                      : 'от ' + (orderItem.product.price * orderItem.productCount).toFixed(1) +' ₽'
                   }
                 </h2>
                 <div id="discounted_price" 
                   className="w- flexauto pr-2 justify-between ">
                   <h4 id="old_price" 
                     className="text-[#8D8D8E] text-s line-through font-extralight">
-                  {orderItem.product.isDiscounted[0] ? orderItem.product.price +' ₽' : ''}
+                  {orderItem.product.isDiscounted ? orderItem.product.price +' ₽' : ''}
                   </h4>
                 </div>
               </div>
             </div>
             {/* {isOrdered && <Line/>} */}
           </div>
-          <button id="delete_btn" 
-            className=" relative top-[0.3rem] right-[0rem] md:relative   lg:relative   xl:relative   w-max h-min  px-2 py-2 flex flex-col justify-start" onClick={()=>handleDelete(orderItem.product.id)}>
+          <button id="delete_btn"
+            onClick={() => handleDelete(orderItem.id)}
+            className=" relative top-[0.3rem] right-[0rem] md:relative   lg:relative   xl:relative   w-max h-min  px-2 py-2 flex flex-col justify-start" >
               <DeleteIco />
           </button>
           
@@ -158,17 +151,10 @@ const Cart = ({ unOrd, ord, }) => {
      )
    }
 
-   const CartStoreItem = ({keyId,storeName,orders, isOrdered})=> { 
-    
-    const [totalPrice, setTotalPrice] = useState(
-      orders.map((orderItem) => {
-        return (orderItem.product.isDiscounted[0] ? calcDisc(orderItem.product.price, orderItem.product.isDiscounted[1] ) : orderItem.product.price)
-      }).reduce((a,b)=> a+b)
-      
-    )
-     
+   const CartStoreItem = ({keyId,storeName,orders, total, isOrdered})=> { 
      const disableItem = isOrdered
-    
+     const state = { total, orderedItems: orders.map(oi=> ({productId: oi.product.id, price:oi.product.isDiscounted || oi.product.price, quantity: oi.productCount})) }
+
      return (
           <div id="cart_item__wrapper"
             className={"w-full flex flex-col mb-2"+(disableItem ? " filter grayscale contrast-50" : ""  ) }>
@@ -184,7 +170,7 @@ const Cart = ({ unOrd, ord, }) => {
                 >
                   <Link 
                     to={{pathname: "/checkout"}} 
-                    state={{id:keyId, totalPrice, prCount:orders}} 
+                    state={state} 
                     className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
                   > 
                     {"Оформить"} 
@@ -199,7 +185,7 @@ const Cart = ({ unOrd, ord, }) => {
                 </p>
                 <p 
                   className=" text-black text-xl font-bold">
-                  {totalPrice+' ₽'} 
+                  {total+' ₽'} 
                 </p>
                 <button id="Checkout_btn"
                 onClick={(e)=>handleItemOrdered(e,[storeName, orders])} 
@@ -208,7 +194,7 @@ const Cart = ({ unOrd, ord, }) => {
                 >
                   <Link 
                     to={{pathname: "/checkout"}} 
-                    state={{id:keyId, totalPrice, prCount:orders}} 
+                    state={state} 
                     className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
                   > 
                     {"Оформить"} 
@@ -218,7 +204,7 @@ const Cart = ({ unOrd, ord, }) => {
               
             </div>
             {
-              orders.map((orderItem) => <CartOrderItem key= {orderItem.id} isOrdered={isOrdered}  orderItem = {orderItem} setTotalPrice={setTotalPrice}  /> )
+              orders.map((orderItem) => <CartOrderItem key= {orderItem.id} isOrdered={isOrdered}  orderItem = {orderItem}  /> )
             }
              
           </div>
@@ -260,18 +246,18 @@ const Cart = ({ unOrd, ord, }) => {
           
 
 
-          { Object.keys(unOrd).length > 0
+          { unOrd.length > 0
             
-            ? Object.keys(unOrd).map((store,idx) => {return <CartStoreItem key={idx} keyId={idx} storeName={store}  orders={unOrd[store]}/> })
+            ? unOrd.map((store,idx) => {return <CartStoreItem key={idx} keyId={idx} storeName={store.storeName}  orders={store.orders} total={store.currentCummulativeTotal}/> })
             : <NoItems/>
           }
-          { Object.keys(ord).length > 0
+          { ord.length > 0
             
             ? <div id="cart_history__wrapper" className="w-full mt-4 ">
                 <div id="cart_history__header" className=" text-lg text-black font-raleway font-medium">
                   <h3>{"Cart History"}</h3>
                 </div>
-                {Object.keys(ord).map((store,idx) => {return <CartStoreItem key={idx} storeName={store}  orders={ord[store]} isOrdered={true}/>  })}
+              {ord.map((store, idx) => { return <CartStoreItem key={idx} storeName={store.storeName} orders={store.orders} isOrdered={true} total={store.currentCummulativeTotal} />  })}
               </div> 
             
             : null //<NoItems/>

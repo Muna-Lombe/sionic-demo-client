@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CancelIco } from '../assets'
-import {updatedCatActive } from '../orm/models/ProductCategoryModel'
+import {updatedAllCatActive, updatedCatActive } from '../orm/models/ProductCategoryModel'
 import { categories } from '../orm/selectors'
 import { colorTags } from '../orm/utilities'
 
@@ -32,7 +32,7 @@ const CategoryTag = ({borderId=1,id,text='tag'})=>{
         break;
       case "remove_all" :
         // console.log(action)
-        dispatch(updatedCatActive({id: 'all',set:{active:false}}))
+        dispatch(updatedAllCatActive({set:{active:false}}))
         break;
     
       case "add":

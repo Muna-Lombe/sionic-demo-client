@@ -11,7 +11,7 @@ const ShowProduct = ()=>{
   const productItem = useSelector(filteredProductsFromModel([])).find(i=> i.id.toString() === id.toString())
   // console.log("show", product)
   const navigate = useLocation()
-
+  
   const handleClassToggle=(e, setActive)=>{
     e.preventDefault()
     const curElem = e.target;
@@ -149,7 +149,7 @@ const ShowProduct = ()=>{
                   <ContentPayment >
                     <PriceTag original={productItem?.priceRange.sort((a, b) => b - a).at(-1)} discount={productItem?.isDiscounted[0] ? productItem?.isDiscounted[1] : false} />
                     <DiscountInfo/>
-                    <BuyBtns id={productItem.id}/>
+                    <BuyBtns id={productItem?.id}/>
                   </ContentPayment> 
                   <PaymentType >
                     <Faqs />

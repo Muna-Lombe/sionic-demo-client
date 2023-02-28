@@ -1,7 +1,9 @@
 import { createSelector } from "redux-orm";
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
-import { addToProductData } from "./utilities";
+import { addToProductData, calcDisc } from "./utilities";
+import types from "./actions/actionTypes";
+import { useSelector } from "react-redux";
 console.log(session, orm)
 
 const ormSelector = state => state
@@ -95,7 +97,13 @@ export const filteredProductsFromModel = (ex)=> createSelector(
       // return (ex.length ? productsArray.filter(el=> ex.includes(el.category_id))/*.some((e)=> e === el.category_id))*/ :  productsArray)
     }
     )
-    
+    export const useGetName=(model, id)=>{
+      const name = createSelector(
+        ormSelector(session.schema),
+        (state)=> state[model]?.withId(id)?.ref.name.slice(0,10)+"..." 
+      )
+      return useSelector(name)
+    }
     export const productsMatchingSearch =(searchTextArr)=> createSelector(
       ormSelector(session.schema),
       filteredProductsFromModel([]),
@@ -115,7 +123,14 @@ export const filteredProductsFromModel = (ex)=> createSelector(
           const findProd = (id)=> {
             const prod = products.find(p=> p.id === id)
             console.log("p", prod)
-            return {id:prod.id, name:prod.name, store:prod.store, price: prod.priceRange.sort((a,b)=>a-b)[0],isDiscounted: prod.isDiscounted, images:[prod.images[0]] }
+            const getDisc = (disc)=>{
+              if(disc[0]){
+  
+                return calcDisc(prod.priceRange.sort((a, b) => a - b)[0],disc[1])
+              }
+              return false
+            }
+            return {id:prod.id, name:prod.name, store:prod.store, price: prod.priceRange.sort((a,b)=>a-b)[0],isDiscounted: getDisc(prod.isDiscounted), images:[prod.images[0]] }
           }
           // 
           console.log("rods", state.Order.all().toModelArray().products)
@@ -129,14 +144,44 @@ export const filteredProductsFromModel = (ex)=> createSelector(
           
         }
       )
+    export const filteredCartItemsFromModel = () => createSelector(
+      ormSelector(session.schema),
+      filteredProductsFromModel([]),
+      (state, products) => {
+
+        // console.log("p", products)
+        const findProd = (id) => {
+          const prod = products.find(p => p.id === id)
+          console.log("p", prod)
+          const getDisc = (disc) => {
+            if (disc[0]) {
+
+              return calcDisc(prod.priceRange.sort((a, b) => a - b)[0], disc[1])
+            }
+            return false
+          }
+          return { id: prod.id, name: prod.name, store: prod.store, price: prod.priceRange.sort((a, b) => a - b)[0], isDiscounted: getDisc(prod.isDiscounted), images: [prod.images[0]] }
+        }
+        // 
+        console.log("rods", state.CartItem.all().toModelArray().products)
+        const CartItemsObj = state.CartItem.all().toModelArray().map((i, x, arr) => {
+          const p = findProd(i.product.ref.id)
+
+          return { ...i.ref, product: p }
+
+        })
+        return CartItemsObj.filter(i => i !== undefined)
+
+      }
+    )
       export const cartItemsCount =()=> createSelector(
         ormSelector(session.schema),
         // filteredOrdersFromModel(),
-        (state,orders)=>   state.Order.all().count()
+        (state, orders) => state.CartItem.all().filter(o => (o.ItemStatus === types.IN_CART || o.ItemStatus === types.ORDERED_PENDING)).count()
       )
-    export const isAlreadyOrdered = (id) => createSelector(
-      ormSelector(session.schema),
-      // filteredOrdersFromModel(),
-      (state, orders) => state.Order.all().toModelArray().some(o=> o.product.ref.id === id)
-    )
+      export const isInCart = (id) => createSelector(
+        ormSelector(session.schema),
+        // filteredOrdersFromModel(),
+        (state, orders) => state.CartItem.all().toModelArray().some(o=> o.product.ref.id === id)
+      )
           

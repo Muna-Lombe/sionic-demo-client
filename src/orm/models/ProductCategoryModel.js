@@ -38,7 +38,7 @@ ProductCategory.fields = {
 ProductCategory.options = {
     idAttribute: 'id'
 }
-export const { UPDATE: updatedCatActive} = actions().createDefaultFor('ProductCategory')
+export const { UPDATE: updatedCatActive, UPDATE_ALL: updatedAllCatActive} = actions().createDefaultFor('ProductCategory')
 // export const [updatedProductCategory, removedProductCategory, addedProductCategory, createdProductCategory, addedProductCategoryTo, removedProductCategoryFrom,] = actions().createDefaultFor('ProductCategory')
 // export const setCatActive = actions().createCustomFor('ProductCategory', 'setCatActive')
 // export const removedCatActive = actions().createCustomFor('ProductCategory', 'removedCatActive')

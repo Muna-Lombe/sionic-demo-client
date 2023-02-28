@@ -9,14 +9,15 @@ import no_product_img from '../assets/images/no_product_img.png'
 import { createdOrder } from '../orm/models/OrderModel';
 import { calcDisc, momentDate } from '../orm/utilities';
 import types from '../orm/actions/actionTypes';
-import { isAlreadyOrdered } from '../orm/selectors';
+import { isAlreadyOrdered, isInCart } from '../orm/selectors';
+import { createdCartItem } from '../orm/models/CartModel';
 
 
 const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
   
   let img = new IMG()
   const dispatch = useDispatch()
-  const isOrdered = useSelector(isAlreadyOrdered(product?.id))
+  const isOrdered = useSelector(isInCart(product?.id))
   // let cats = useSelector(filteredCategoriesFromModel(product?.categoryIds))
   const textStyle = {
     maxWidth: '100%',
@@ -38,10 +39,11 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
   )
   
   const handleAddToCart=(id)=>{
-    dispatch(createdOrder({
-      DateCreated: momentDate(),
+    dispatch(createdCartItem({
+      DateCreated: momentDate().full,
       product: id,
-      OrderStatus:types.IN_CART
+      productCount:1,
+      ItemStatus:types.IN_CART
       }))
 
   }
