@@ -4,7 +4,7 @@ import { productSession, orderSession, categorySession, imageSession, productVar
 import { addToProductData, calcDisc } from "./utilities";
 import types from "./actions/actionTypes";
 import { useSelector } from "react-redux";
-console.log(session, orm)
+// console.log(session, orm)
 
 const ormSelector = state => state
 
@@ -116,33 +116,14 @@ export const filteredProductsFromModel = (ex)=> createSelector(
       
       export const filteredOrdersFromModel =()=>  createSelector(
         ormSelector(session.schema),
-        filteredProductsFromModel([]),
-        (state,products) => {
-        
-          // console.log("p", products)
-          const findProd = (id)=> {
-            const prod = products.find(p=> p.id === id)
-            console.log("p", prod)
-            const getDisc = (disc)=>{
-              if(disc[0]){
-  
-                return calcDisc(prod.priceRange.sort((a, b) => a - b)[0],disc[1])
-              }
-              return false
-            }
-            return {id:prod.id, name:prod.name, store:prod.store, price: prod.priceRange.sort((a,b)=>a-b)[0],isDiscounted: getDisc(prod.isDiscounted), images:[prod.images[0]] }
-          }
-          // 
-          console.log("rods", state.Order.all().toModelArray().products)
-          const ordersObj = state.Order.all().toModelArray().map((i,x,arr) => {
-            const p = findProd(i.product.ref.id)
-       
-            return { ...i.ref, product: p }
-
-          })
-          return ordersObj.filter(i=>i!==undefined)
+        (state) => {
+          return state.Order.all().toRefArray()
           
         }
+      )
+      export const getNextId = (model)=> createSelector(
+        ormSelector(session.schema),
+        (state)=> state[model].all().toRefArray().length+1
       )
     export const filteredCartItemsFromModel = () => createSelector(
       ormSelector(session.schema),
@@ -152,7 +133,7 @@ export const filteredProductsFromModel = (ex)=> createSelector(
         // console.log("p", products)
         const findProd = (id) => {
           const prod = products.find(p => p.id === id)
-          console.log("p", prod)
+          // console.log("p", prod)
           const getDisc = (disc) => {
             if (disc[0]) {
 
@@ -163,7 +144,7 @@ export const filteredProductsFromModel = (ex)=> createSelector(
           return { id: prod.id, name: prod.name, store: prod.store, price: prod.priceRange.sort((a, b) => a - b)[0], isDiscounted: getDisc(prod.isDiscounted), images: [prod.images[0]] }
         }
         // 
-        console.log("rods", state.CartItem.all().toModelArray().products)
+        // console.log("rods", state.CartItem.all().toModelArray().products)
         const CartItemsObj = state.CartItem.all().toModelArray().map((i, x, arr) => {
           const p = findProd(i.product.ref.id)
 

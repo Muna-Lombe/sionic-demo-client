@@ -153,7 +153,7 @@ const Cart = ({ unOrd, ord, }) => {
 
    const CartStoreItem = ({keyId,storeName,orders, total, isOrdered})=> { 
      const disableItem = isOrdered
-     const state = { total, orderedItems: orders.map(oi=> ({productId: oi.product.id, price:oi.product.isDiscounted || oi.product.price, quantity: oi.productCount})) }
+     const state = { storeName, cartItemIds:orders.map(o=> o.id),total, orderedItems: orders.map(oi=> ({productId: oi.product.id, price:oi.product.isDiscounted || oi.product.price, quantity: oi.productCount})) }
 
      return (
           <div id="cart_item__wrapper"

@@ -72,7 +72,8 @@ const Navbar = () => {
       dispatch(setSearchedProductId([]))
     }
     if (e.key === "Enter" && e.code === "Enter") {
-      handleSubmit(suggestions(e.target.value))
+      // console.log("suggestions ", suggestions(e.target.value), e.target.value)
+      handleSubmit([e.target.value])
       return
     }
     ///////////////////////////////////////////////

@@ -45,7 +45,6 @@ function App() {
   //   setProducts(get.Products());
     
   // }, [])
-  console.log("app products", products)
   const handleTest=async ()=>{
     
     let data = await get.SortedProductCategories();

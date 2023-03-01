@@ -1,16 +1,17 @@
-import moment from 'moment'
 import React,{useRef} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 
 // assets
-import { LocationIco } from '../assets'
-import { orderHistoryItemAdded } from '../js/slices/orders/ordersSlice'
+import { LocationIco, setTextBg, textBg } from '../assets'
 import { createdOrder } from '../orm/models/OrderModel'
 import ProductDescriptor from './ProductDescriptor'
-import { getName, useGetName } from '../orm/selectors'
 import { momentDate, returnOnReload } from '../orm/utilities'
+import types from '../orm/actions/actionTypes'
+import NameTag from './NameTag'
+import { orderedCartItem } from '../orm/models/CartModel'
+import { getNextId } from '../orm/selectors'
 
 
 const CheckoutForm = ({ checkoutText = "Доставка"}) => {
@@ -21,37 +22,38 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
   const timeRef = useRef()
   const dispatch = useDispatch()
   // returnOnReload()()
-  console.log(location)
 
   const total = Number.parseInt(location.state?.total)
   const id = location.key
   const orderedItems = location.state?.orderedItems
+  const ids = location.state?.cartItemIds
+  const storeName = location.state?.storeName
   const deliveryPrice = 200
-
+  const nextId = useSelector(getNextId('Order'))
 
   const handleSubmit=(e)=>{
     e.preventDefault();
     let formData = new FormData(document.forms['checkout_form']);
     let orderData = {}
     formData.forEach((k,v, idx)=> {
-      orderData[v] = k
+      const camelize = (str) => str.toString().toLowerCase().split("_").map((el, x) => x !== 0 ? [el.slice(0, 1)[0].toUpperCase(), el.slice(1)].join("") : el).join("")
+      if (["orderCost","deliveryCost","totalCost"].every(i => i!==camelize(k))){
+        orderData[camelize(v)] = k
+      }
     })
     
-// 
 
-    // let order_date = moment().toObject()
-    // let orderId='664-'+(id.toString().length > 1 ? '0' : '00' + id.toString())
     
-    let status = ['Оплачен', 'Завершён']
-
-    let finalOrderData = { id, DateCreated: momentDate().shortDate, quantity: orderedItems, status, ...orderData}
-    console.log("ord", finalOrderData)
+    let status = types.ORDERED_COMPLETE.toLowerCase().split("_")
     
-    // quantity:4,  status:['Оплачен', 'Завершён']
+    let finalOrderData = {id:id+"-"+nextId, DateCreated: momentDate().full, productIds: orderedItems.map(oi => oi.productId), OrderProps: { quantity: orderedItems, ...orderData, storeName, orderCost: total, deliveryCost: deliveryPrice, totalCost: deliveryPrice + total }, status, }
     dispatch(createdOrder(finalOrderData))
-    // setTimeout(() => {
-    //   navigate("../history", { replace: true})
-    // }, 1000);
+    // console.log("ids", ids)
+    ids.forEach(id=>dispatch(orderedCartItem({id:id, set:{ItemStatus: types.ORDERED_COMPLETE}})))
+    
+    setTimeout(() => {
+      navigate("../history", { replace: true})
+    }, 1000);
   }
  
 
@@ -65,36 +67,33 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
           <label htmlFor="delivery_date" className="w-0 h-0"></label>
           <input id="d_date" className=" focus:outline-none" form="checkout_form" type="text" name="delivery_date" placeholder="Выберите дату"  ref={dateRef} onFocus={() => (dateRef.current.type = "date")} onBlur={() => (dateRef.current.type = "text")} required  ></input>
         </div>
-        <div id="time" className="w-[8rem] flex flex-col justify-center border-b-[1px] border-b-gray-300 ">
+        <div id="time" className="w-[9rem] flex flex-col justify-center border-b-[1px] border-b-gray-300 ">
           <label htmlFor="delivery_time" className="w-0 h-0"></label>
-          <input id="d_time" className="w-min px-2 focus:outline-none"  form="checkout_form"  type="text" name="delivery_time" placeholder="Выберите время" ref={timeRef} onFocus={() => (timeRef.current.type = "time")} onBlur={() => (timeRef.current.type = "text")} required ></input>
+          <input id="d_time" className="  w-full  px-2 focus:outline-none"  form="checkout_form"  type="text" name="delivery_time" placeholder="Выберите время" ref={timeRef} onFocus={() => (timeRef.current.type = "time")} onBlur={() => (timeRef.current.type = "text")} required ></input>
         </div>
       </div>
       <div id="address__wrapper" className="min-w-[15rem] py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="delivery_address" className="text-md font-semibold">{orderToWhereText+"?"}</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <LocationIco />
-          <input id="d_addr" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="delivery_address"  placeholder="Выберите адрес доставки" required />
+          <input id="d_addr" className=" min-w-[314px] w-full  px-2 focus:outline-none" form="checkout_form" type="text" name="delivery_address"  placeholder="Выберите адрес доставки" required />
         </div>
       </div>
       <div id="name__wrapper" className="min-w-[15rem]  py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="receiver_name" className="text-md font-semibold">{receiverNameText}</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
-          <input id="rcv_name" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver" required />
+          <input id="rcv_name" className=" min-w-[314px] w-full  px-2 focus:outline-none" form="checkout_form" type="text" name="receiver" required />
         </div>
       </div>
       <div id="phone__wrapper" className="min-w-[15rem] py-2 flex flex-col justify-center font-raleway">
         <label htmlFor="receiver_phone" className=" text-md font-semibold">{phoneText}</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
-          <input id="rcv_phone" className="w-min px-2 focus:outline-none" form="checkout_form" type="text" name="receiver_phone" required />
+          <input id="rcv_phone" className=" min-w-[314px] w-full  px-2 focus:outline-none" form="checkout_form" type="text" name="receiver_phone" required />
         </div>
       </div>
     </>
   )
-  const NameQuantTag=({oi})=>(
-    <span>{useGetName('Product', oi.productId)+"     x"+oi.quantity}</span>
-  )
-  const textBg = {backgroundImage:'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' version=\'1.1\' height=\'20px\' width=\'1px\'><text x=\'0\' y=\'15\' fill=\'black\' font-size=\'12\'>.</text></svg>")'}
+  
   const CheckoutOrder = ({ totalPriceText = "Стоимость товаров", deliveryCostText = "Стоимость доставки", sumTotal = "Итого", checkoutBtnText = "Сделать заказ" }) =>(
     <div className=" mt-14 w-full flex flex-col justify-center gap-6 lg:p-4">
       <div id="order_details" className="w-auto p-2 lg:p-4 flex flex-col justify-start md:justify-center lg:justify-center xl:justify-center items-center gap-4 border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
@@ -104,10 +103,10 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
             {"Ordered Items:"}
           </p>
           {orderedItems.map((oi,x)=>
-            <ProductDescriptor  key={x} id={`${oi.id}${x}`} label={<NameQuantTag oi={oi}/>} values={[Number.parseInt(oi.price*oi.quantity)]} />
+            <ProductDescriptor key={x} id={`${oi.productId}${x}`} label={<NameTag modelName={"Product"} item={{ id: oi.productId, prop: "     x" + oi.quantity}}/>} values={[Number.parseInt(oi.price*oi.quantity)]} />
             )
           }
-          <span className={"dotted-div px-2 w-full h-8 text-slate-400 overflow-hidden clear-right text-clip bg-repeat"} style={textBg} >
+          <span className={"dotted-div my-2 px-2 w-full h-[1px] text-slate-400 overflow-hidden clear-right text-clip bg-repeat-x"} style={setTextBg(".")} >
           </span>
         </div>
         
@@ -137,7 +136,7 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
 
       </div>
       
-      <input type="submit" form="checkout_form" id="checkout_btn" value={checkoutBtnText} className="w-auto p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-3xl active: text-2xl text-white font-raleway font-normal" required/>
+      <input type="submit" form="checkout_form" id="checkout_btn" value={checkoutBtnText} className="w-auto p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-3xl active: text-2xl text-white font-raleway font-normal cursor-pointer" required/>
     </div>
   )
   return (

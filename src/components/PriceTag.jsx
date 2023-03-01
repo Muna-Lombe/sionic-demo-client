@@ -3,17 +3,17 @@ import { InfoIco } from "../assets"
 import { ClassWatcher } from "../orm/utilities/classWatcher"
 import { calcDisc } from "../orm/utilities"
 
-const PriceTag = ({original, discount=false }) => {
+const PriceTag = ({tagFor,original, discount=false }) => {
   const [currPriceTag, setCurrPriceTag] = useState({oldPrice:original})
   const setDisc = (oldPrice, disc) => {
     if (disc) return {discounted: calcDisc(oldPrice, discount), oldPrice }
     return { oldPrice }
   }
   useEffect(() => {
-    const currPrice = document.querySelector(".product-variations")
+    const currPrice = document.querySelector("."+tagFor)
     let watcher
     currPrice.childNodes.forEach((c, x) => {
-      watcher = new ClassWatcher(c, "active", () => setCurrPriceTag(setDisc(Number.parseInt(c.innerText), discount)), () => console.log("removed activated"));
+      watcher = new ClassWatcher(c, "active", () => setCurrPriceTag(setDisc(Number.parseInt(c.innerText), discount)), () => "");
 
       // c.addEventListener()
     })

@@ -13,7 +13,7 @@ const Basket = () => {
   // recieve the state
   const items = useSelector(filteredCartItemsFromModel()) //useSelector(state => state.cart.entities)
   // const testItems = useSelector(filteredOrdersFromModel([]))
-  console.log("test", items)
+  // console.log("test", items)
   // convert received state to array of state
   
   // filter it by store
@@ -75,7 +75,7 @@ const Basket = () => {
                 )
               )
     
-  console.log('test items',unOrd,'\n',ord)
+  // console.log('test items',unOrd,'\n',ord)
     return (
       <>
         <Suspense fallback={<NoItems />}>

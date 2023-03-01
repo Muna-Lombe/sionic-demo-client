@@ -16,7 +16,7 @@ const BuyBtns = ({ id, mainText = "Добавить в корзину", subText 
       DateCreated: momentDate().full,
       product: id,
       productCount:1,
-      ItemStatus: types.ORDERED_PENDING
+      ItemStatus: types.IN_CART
     }))
 
   }

@@ -21,5 +21,5 @@ const Store = configureStore({
     //middleware: [fetchProducts]//,asyncThunk]
 })
 
-console.log("store",Store)
+// console.log("store",Store)
 export default Store ;

@@ -17,7 +17,7 @@ Store.dispatch(asyncThunk())
 // Store.dispatch(createAsyncThunk(`orm/load${ThunkTypes[0].dataName}`, async () => {
 //   return await load(ThunkTypes[0])
 //   }))
-console.log("store", Store.getState())
+// console.log("store", Store.getState())
 // loadProducts()
 ReactDOM.render(
   <React.StrictMode>

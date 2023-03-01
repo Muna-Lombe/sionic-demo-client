@@ -3,7 +3,7 @@ import { ArrowLeft,  PinIco } from "../assets";
 import { filteredProductsFromModel } from "../orm/selectors";
 import { useSelector } from "react-redux";
 import { Link,useParams, useLocation, } from "react-router-dom";
-import { BuyBtns, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, EmbeddedProducts, Faqs, FullProductCharacteristics, FullProductDescription, NoItems, OrderInfo,  PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags,  ReviewsAndQuestions } from "../components";
+import { BuyBtns, ContentDescription, ContentDetails, ContentPayment, ContentSpecification, ContentViewer, Courier, DiscountInfo, EmbeddedProducts, Faqs, FullProductCharacteristics, FullProductDescription, Logo, NoItems, OrderInfo,  PaymentType, PickupPoints, PinLocation, PriceTag, ProductDescriptor, ProductImageViewer, ProductSpecificationDetail, ProductTags,  ReviewsAndQuestions } from "../components";
 
 
 const ShowProduct = ()=>{
@@ -131,9 +131,9 @@ const ShowProduct = ()=>{
             <MiddleSection>
               <ContentViewer>
                   <ProductImageViewer images={productItem?.images}/>
-                  <ContentDetails storeName={productItem?.store.name} variations={productItem?.variations}>
+                <ContentDetails contentType={"product"} showLogo={<Logo logo={productItem?.store.name} />} variations={productItem?.variations.map((p)=> ({...p, text:p.price}))}>
                       { productItem?.variations.map((i,x)=>
-                            <ContentDescription key={x} stock={i.stock} first={x===0} id={`${i.id}`} >
+                            <ContentDescription key={x} first={x===0} id={`${i.id}`} >
                               <ProductDescriptor key={101} id={`${i.id}${x}`} label={"In stock"} values={[i.stock]} />
                               { i.properties.map((k,v)=> <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />) }
                             </ContentDescription>
@@ -147,7 +147,7 @@ const ShowProduct = ()=>{
                       </ContentSpecification>
                   </ContentDetails >
                   <ContentPayment >
-                    <PriceTag original={productItem?.priceRange.sort((a, b) => b - a).at(-1)} discount={productItem?.isDiscounted[0] ? productItem?.isDiscounted[1] : false} />
+                    <PriceTag tagFor={"product-variations"} original={productItem?.priceRange.sort((a, b) => b - a).at(-1)} discount={productItem?.isDiscounted[0] ? productItem?.isDiscounted[1] : false} />
                     <DiscountInfo/>
                     <BuyBtns id={productItem?.id}/>
                   </ContentPayment> 

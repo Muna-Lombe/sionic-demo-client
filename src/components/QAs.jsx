@@ -226,7 +226,7 @@ const QAs = ({ qas}) => {
           <Question key={x} question={{...q, responses:""}}>
             {
               q.responses.map((r,x)=>
-              <Answer response={r} />
+              <Answer key={x} response={r} />
               )
             }
           </Question>

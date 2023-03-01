@@ -66,7 +66,7 @@ export default function customReducer({session, model,action }) {
       // session.reduce();
       break;
     case ( isTargetModel() && verb() + '_' + model.modelName) === (types.UPDATE+'_'+model.modelName):
-      console.log("update", payload, model.modelName, model.withId(payload.id))
+      // console.log("update", payload, model.modelName, model.withId(payload.id))
 
       model.withId(payload.id).update(payload.set);
       // session.reduce();

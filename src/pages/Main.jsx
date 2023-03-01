@@ -1,15 +1,10 @@
 import React, { Suspense } from 'react'
-import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { Product,CategoryTag, NoItems } from '../components'
-import {  filterProducts} from '../js/slices/products/productsSlice'
 import { filteredProductsFromModel, categories } from '../orm/selectors';
-import { selectCatIds, selectCurCatId } from '../js/slices/filters/categoriesSlice';
 const Main = () => {
     let cats = useSelector(categories)
     let products = useSelector(filteredProductsFromModel([]))
-    // console.log("curCatId", curCatId)
-    console.log("...", products)
     const wait=(fn)=>{
       setTimeout(() => {
         
@@ -27,7 +22,6 @@ const Main = () => {
                 <h4 className="text-xs text-[#2967FF] flex items-baseline">{"Настройки"}</h4>
             </div>
             <div id="product_tags" className=" w-full flex flex-row flex-nowrap overflow-clip" >
-                {/* <Link to={"/orm-reader"}>🔮</Link> */}
                 <CategoryTag  borderId={'type_clear'} text={'clear'} />
                 <div className="scrollable_product_tags flex flex-row overflow-x-scroll tag">
                   {
@@ -40,8 +34,7 @@ const Main = () => {
                 </div>
                 
             </div>
-          {/* flex flex-row flex-wrap */}
-              {/* grid grid-flow-rows grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] */}
+          
           <div id="mainbar__content" className={"w-auto h-[rem] p-2 grid grid-flow-row-dense "+ smallScreens+" greater-than-md:"+bigScreens+"  overflow-x-scroll scroll-smooth justify-center  transition-all  tag"}>
                 {
                     products.length
