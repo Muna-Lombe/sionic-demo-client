@@ -130,7 +130,7 @@ const ShowProduct = ()=>{
           </div>
             <MiddleSection>
               <ContentViewer>
-                  <ProductImageViewer images={productItem?.images}/>
+                <ProductImageViewer images={productItem?.images}/>
                 <ContentDetails contentType={"product"} showLogo={<Logo logo={productItem?.store.name} />} variations={productItem?.variations.map((p)=> ({...p, text:p.price}))}>
                       { productItem?.variations.map((i,x)=>
                             <ContentDescription key={x} first={x===0} id={`${i.id}`} >

@@ -14,7 +14,7 @@ const ContentDetails = ({showLogo, contentType, variations = [{ id: 1, name: "ye
     // console.log("curAct", nextContDesc)
   }
   return (
-    <div className="content-details p-2 w-full h-max   flex  flex-col gap-3 order-2 ">
+    <div className="content-details p-2 w-max h-max   flex  flex-col gap-3 order-2 ">
       {
         showLogo 
         ? showLogo
