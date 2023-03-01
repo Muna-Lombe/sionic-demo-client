@@ -22,7 +22,7 @@ const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
     if (maxValRef.current) {
       const minPercent = getPercent(stateUpdaters.min.val);
       const maxPercent = getPercent(+maxValRef.current.value); // Preceding with '+' converts the value from type string to type number
-      console.log("min---", maxPercent, minPercent)
+      // console.log("min---", maxPercent, minPercent)
 
       if (range.current) {
         range.current.style.left = `${minPercent}%`;
@@ -36,7 +36,7 @@ const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
     if (minValRef.current) {
       const minPercent = getPercent(+minValRef.current.value);
       const maxPercent = getPercent(stateUpdaters.max.val);
-      console.log("max---", maxPercent, minPercent)
+      // console.log("max---", maxPercent, minPercent)
       if (range.current) {
         range.current.style.width = `${(maxPercent - minPercent) > 250 ? 100 : (maxPercent - minPercent) }%`;
       }

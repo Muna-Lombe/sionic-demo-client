@@ -23,6 +23,6 @@ ProductImage.options = {
     idAttribute: 'id'
 }
 
-export const [updatedProductImage, removedProductImage, addedProductImage, createdProductImage, addedProductImageTo, removedProductImageFrom,] = actions().createDefaultFor('ProductImage')
+export const { UPDATE: updatedImage, REMOVE: removedImage, ADD: addedImage, CREATE: createdImage, ADD_TO: addedImageTo, REMOVE_FROM: removedImageFrom } = actions().createDefaultFor('ProductImage')
 
 export default ProductImage;

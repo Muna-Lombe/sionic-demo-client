@@ -36,5 +36,5 @@ export { default as FullProductCharacteristics } from './FullProductCharacterist
 export { default as ProductTags } from './ProductTags';
 export { default as FilterSearchResults } from './FilterSearchResults';
 export { default as EmbeddedProducts } from './EmbeddedProducts';
-export { default as FilterIco } from '../assets/FilterIco';
+export { default as NameTag } from './NameTag';
 // export { default as SearchResults } from './SearchResults';

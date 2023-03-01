@@ -21,6 +21,6 @@ ProductVariation.fields = {
 ProductVariation.options = {
     idAttribute: 'id'
 }
-export const [updatedProductVariation, removedProductVariation, addedProductVariation, createdProductVariation, addedProductVariationTo, removedProductVariationFrom,] = actions().createDefaultFor('ProductVariation')
+export const { UPDATE: updatedVariation, REMOVE: removedVariation, ADD: addedVariation, CREATE: createdVariation, ADD_TO: addedVariationTo, REMOVE_FROM: removedVariationFrom } = actions().createDefaultFor('ProductVariation')
 
 export default ProductVariation;

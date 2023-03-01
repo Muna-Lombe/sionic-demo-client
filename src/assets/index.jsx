@@ -1,3 +1,9 @@
+
+export const setTextBg = (text, size={h:1, w:1, x:0, y:1, font:8})=>(
+  
+  { backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' version=\'1.1\' height=\'' + size.h + 'px\' width=\'' + size.w + 'px\' style=\'\'><text x=\'' + size.x + '\' y=\'' + size.y + '\' fill=\'gray\' font-family=\'' + 'Raleway' +'\' font-size=\'' + size.font  +'\'>'+text+'</text></svg>")' }
+)
+
 export {default as SearchIco } from './SearchIco';
 export {default as PinIco } from './PinIco';
 export {default as BasketIco } from './BasketIco';
@@ -23,3 +29,4 @@ export { default as StarIco } from './StarIco';
 export { default as ThumbIco } from './ThumbIco';
 export { default as CancelIco } from './CancelIco';
 export { default as ToggleIco } from './ToggleIco';
+export { default as FilterIco } from './FilterIco';

@@ -9,7 +9,7 @@ import { imagepath, imagepaths } from '../assets/images';
 import { created, removed, selectedProduct } from '../orm/actions/actionTypes';
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationProperrtyListValueSession, productVariationProperrtySession, productVariationProperrtyValueSession, session } from '../orm/reducers/rootOrmReducer';
-import { filteredProductsFromModel, filteredCategoriesFromModel, filteredOrdersFromModel, filteredCustomModelSelector } from '../orm/selectors';
+import { filteredProductsFromModel, categories, filteredOrdersFromModel, filteredCustomModelSelector } from '../orm/selectors';
 import Product from './Product';
 import { useDispatch } from 'react-redux';
 import { ImageMagnifier } from '.';
@@ -22,7 +22,7 @@ const OrmReader = () => {
   const [excludedIds, setExcludedIds] = useState([])
   const [modalContent, setModalContent]= useState({})
   const products = useSelector(filteredProductsFromModel(excludedIds))
-  const categories = useSelector(filteredCategoriesFromModel(excludedIds))
+  const categories = useSelector(categories)
   const orders = useSelector(filteredOrdersFromModel())
   const useGet=(model)=> useSelector(filteredCustomModelSelector(model))
   const dispatch = useDispatch();

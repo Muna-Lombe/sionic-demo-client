@@ -6,7 +6,7 @@ const CopyIco = ({text}) => {
   let color = "#727280"
  
   const copyToClipboard= (e,text)=>{
-    console.log(text)
+    // console.log(text)
     navigator.clipboard.writeText(text)
     setIsCopied((prevState) => !prevState)
     setTimeout(() => {
@@ -18,14 +18,14 @@ const CopyIco = ({text}) => {
   const CopyNotice = ()=> {
       return(
         // (isCopied ? "flex": "hidden")+
-          <span className={ (isCopied ? "flex": "hidden")+" px-[1.5px] bg-slate-100 border border-gray-400 rounded-md text-xs text-gray-400 animate-bounce duration-150 "}>
-            Id Copied!
+          <span className={ (isCopied ? "flex": "hidden")+" absolute -top-5 -right-8 px-[1.5px] bg-slate-100 border border-gray-400 rounded-md text-xs text-gray-400 "}>
+            copied!
           </span>
         
       )
     }
   return (
-    <div id="copy_icon" className="relative flex gap-2">
+    <span id="copy_icon" className="relative flex gap-2">
       
       <svg className={"cursor-pointer  "+(isCopied ? "stroke-[#2967FF]" : "stroke-[#727280]"+" hover:stroke-[#2967FF]")} onClick={(e)=>copyToClipboard(e,text)} width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M8.375 12.1251H2.125C1.43437 12.1251 0.875 11.5657 0.875 10.8751V4.62506C0.875 3.93444 1.43437 3.37506 2.125 3.37506H8.375C9.06563 3.37506 9.625 3.93444 9.625 4.62506V10.8751C9.625 11.5657 9.06563 12.1251 8.375 12.1251Z" strokeLinecap="round" strokeLinejoin="round"/>
@@ -33,7 +33,7 @@ const CopyIco = ({text}) => {
       </svg>
       <CopyNotice />
       
-    </div>
+    </span>
     
 
   )

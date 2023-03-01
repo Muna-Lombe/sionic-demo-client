@@ -20,7 +20,7 @@ const Search = () => {
                   ? <>
                       <FilterSearchResults/>
                       <div id="mainbar-search__content" className={"p-2  grid grid-flow-row-dense " + smallScreens + " greater-than-md:" + bigScreens +" overflow-x-clip scroll-smooth gap-[38px] justify-center  transition-all  tag"}>
-                          {products.map((i) => (<Product key={i.id} id={i.id} product={i.product} isSearchOrMain/>))}
+                          {products.map((i) => (<Product key={i.id}  product={i} isSearchOrMain/>))}
                       </div>
                     
                     </>

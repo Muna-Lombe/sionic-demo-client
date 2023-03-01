@@ -16,8 +16,26 @@ class Order extends Model {
 Order.modelName = 'Order';
 Order.fields = {
     id: attr(),
-    product_id: fk('Product', 'orders'),
+    // product: fk({ to: 'Product', as: 'product', through: "Product", throughFields: { itemId: attr(), itemQuantity: attr(), itemPrice: attr() }, relatedName: 'orders' }),
+    productIds: many({to:'Product', relatedName: 'orders'}),
     DateCreated: attr(),
+    OrderProps:attr({
+        quantity: attr([{ 
+            itemId: fk({ to: 'Product', as: 'product', relatedName: 'orders' }), 
+            itemQuantity: attr(), 
+            itemPrice: attr() 
+        }]),
+        storeName:attr(),
+        deliveryDate: attr(),
+        deliveryTime: attr(),
+        deliveryAddress: attr(),
+        receiver:attr(),
+        receiverPhone: attr(),
+        orderCost: attr(),
+        deliveryCost: attr(),
+        totalCost: attr()
+    }),
+    OrderStatus: attr()
 };
-export const [updatedOrder, removedOrder, addedOrder, createdOrder, addedOrderTo, removedOrderFrom,] = actions().createDefaultFor('Order')
+export const {UPDATE:updatedOrder, REMOVE:removedOrder, ADD:addedOrder, CREATE:createdOrder, ADD_TO:addedOrderTo, REMOVE_FROM:removedOrderFrom} = actions().createDefaultFor('Order')
 export default Order;

@@ -16,7 +16,7 @@ const FilterSearchResults = ({ children }) => {
         <div className="category-types-wrapper font-medium">
           {
             categories.categoryTypes.map((i,x)=>
-            <div className="category-type hover:text-blue-500 cursor-pointer">
+            <div key={x} className="category-type hover:text-blue-500 cursor-pointer">
               {"Cate"}
             </div>
             )
@@ -89,8 +89,8 @@ const FilterSearchResults = ({ children }) => {
     }
 
     const addIcon =(iconName="InfoIco")=>{
-      const icon = require("../assets/"+iconName+".jsx")
-      return <icon/>
+      const Icon = require("../assets/"+iconName+".jsx").default
+      return <Icon/>
     }
     const selectType=(d,t)=>{
     switch (t) {

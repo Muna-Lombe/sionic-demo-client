@@ -24,6 +24,6 @@ ProductVariationPropertyValue.options = {
     idAttribute: 'id'
 }
 
-export const [updatedProductVariationPropertyValue, removedProductVariationPropertyValue, addedProductVariationPropertyValue, createdProductVariationPropertyValue, addedProductVariationPropertyValueTo, removedProductVariationPropertyValueFrom] = actions().createDefaultFor('ProductVariationPropertyValue')
+export const { UPDATE: updatedVariationPropertyValue, REMOVE: removedVariationPropertyValue, ADD: addedVariationPropertyValue, CREATE: createdVariationPropertyValue, ADD_TO: addedVariationPropertyValueTo, REMOVE_FROM: removedVariationPropertyValueFrom } = actions().createDefaultFor('ProductVariationPropertyValue')
 
 export default ProductVariationPropertyValue;

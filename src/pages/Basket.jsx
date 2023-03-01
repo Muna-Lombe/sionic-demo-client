@@ -4,24 +4,27 @@ import { Cart, NoItems } from '../components'
 import { cartItemAdded, itemsInCart, selectCartItems } from '../js/slices/cart/cartSlice'
 import { selectProductIds } from '../js/slices/products/productsSlice'
 import { Outlet } from 'react-router-dom'
+import { filteredCartItemsFromModel, filteredOrdersFromModel } from '../orm/selectors'
+import types from '../orm/actions/actionTypes'
+import { calcDisc } from '../orm/utilities'
 
 const Basket = () => {
 
   // recieve the state
-  const items = useSelector(state => state.cart.entities)
-  const testItems = useSelector(selectCartItems)
-  
+  const items = useSelector(filteredCartItemsFromModel()) //useSelector(state => state.cart.entities)
+  // const testItems = useSelector(filteredOrdersFromModel([]))
+  // console.log("test", items)
   // convert received state to array of state
   
   // filter it by store
-  const filterByStore = (filteredArr) =>{
+  const filterByStore = (ordItm) =>{
     const filteredStoreObject = Object.create(null)
-      filteredArr.forEach((fp)=>{
+      ordItm.forEach((fp)=>{
       if(filteredStoreObject[fp.product.store.name]){
 
-        filteredStoreObject[fp.product.store.name].push({id:fp.id, ...fp.product, isOrdered: fp.isOrdered}) 
+        filteredStoreObject[fp.product.store.name].push(fp) 
       }else{
-          filteredStoreObject[fp.product.store.name] = [{id:fp.id, ...fp.product, isOrdered: fp.isOrdered}]
+          filteredStoreObject[fp.product.store.name] = [fp]
       }
       
     })
@@ -29,22 +32,54 @@ const Basket = () => {
   }
 
   // seperate it by ordered and not ordered status
-  const inArrHaveBeenOrdered = (el, idx, arr) => {
-    return el.isOrdered === true
+
+  const addTotalCost = (store)=>{
+    if(Object.keys(store).length < 1) return []
+    return Object.keys(store).map(storeName => (
+          { storeName:storeName, 
+            orders: store[storeName],
+        currentCummulativeTotal: store[storeName].map((orderItem) => {
+                            return (orderItem.product.isDiscounted? orderItem.product.isDiscounted * orderItem.productCount : orderItem.product.price * orderItem.productCount)
+            }).reduce((a, b) => a + b).toFixed(1)
+          })
+    )
+    // return { ...store, totalPrice: totalPrice }
   }
-  const filtered = (cartItems, isOrdered) => {
-    return Object.fromEntries(Object.entries(cartItems).filter(([key,value]) => value.some(inArrHaveBeenOrdered) === isOrdered));
+
+  const sortBy = (cartItems, orderStatuses) => {
+    const matchingStatus = (i) => orderStatuses.some(os => os.includes(i.ItemStatus.toString()))
+    const filterByStatus =([k,v])=>{
+      const itm = v.filter(matchingStatus)
+      if (itm.length) return [k,itm]
+    } 
+    const noUndefined = i => i!==undefined
+    return Object.entries(cartItems).map(filterByStatus).filter(noUndefined) 
   } 
 
-    const unOrd = filtered(filterByStore(Object.keys(items).map((key)=> items[key])), false)
-    const ord = filtered(filterByStore(Object.keys(items).map((key)=> items[key])), true)
+  const unOrd = addTotalCost(
+                  Object.fromEntries(
+                    sortBy(
+                      filterByStore(
+                        Object.values(items)
+                      ), [types.IN_CART, types.ORDERED_PENDING]
+                    )
+                  )
+                )
+  const ord = addTotalCost(
+                Object.fromEntries(
+                    sortBy(
+                      filterByStore(
+                        Object.values(items)
+                      ),[types.ORDERED_COMPLETE]
+                    )
+                )
+              )
     
-    // console.log('test items', testItems)
-
+  // console.log('test items',unOrd,'\n',ord)
     return (
       <>
         <Suspense fallback={<NoItems />}>
-          <Cart items={items} unOrd={unOrd} ord={ord} inArrHaveBeenOrdered={inArrHaveBeenOrdered}/>
+          <Cart unOrd={unOrd} ord={ord}/>
         </Suspense>
       </>
     )
