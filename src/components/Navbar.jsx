@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
-import { Link, Navigate, Outlet, createSearchParams, useNavigate } from "react-router-dom";
+import { Link, Navigate, Outlet, createSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 // assets
 import { AvatarIco, CartIco, PinIco, SearchIco } from '../assets';
@@ -15,6 +15,7 @@ const Navbar = () => {
   const searchProductText = prodNames[0]?.name || "" //"false"
   const ref = useRef(null)
   const goto = useNavigate()
+  const location = useLocation()
   const handleClick =(e)=>{
     e.stopPropagation()
     dispatch( setSearchedProductId([e.target.value]))
@@ -154,14 +155,19 @@ const Navbar = () => {
               <h2 className="hidden p-2 md:flex lg:flex"> Александровск-Са...</h2>
             </div>
           </div>
-          <div id="search_field_wrapper"  className="w-full greater-than-md:w-max max-h-14 lg:min-w-[2rem] xl:min-w-[2rem] py-2 flex flex-col justify-start items-start transition-all">
-            <div id="search_field_box" className='w-full flex flex-col items-center' onBlur ={(e) => handleBlur(e, "blur")}>
-              <SearchField/>
-              <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="min-w-[22rem] greater-than-md:min-w-[28rem] w-auto max-w-[28rem] greater-than-md:max-w-[32rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
-              </optgroup>
+          {
+            location.pathname.includes("checkout")
+            ? ""
+            :<div id="search_field_wrapper"  className="w-full greater-than-md:w-max max-h-14 lg:min-w-[2rem] xl:min-w-[2rem] py-2 flex flex-col justify-start items-start transition-all">
+              <div id="search_field_box" className='w-full flex flex-col items-center' onBlur ={(e) => handleBlur(e, "blur")}>
+                <SearchField/>
+                <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="min-w-[22rem] greater-than-md:min-w-[28rem] w-auto max-w-[28rem] greater-than-md:max-w-[32rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
+                </optgroup>
+              </div>
+              
             </div>
-            
-          </div>
+          
+          }
         </div>
         <div id="navbar_right__wrapper" className=" absolute right-0   h-full flex md:items-start md:justify-end   lg:m-0 lg:p-0 lg:items-center lg:justify-center xl:m-0 xl:p-0 xl:items-center xl:justify-center">
           <div id="user_content" className="hidden pt-4 px-2 w-[7rem] h-max md:w-[8rem] lg:w-[8rem] lg:p-0 xl:w-[8rem] xl:p-0 xs:flex sm:flex md:flex lg:flex xl:flex  justify-around items-center gap-2">

@@ -83,7 +83,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
     // min - w - [8rem] w - full max - w - [12rem] md: max - w - [14rem] lg: max - w - [14rem] xl: max - w - [14rem] h - [14rem] md: h - [24rem] lg: h - [24rem] xl: h - [24rem]
     <div id={"product_card_" + product?.id} className={(noPrd ? " " : " ") + " p-2 min-w-[10rem] greater-than-md:min-w-[10rem] greater-than-lg:min-w-[13rem] w-auto max-w-[15rem] h-full max-h-[20rem] flex flex-nowrap  flex-col justify-between gap-2 bg-white shadow-md border-t border-gray-200 rounded-md font-raleway "}>
       <div id="product_header" className="relative w-[100%] h-[50%] my-1  justify-center items-end  ">
-        <div id="product_image" className="flex  justify-center items-end" >
+        <Link to={"/product/" + product?.id} id="product_image" className="flex  justify-center items-end" >
           {
             noPrd
               ? <Image imagepath={no_product_img}/>
@@ -91,7 +91,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
           }
           
           {/* <img className="w-[6rem] md:w-full lg:w-full xl:w-full aspect-square object-contain"  src={imagepath(product.images[0].id)|| img[product.img_path_id] || no_product_img} alt="prd"  /> */}
-        </div>
+        </Link>
         {/* <div id="product_tag" className=" w-[90%] absolute bottom-0 md:bottom-5 lg:bottom-5 xl:bottom-5 transition-all flex flex-row overflow-x-scroll tag cursor-pointer z-0">
           {
             cats?.map((tag, idx) => {
@@ -122,7 +122,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
               {
                 noPrd
                   ? <div className="no-prd-field w-[70%] h-6 border rounded-md bg-gradient-to-tr from-slate-400 to-slate-500 animate-pulse opacity-30"></div>
-                  : <Link to={"/product/" + product?.id} style={textStyle} >
+                  : <Link to={"/product/" + product?.id}  style={textStyle} >
                       {product?.name}
                     </Link>
               }

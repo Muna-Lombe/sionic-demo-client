@@ -42,18 +42,11 @@ const AppWrapper = ({children}) => {
   return (
     <Suspense fallback={<NoItems />}>
 
-      <div id="App" className="dark relative min-w-[200px] w-auto max-w-[2528px] min-h-screen flex flex-col justify-between gap-4 ">
+      <div id="App" className="dark relative min-w-[200px] w-auto max-w-[2528px] min-h-screen flex flex-col justify-start gap-4 2n-child:self-start">
 
         <MainbarNav/>
-        <div id="main" className="w-auto min-h-[76rem] h-auto  flex first:flex-col justify-between">
-          <div id="mainbar_container_wrapper" className=" w-full  h-auto overflow-y-auto gap-1 scrollbar">
-            {children}
-            
-          </div>
-          <div id="sidebar_container" className="hidden lg:flex lg:w-auto lg:max-w-[24rem] xl:flex xl:w-auto xl:max-w-[24rem] border-l-2 child:mx-2 ">
-            <Sidebar />
-          </div>
-        </div>
+        
+        {children}
         <FooterNav />
         <footer id="footer" className="w-full min-h-[20%] h-[12rem] flex self-baseline xs:sticky xs:top-full  z-10    bg-[#F8F8F8] no_highlights">
           <Footer />

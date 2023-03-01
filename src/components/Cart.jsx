@@ -171,6 +171,7 @@ const Cart = ({ unOrd, ord, }) => {
                   <Link 
                     to={{pathname: "/checkout"}} 
                     state={state} 
+                    
                     className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
                   > 
                     {"Оформить"} 

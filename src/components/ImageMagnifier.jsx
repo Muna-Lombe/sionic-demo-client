@@ -28,11 +28,11 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
     glass.addEventListener("mousemove", moveMagnifier);
     mesh.addEventListener("mousemove", moveMagnifier);
 
-    glass.addEventListener("touchmove", ()=>console.log("touchmove"));//moveMagnifier);
-    img.addEventListener("touchmove", () => console.log("touchmove")); //moveMagnifier);
+    glass.addEventListener("touchmove", moveMagnifier);
+    img.addEventListener("touchmove", moveMagnifier);
 
     function moveMagnifier(e) {
-
+      console.log("move event", e)
       let pos, x, y, whOffsetBal, bgPosOffset;
       e.preventDefault();
 
@@ -112,7 +112,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
   )
   const CurrentImage = () => (
       <div className={"mesh-magnifier-container relative w-[" +sqrDim+ "px] max-w-full aspect-square"}>
-        <div onMouseEnter={(e) => magnify("activeImage", 3)} className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
+      <div onTouchMove={(e) => magnify("activeImage", 3)} onPointerEnter={(e) => magnify("activeImage", 3)} onMouseEnter={(e) => magnify("activeImage", 3)} className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
           {/* <VerticalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} />
           <HorizontalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} /> */}
 
