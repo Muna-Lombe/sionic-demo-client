@@ -1,4 +1,4 @@
-const Faqs = ({ titleText = "Часто задаваемые вопросы", subTexts = ["Условия доставки", "Возврат товаров", "Способы оплаты", "Возврат денег"], children }) => {
+const Faqs = ({ titleText = "FAQ", subTexts = ["Delivery conditions "," Return of goods "," Methods of payment "," Return of money"], children }) => {
   return (
     <div className="faqs py-4">
       <p className="title text-lg">{titleText}</p>

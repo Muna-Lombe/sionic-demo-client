@@ -1,15 +1,12 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react';
-import { Link, Navigate, Outlet, createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import React, {  useRef, useState } from 'react';
+import { Link, createSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 // assets
-import { AvatarIco, CartIco, PinIco, SearchIco } from '../assets';
+import { AvatarIco, CartIco, PinIco, SearchIco, titleTagTypes as tags } from '../assets';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProductNamesThatMatch, setSearchedProductId } from '../js/slices/products/productsSlice';
-import { useMemo } from 'react';
-import NoItems from './NoItems';
 const Navbar = () => {
-  // const [dropdownActive, setDropdownActive] = useState(false)
-  // const [showSuggestions, setShowSuggestions] = useState([])
+
   const prodNames = useSelector(selectProductNamesThatMatch());
   const dispatch = useDispatch();
   const searchProductText = prodNames[0]?.name || "" //"false"
@@ -26,10 +23,7 @@ const Navbar = () => {
   }
 
   const handleBlur = (e, type) =>{
-    // console.log(e)
-    // console.log("blur target from", e.target.parentElement.id)
-    // console.log("blur action owner", e.currentTarget.id)
-    // // console.log("blur target to", e.relatedTarget.id)
+
     e?.stopPropagation()
     
     const hideSuggestions = () => {
@@ -111,6 +105,14 @@ const Navbar = () => {
       optgrp.insertAdjacentElement("beforeend", optElem)  
     })
   };
+  const textStyle = {
+    maxWidth: '100%',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }
   const GoToCartIco = ({isBurgerMenu=false,size="2.5rem"}) => (
    
       <Link id='cart' to="cart/"> 
@@ -123,6 +125,7 @@ const Navbar = () => {
       <AvatarIco  size={size}  />
     </Link> 
   )
+
   const SearchField =({})=>{
     const [curtext, setCurtext] =useState("")
     const setParams = () =>{
@@ -146,13 +149,13 @@ const Navbar = () => {
         <div id="navbar_left__wrapper" className=" w-full block md:block  lg:gap-6 lg:flex lg:flex-row xl:flex xl:flex-row justify-start items-center transition-all">
           <div id="logo_location" className="min-w-max w-full lg:w-auto xl:auto flex justify-start  p-4 gap-8">
             <div id="logo" className="p-1 border-[4px] border-black border-spacing-2 rounded-[4px] text-[2.4rem] leading-10 font-raleway font-bold">
-              <Link to="" > Katundu </Link> 
+              <Link to="" > {tags.footer.storename} </Link> 
             </div>
             
             <div id="address" className="flex items-center justify-between">
               <PinIco />
       
-              <h2 className="hidden p-2 md:flex lg:flex"> Александровск-Са...</h2>
+              <h2 className="hidden p-2 md:flex lg:flex" style={textStyle}>{tags.location.city + ", " + tags.location.state}</h2>
             </div>
           </div>
           {
@@ -176,9 +179,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      {/* <Suspense fallback={<NoItems/>}>
-        <Outlet/>
-      </Suspense> */}
     </>
     
     

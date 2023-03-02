@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Product,CategoryTag, NoItems, Sidebar } from '../components'
 import { filteredProductsFromModel, categories } from '../orm/selectors';
+import { titleTagTypes as tags } from '../assets';
 const Main = () => {
     let cats = useSelector(categories)
     let products = useSelector(filteredProductsFromModel([]))
@@ -27,12 +28,12 @@ const Main = () => {
   const ProductContent = ()=>(
     <div id="products_list" className="w-full flex flex-col">
       <div id="products_list__header" className="m-3 w-auto flex flex-col md:flex-row lg:flex-row xl:flex-row justify-start gap-2  items-baseline ">
-        <h3 className=" text-2xl text-black  font-raleway font-[700]">{"Категории товаров"}</h3>
-        <h4 className="text-xs text-[#2967FF] flex items-baseline">{"Настройки"}</h4>
+        <h3 className=" text-2xl text-black  font-raleway font-[700]">{tags.home.categoriesText}</h3>
+        <h4 className="text-xs text-[#2967FF] flex items-baseline">{tags.home.settingsText}</h4>
       </div>
-      <div id="product_tags" className=" w-full flex flex-row flex-nowrap overflow-clip" >
+      <div id="product_tags" className="mr-24 w-auto flex flex-row flex-nowrap overflow-x-hidden" >
         <CategoryTag borderId={'type_clear'} text={'clear'} />
-        <div className="scrollable_product_tags flex flex-row overflow-x-scroll tag">
+        <div className="scrollable_product_tags  w-max flex flex-row overflow-x-scroll tag">
           {
 
             cats.map((tag, idx) => {

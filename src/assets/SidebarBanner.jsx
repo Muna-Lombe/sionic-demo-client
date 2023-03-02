@@ -1,14 +1,43 @@
 
 import React from 'react'
 
-const SidebarBanner = () => {
+const SidebarBanner = ({ onClick, mainText = "Receive goods", subText = "For Free!",ctaText = "Learn more" }) => {
 
+  // width="310" height="142"
+  const CTA = () => (
+    <g>
+      <rect x="110" y="90"  rx="19.5" onClick={onClick} //stroke="#FF2D87"
+        className="w-[55%] h-[26%] fill-[#2967FF] cursor-pointer">
+      </rect>
+      <text x='157' y='109' z={50} font-family='Raleway' dominantBaseline={"middle"} className="w-auto flex gap-2 "  >
+        <tspan className="w-max h-max border text-base fill-white font-raleway hover:font-semibold font-medium" >
+          {ctaText}
+        </tspan>
+      </text>
+    </g>
+  )
+  const MainText = ()=>(
+    <text x='110' y='40' font-family='Raleway' dominantBaseline={"middle"} className="w-auto flex gap-2"  >
+      <tspan className="text-xl fill-[#2967FF]  font-semibold" >
+        {mainText}
+      </tspan> 
+      <tspan x="110" y="68" className="text-xl fill-[#FF2D87] font-semibold uppercase" >
+        {subText}
+      </tspan>
+    </text>
+  )
   return (
-   <div className="absolute lg:w-[22rem] lg:h-[10rem] top-4 -z-50">
+    <div className=" lg:w-[22rem] lg:h-[10rem] top-4 ">
   {/* // className="absolute w-[425px] h-[225px] top-0 -left-[0.5rem] -z-50" */}
-      <svg   viewBox="0 0 322 143" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="11.5" y="0.5" width="310" height="142" rx="19.5" fill="none" stroke="#FF2D87"/>
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">TEXT</text>
+      <svg   viewBox="0 0 330 143" fill="none" xmlns="http://www.w3.org/2000/svg"
+          className="w-auto flex justify-center items-center"
+      >
+        <rect x="11.5" y="0.5" width="310" height="142" rx="19.5" fill="none" stroke="#FF2D87">
+
+        </rect>
+          <MainText/>
+          <CTA/>
+        {/* <text x="50%" y="50%" dominant-baseline="middle" color='black' text-anchor="middle">TEXT </text> */}
             <g clip-path="url(#clip0_6330_4)">
                 <path d="M90.9999 114H37.9092L45.1892 54.4449H83.6311L90.9999 114Z" fill="#FF2D87"/>
                 <path d="M87.2712 114H34.1804L41.4604 54.4449H79.9912L87.2712 114Z" fill="#FF7CB4"/>

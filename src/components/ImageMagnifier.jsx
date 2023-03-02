@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { imagepath } from '../assets/images'
-import no_img_path from '../assets/images/no_product_img.png'
+import no_img_path from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
 
 const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
   const [itemsCentered, setItemsCenter] = useState(false)

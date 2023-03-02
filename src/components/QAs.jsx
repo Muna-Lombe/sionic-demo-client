@@ -1,21 +1,21 @@
 import React from 'react'
 import { image1_1, imagepath } from '../assets/images'
-import { ArrowDown, CheckIco, ThumbIco } from '../assets'
+import { ArrowDown, CheckIco, ThumbIco, titleTagTypes as tags } from '../assets'
 import { CopyIco } from '../assets'
-import no_img_path from '../assets/images/no_product_img.png'
+import no_img_path from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
 
 const QAs = ({ qas}) => {
 
 
-  const QuestionInput=({questionBanner})=>{
+  const QuestionInput=({})=>{
     
     return(
       <div className="question-input p-6  flex flex-col gap-2 bg-slate-200 border rounded-lg">
         <p className="main-title text-lg font-[arial] font-medium">
-          {questionBanner.mainText}
+          {tags.questionBanner.mainText}
         </p>
         <p className="sub-title text-sm font-[arial] font-normal">
-          {questionBanner.subText}
+          {tags.questionBanner.subText}
         </p>
         <input type="text" name="question-input" placeholder='Write your question' id="" className="p-1 max-w-sm border-2 border-slate-400 rounded-lg" />
       </div>
@@ -219,7 +219,7 @@ const QAs = ({ qas}) => {
   }
   return (
     <div className="QA-wrapper flex flex-col gap-4">
-      <QuestionInput questionBanner={qas.questionBanner}/>
+      <QuestionInput/>
       <AnswerSorter answersList={qas.answersList}/>
       {
         qas?.questions?.map((q,x)=> 

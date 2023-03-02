@@ -1,10 +1,10 @@
-import { ArrowRight } from "../assets";
+import { ArrowRight, titleTagTypes as tags } from "../assets";
 
-const PickupPoints = ({ titleText = "Пункты выдачи и постаматы", points = { date: { day_tag: "завтра", date_text: "6 февраля" }, price: 0 } }) => (
+const PickupPoints = ({  points = { date: { day_tag: "tomorrow", date_text: "6 February" }, price: 0 } }) => (
   <span className="pickup-points p-2 flex flex-row justify-between gap-4 ">
     <span className='flex flex-col'>
       <span className="title">
-        {titleText}
+        {tags.pickupPoints.text}
       </span>
       <span className="details text-slate-400 text-sm">
         <span className='date'>

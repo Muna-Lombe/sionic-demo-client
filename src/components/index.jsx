@@ -1,4 +1,3 @@
-export {default as OrderedProduct } from './OrderedProduct';
 export {default as CheckoutForm } from './CheckoutForm';
 export {default as OrderHistory } from './OrderHistory';
 export {default as Navbar } from './Navbar';
@@ -11,7 +10,6 @@ export {default as Footer } from './Footer';
 export { default as OrmReader } from './OrmReader';
 export { default as ImageMagnifier } from './ImageMagnifier';
 export { default as NoItems } from './NoItems';
-export { default as NoProduct } from './NoProduct';
 export { default as ProductImageViewer } from './ProductImageViewer';
 export { default as Logo } from './Logo';
 export { default as ProductDescriptor } from './ProductDescriptor';

@@ -12,9 +12,10 @@ import types from '../orm/actions/actionTypes'
 import NameTag from './NameTag'
 import { orderedCartItem } from '../orm/models/CartModel'
 import { getNextId } from '../orm/selectors'
+import { titleTagTypes as tags } from "../assets";
 
 
-const CheckoutForm = ({ checkoutText = "Доставка"}) => {
+const CheckoutForm = ({ }) => {
   
   let navigate = useNavigate()
   const location = useLocation()
@@ -57,10 +58,10 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
   }
  
 
-  const CheckoutForm = ({ orderWhenText = "Когда доставить", orderToWhereText = "Куда доставить", receiverNameText = "Имя", phoneText ="Телефон" })=> (
+  const CheckoutForm = ({})=> (
     <>
       <div id="date_time" className="py-2 font-relaway" >
-        <p className="text-md font-semibold ">{orderWhenText}</p> 
+        <p className="text-md font-semibold ">{tags.checkout.orderWhenText}</p> 
       </div>
       <div id="delivery_date_time__wrapper" className="w-max flex justify-around gap-4">
         <div id="date" className="w-[9rem] flex flex-col justify-center border-b-[1px] border-b-gray-300">
@@ -73,20 +74,20 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
         </div>
       </div>
       <div id="address__wrapper" className="min-w-[15rem] py-2 flex flex-col justify-center font-raleway">
-        <label htmlFor="delivery_address" className="text-md font-semibold">{orderToWhereText+"?"}</label>
+        <label htmlFor="delivery_address" className="text-md font-semibold">{tags.checkout.orderToWhereText+"?"}</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <LocationIco />
           <input id="d_addr" className=" min-w-[314px] w-full  px-2 focus:outline-none" form="checkout_form" type="text" name="delivery_address"  placeholder="Выберите адрес доставки" required />
         </div>
       </div>
       <div id="name__wrapper" className="min-w-[15rem]  py-2 flex flex-col justify-center font-raleway">
-        <label htmlFor="receiver_name" className="text-md font-semibold">{receiverNameText}</label>
+        <label htmlFor="receiver_name" className="text-md font-semibold">{tags.checkout.receiverNameText}</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <input id="rcv_name" className=" min-w-[314px] w-full  px-2 focus:outline-none" form="checkout_form" type="text" name="receiver" required />
         </div>
       </div>
       <div id="phone__wrapper" className="min-w-[15rem] py-2 flex flex-col justify-center font-raleway">
-        <label htmlFor="receiver_phone" className=" text-md font-semibold">{phoneText}</label>
+        <label htmlFor="receiver_phone" className=" text-md font-semibold">{tags.checkout.phoneText}</label>
         <div className="h-[2.5rem] px-2 flex items-center gap-1 border-[1px] border-gray-300 rounded-3xl">
           <input id="rcv_phone" className=" min-w-[314px] w-full  px-2 focus:outline-none" form="checkout_form" type="text" name="receiver_phone" required />
         </div>
@@ -94,8 +95,8 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
     </>
   )
   
-  const CheckoutOrder = ({ totalPriceText = "Стоимость товаров", deliveryCostText = "Стоимость доставки", sumTotal = "Итого", checkoutBtnText = "Сделать заказ" }) =>(
-    <div className=" mt-14 w-full flex flex-col justify-center gap-6 lg:p-4">
+  const CheckoutOrder = ({ totalPriceText = "Order total", deliveryCostText = "Delivery cost", sumTotal = "Total", checkoutBtnText = "Checkout" }) =>(
+    <div className=" mt-14 w-full flex flex-col justify-center gap-6 lg:p-4 lining-nums tabular-nums">
       <div id="order_details" className="w-auto p-2 lg:p-4 flex flex-col justify-start md:justify-center lg:justify-center xl:justify-center items-center gap-4 border-[1px] border-[#F0F4FB] bg-[#F0F4FB] rounded-3xl">
         
         <div id="order_items" className="w-full flex flex-col items-start text-black text-base">
@@ -110,25 +111,23 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
           </span>
         </div>
         
-        
-        
         <div id="order_cost__wrapper" className="w-full   py-1 px-2 flex flex-col sm:flex-row  md:flex-row  lg:flex-row xl:flex-row justify-between md:justify-between lg:justify-between xl:justify-between  items-center text-lg text-[#727280]  font-raleway ">
           <label htmlFor="order_cost">
-            {totalPriceText+":"}
+            {tags.checkout.totalPriceText+":"}
           </label>
           <input id="o_cost" className="w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end text-xl bg-transparent lining-nums tabular-nums" name="order_cost" form="checkout_form" type="text" value={(total || 0) +"₽"} readOnly required  />
         </div>
 
         <div id="delivery_cost__wrapper" className="w-full  py-1 px-2 flex flex-col sm:flex-row  md:flex-row  lg:flex-row xl:flex-row justify-between md:justify-between lg:justify-between xl:justify-between items-center text-lg text-[#727280] font-raleway ">
           <label className="" htmlFor="delivery_cost">
-            {deliveryCostText+":"}
+            {tags.checkout.deliveryCostText+":"}
           </label>
           <input id="d_cost" className="w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent lining-nums tabular-nums" name="delivery_cost" form="checkout_form" type="text" value={(deliveryPrice || 0) +"₽"} readOnly required />
         </div>
 
         <div id="total_cost__wrapper" className="w-full  px-2 flex flex-col sm:flex-row  md:flex-row  lg:flex-row xl:flex-row justify-between md:justify-between lg:justify-between xl:justify-between items-center text-xl text-[#727280] font-raleway font-medium ">
           <label className="bg-transparent" htmlFor="total_cost">
-            {sumTotal+":"}
+            {tags.checkout.sumTotalText+":"}
           </label>
           <input id="t_cost" className="w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent text-black font-bold lining-nums tabular-nums" name="total_cost" form="checkout_form" type="text" value={(total 
           + deliveryPrice) +"₽"} readOnly required />
@@ -136,14 +135,14 @@ const CheckoutForm = ({ checkoutText = "Доставка"}) => {
 
       </div>
       
-      <input type="submit" form="checkout_form" id="checkout_btn" value={checkoutBtnText} className="w-auto p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-3xl active: text-2xl text-white font-raleway font-normal cursor-pointer" required/>
+      <input type="submit" form="checkout_form" id="checkout_btn" value={tags.checkout.checkoutBtnText} className="w-auto p-3 flex justify-center  items-center border-[1px] border-[#2967FF] bg-[#2967FF] active:bg-green-400 rounded-3xl active: text-2xl text-white font-raleway font-normal cursor-pointer" required/>
     </div>
   )
   return (
     <div id="checkout_wrapper" className="w-full mx-2">
       <div id="checkout_header" className="text-xl text-black font-raleway font-bold">
         <p>
-        {checkoutText}
+        {tags.checkout.checkoutText}
         </p>
       </div>
       <form id="checkout_form" name="checkout_form" action="/#" method='POST'  onSubmit={(e)=>handleSubmit(e)} >

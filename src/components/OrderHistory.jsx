@@ -1,15 +1,14 @@
 import React from 'react'
 
 // assets 
-import logo from '../assets/images/item_logo.png'
-import { CopyIco, ArrowDown } from '../assets'
+import { CopyIco, ArrowDown, titleTagTypes as tags} from '../assets'
 import ContentDetails from './ContentDetails'
 import NameTag from './NameTag'
 import ProductDescriptor from './ProductDescriptor'
 import ContentDescription from './ContentDescription'
 import Logo from './Logo'
 
-const OrderHistory = ({ orderHistoryText ="История заказов", itemsOrdered}) => {
+const OrderHistory = ({ itemsOrdered}) => {
   const handleRotateIco = (e) => {
     const elem = e.target || e
     // console.log(elem)
@@ -45,21 +44,21 @@ const OrderHistory = ({ orderHistoryText ="История заказов", items
 
   }
   
-  const Item = ({ order, showMoretext = "Подробнее", orderStatusText = "Статус заказа", orderNumberText = "Номер заказа", quantityOrderedText = "Кол-во товаров", orderCostText = "Стоимость заказа", deliveryAddressText ="Адрес доставки"})=>{
+  const Item = ({ order})=>{
     const id = '#'+ order.id
     let date = order.DateCreated.split(",")[0]
     const OrderSummary = () =>(
       <div id="order-summary" className="visible flex flex-row">
         <div id="quatity_ordered">
-          <p className="text-xs text-[#727280] font-medium">{quantityOrderedText}</p>
+          <p className="text-xs text-[#727280] font-medium">{tags.orderHistory.quantityOrderedText}</p>
           <p className="text-xs text-black font-semibold">{order?.OrderProps.quantity.map(i => i.quantity).reduce((a, b) => a + b)} шт.</p>
         </div>
         <div id="order_cost">
-          <p className="text-xs text-[#727280] font-medium"> {orderCostText}</p>
+          <p className="text-xs text-[#727280] font-medium"> {tags.orderHistory.orderCostText}</p>
           <p className="text-xs text-black font-semibold"> {order?.OrderProps.totalCost + "₽"}</p>
         </div>
         <div id="delivery_address">
-          <p className="text-xs text-[#727280] font-medium"> {deliveryAddressText} </p>
+          <p className="text-xs text-[#727280] font-medium"> {tags.orderHistory.deliveryAddressText} </p>
           <p className="text-xs text-black font-semibold"> ул.{order?.OrderProps.deliveryAddress.length > 41 ? order?.OrderProps.deliveryAddress.slice(0, 41) + "..." + order?.OrderProps.deliveryAddress.slice(-10, -1) : order.OrderProps.deliveryAddress} </p>
         </div>
       </div>
@@ -96,7 +95,7 @@ const OrderHistory = ({ orderHistoryText ="История заказов", items
                 <p> {date} </p>
               </div>
               <div id="show_more" className="flex items-baseline text-[12.2px] text-[#2967FF] font-semibold">
-                <p className="flex items-end"> {showMoretext} </p>
+                <p className="flex items-end"> {tags.orderHistory.showMoretext} </p>
               </div>
             </div>
             
@@ -108,11 +107,11 @@ const OrderHistory = ({ orderHistoryText ="История заказов", items
         <div id="item_content" className="w-full flex flex-col justify-center gap-2 font-raleway ">
           <div id="order_header" className="flex justify-start items-center gap-8">
             <div id="order_status">
-              <p className="text-xs text-[#727280] font-medium">{orderStatusText}</p>
+              <p className="text-xs text-[#727280] font-medium">{tags.orderHistory.orderStatusText}</p>
               <p className="text-xs text-black font-semibold">{order?.status[0]+'/'+order?.status[1]} </p>
             </div>
             <div id="order_number">
-              <p className="text-xs text-[#727280] font-medium"> {orderNumberText} </p>
+              <p className="text-xs text-[#727280] font-medium"> {tags.orderHistory.orderNumberText} </p>
               <p className="flex justify-between gap-2 text-xs text-[#2967FF] font-semibold" > {id} <CopyIco text={id.toString()} /> </p>
               
 
@@ -134,7 +133,7 @@ const OrderHistory = ({ orderHistoryText ="История заказов", items
     <div id="order_history__container" className="w-full px-2 flex flex-col justify-center gap-2  ">
       <div id="order_history__header" className="text-xl text-black font-raleway font-semibold">
         <p>
-          {orderHistoryText}
+          {tags.orderHistory.mainText}
         </p>
         
       </div>

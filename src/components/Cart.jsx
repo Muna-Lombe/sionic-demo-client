@@ -2,22 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 
 // assets
-import cartImg from '../assets/images/cart_item.png'
 import { DeleteIco } from '../assets'
-import { selectProductIds, selectProducts } from '../js/slices/products/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import IMG, { imagepath } from '../assets/images';
-import { cartItemDeleted, cartItemOrdered, selectCartItems } from '../js/slices/cart/cartSlice';
-import { calcDisc } from '../orm/utilities';
+import  { imagepath } from '../assets/images';
 import { checkedOutCartItem, removedCartItem, updatedCartItem } from '../orm/models/CartModel';
 import types from '../orm/actions/actionTypes';
+import { titleTagTypes as tags } from "../assets";
 
 
 
-const Cart = ({ unOrd, ord, }) => {
-  // const [itemsInCart, setItemsInCart] = useState([items])
-  // const [orderedItems, setOrderedItems] = useState(ord)
-  // const [unOrderedItems, setUnOrderedItems] = useState(unOrd)
+const Cart = ({ unOrd, ord }) => {
+
   
   const dispatch = useDispatch() 
   
@@ -27,20 +22,16 @@ const Cart = ({ unOrd, ord, }) => {
   }
 
   const handleItemOrdered = (e, item) => {
-    // something is not working in the cart component between lines 53-55, 
-    // there is some kind of delay between dispatch and update
+  
     e.preventDefault()
 
     item[1].forEach(ci => dispatch(checkedOutCartItem( Object.assign({id:ci.id, set: {ItemStatus: types.ORDERED_PENDING}}))) )
-    // console.log('dispatching', cartItemProductsIds)
-   
-    // dispatch(checkedOutCartItem(cartItemProductsIds))
+  
   }
   
 
 
-    const CartOrderItem = ({isOrdered, orderItem}) => {
-      // const [counter, setCounter] = useState(1)
+  const CartOrderItem = ({ isOrdered, orderItem, promoQty = "120",  promoDeadline = "12:48:35", cartedQty = "150" }) => {
       const handleCounter = (type)=>{
         if (type === "plus"){
           
@@ -52,7 +43,6 @@ const Cart = ({ unOrd, ord, }) => {
           dispatch(updatedCartItem({ id: orderItem.id, set: { productCount: (orderItem.productCount > 1 ? orderItem.productCount - 1:1) } }))
 
         }
-        // if(counter === 0) setCounter(1)
       }
       const Line = () => (
         <div className="absolute w-[90%] h-[0px] my-[40px] z-0 ">
@@ -84,21 +74,21 @@ const Cart = ({ unOrd, ord, }) => {
                     className="w-max flex  lg:flex-row xl:flex-row justify-between -gap-1 ">
                     <div 
                       className="w-max h-[2rem] p-2 flex justify-center items-center border-[1px] border-[#2967FF] rounded-r-3xl rounded-bl-xl text-md text-[#2967FF] font-raleway font-semibold" >
-                      <p> {"120 шт."} </p>
+                      <p> {promoQty+tags.cart.qtyType} </p>
                     </div>
                     <div 
-                      className="w-max h-[2rem] p-2 flex justify-center items-center -z-10 border-t-[1px] border-r-[1px] border-b-[1px] border-[#FF2D87] rounded-r-3xl ext-md text-[#FF2D87] font-raleway font-semibold ">
-                      <p>{"за 12:48:35"}</p> 
+                      className="w-max h-[2rem] p-2 flex justify-center items-center -z-10 border-t-[1px] border-r-[1px] border-b-[1px] border-[#FF2D87] rounded-r-3xl ext-md text-[#FF2D87] font-raleway font-semibold lining-nums tabular-nums ">
+                      <p>{tags.cart.promoCountdown+promoDeadline}</p> 
                     </div>
                   </div>
                   <div id="purchased_count" 
                     className=" w-max flex justify-between items-center gap-1 font-raleway">
                     <p>
-                      {"Куплено:"}
+                      {"Carted:"}
                     </p>
                     <p 
                       className="font-semibold">
-                      {"150 шт."}
+                      {cartedQty + tags.cart.qtyType}
                     </p>
                   </div>
                 </div>  
@@ -126,20 +116,19 @@ const Cart = ({ unOrd, ord, }) => {
                   {
                     
                     orderItem.product.isDiscounted
-                      ? 'от ' + ( orderItem.product.isDiscounted * orderItem.productCount).toFixed(1) +' ₽'
-                      : 'от ' + (orderItem.product.price * orderItem.productCount).toFixed(1) +' ₽'
+                      ? tags.cart.priceMinTag + ( orderItem.product.isDiscounted * orderItem.productCount).toFixed(1) + tags.currencyType
+                      : tags.cart.priceMinTag + (orderItem.product.price * orderItem.productCount).toFixed(1) + tags.currencyType
                   }
                 </h2>
                 <div id="discounted_price" 
                   className="w- flexauto pr-2 justify-between ">
                   <h4 id="old_price" 
                     className="text-[#8D8D8E] text-s line-through font-extralight">
-                  {orderItem.product.isDiscounted ? orderItem.product.price +' ₽' : ''}
+                  {orderItem.product.isDiscounted ? orderItem.product.price +tags.currencyType: ''}
                   </h4>
                 </div>
               </div>
             </div>
-            {/* {isOrdered && <Line/>} */}
           </div>
           <button id="delete_btn"
             onClick={() => handleDelete(orderItem.id)}
@@ -174,19 +163,19 @@ const Cart = ({ unOrd, ord, }) => {
                     
                     className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
                   > 
-                    {"Оформить"} 
+                    {tags.cart.checkoutTag} 
                   </Link>
                 </button>          
               </div>
               <div id="cart_item__total_price" 
-                className=" flex justify-between gap-8 items-center">
+                className=" flex justify-between gap-8 items-center lining-nums tabular-nums">
                 <p 
                   className=" ">
-                  {"Стоимость корзины"}:
+                  {tags.cart.totalInCartTag}:
                 </p>
                 <p 
                   className=" text-black text-xl font-bold">
-                  {total+' ₽'} 
+                  {total+tags.currencyType} 
                 </p>
                 <button id="Checkout_btn"
                 onClick={(e)=>handleItemOrdered(e,[storeName, orders])} 
@@ -198,7 +187,7 @@ const Cart = ({ unOrd, ord, }) => {
                     state={state} 
                     className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
                   > 
-                    {"Оформить"} 
+                    {tags.cart.checkoutTag} 
                   </Link>
                 </button>
               </div>
@@ -236,10 +225,10 @@ const Cart = ({ unOrd, ord, }) => {
           className=" flex justify-start gap-6 items-baseline">
           <div 
             className="text-lg text-black font-raleway font-[800]">
-              {"Корзина"}
+              {tags.cart.cartTag}
           </div>
           <div className="text-md text-[#FF2D87] font-raleway font-semibold">
-            {"Очистить корзину"}
+            {tags.cart.emptyCartBtnTag}
           </div>
         </div>
         <div id="cart_content" 

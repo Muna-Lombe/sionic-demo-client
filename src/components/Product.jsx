@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector} from 'react-redux';
 import { Link } from "react-router-dom";
-import { BasketIco } from '../assets';
+import { BasketIco, titleTagTypes as tags } from '../assets';
 import IMG, { imagepath } from '../assets/images';
-import no_product_img from '../assets/images/no_product_img.png'
+import no_product_img from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
 // assets
 
 import { createdOrder } from '../orm/models/OrderModel';
@@ -48,7 +48,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
 
   }
   
-  const BuyBtn=({text="в корзину"})=>(
+  const BuyBtn=({})=>(
     <button
       id="add_to_cart_btn"
       className={(isOrdered ? "relative " : " group   hover:bg-blue-500   hover:text-white ") + "  py-[3px] px-1 w-full h-max flex flex-row-reverse justify-center border-[#2967FF] rounded-lg border-[1px] text-blue-500 stroke-blue-500 cursor-pointer"}
@@ -59,7 +59,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
         <BasketIco isBurgerMenu={false} />
       </span>
       <span className={(isOrdered ? "peer ": " ") +' px-1 h-full md:flex lg:flex xl:flex   text-sm  font-raleway font-[600] text-center'}>
-        {text}
+        {tags.buyBtn.mainText}
       </span>
       <span className="is-ordered-tooltip peer-hover:flex absolute hidden -top-5 -right-2  px-1 rounded-lg text-xs text-slate-500 font-raleway font-[600] text-center transition-transform ease-in-out delay-500">
         {"Item already in cart"}

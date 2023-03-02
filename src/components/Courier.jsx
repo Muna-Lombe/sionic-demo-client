@@ -1,4 +1,7 @@
-const Courier = ({ delivery = { courier: "Курьером Ozon", date: { day_tag: "завтра", date_text: "6 февраля" }, price: 149 } }) => (
+
+import { titleTagTypes as tags } from "../assets";
+
+const Courier = ({ delivery = { courier: "Courier Ozon", date: { day_tag: "tomorrow", date_text: "6 February" }, price: 149 } }) => (
   <span className="courier  p-2 flex flex-col  ">
     <span className="title text-lg ">
       {delivery.courier}
@@ -9,7 +12,7 @@ const Courier = ({ delivery = { courier: "Курьером Ozon", date: { day_ta
       </span>
       -
       <span className="courier-price">
-        {delivery.price + " ₽"}
+        {delivery.price + tags.currencyType}
       </span>
     </span>
   </span>
