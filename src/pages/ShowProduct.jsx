@@ -93,7 +93,7 @@ const ShowProduct = ()=>{
   const MiddleSection =({children})=>{
     const NoItems = () => (
       <div 
-        className="loading-product w-full min-w-[372px] flex flex-col justify-center items-center">
+        className="loading-product w-full  flex flex-col justify-center items-center">
         <div id="no_items_banner__header"
           className="text-base text-black font-raleway font-semibold">
           <h3>
@@ -134,16 +134,23 @@ const ShowProduct = ()=>{
                 <ContentDetails contentType={"product"} showLogo={<Logo logo={productItem?.store.name} />} variations={productItem?.variations.map((p)=> ({...p, text:p.price}))}>
                       { productItem?.variations.map((i,x)=>
                             <ContentDescription key={x} first={x===0} id={`${i.id}`} >
-                              <ProductDescriptor key={101} id={`${i.id}${x}`} label={"In stock"} values={[i.stock]} />
-                              { i.properties.map((k,v)=> <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />) }
+                              <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:gap-4">
+                                <ProductDescriptor key={101} id={`${i.id}${x}`} label={"In stock"} values={[i.stock]} />
+                              </div>
+                              { i.properties.map((k,v)=> 
+                              <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-col">
+                                <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />
+                              </div>
+                              )}
                             </ContentDescription>
                           )
                       }
+
                       <ContentSpecification>
-                        <ProductSpecificationDetail label={"18"} value={"белки"} />
-                        <ProductSpecificationDetail label={"2.7"} value={"жиры"} />
-                        <ProductSpecificationDetail label={"42.6"} value={"углеводы"} />
-                        <ProductSpecificationDetail label={"317"} value={"ккал"}/>
+                        {
+                          productItem?.unitValues.map((uv,x)=><ProductSpecificationDetail label={uv.label} value={uv.value} />
+                          )
+                        }
                       </ContentSpecification>
                   </ContentDetails >
                   <ContentPayment >

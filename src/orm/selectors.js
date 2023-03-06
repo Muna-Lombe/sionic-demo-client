@@ -1,9 +1,9 @@
 import { createSelector } from "redux-orm";
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
-import { addToProductData, calcDisc } from "./utilities";
 import types from "./actions/actionTypes";
 import { useSelector } from "react-redux";
+import { addToProductData, calcDisc } from "../assets";
 // console.log(session, orm)
 
 const ormSelector = state => state
@@ -87,7 +87,7 @@ export const filteredProductsFromModel = (ex)=> createSelector(
         }
         let id=i
         if(i !== 0){ id = i%6}
-        // console.log("pr1",p1, i)
+        // console.log("pr1",p1)
         // return p1
         return addToProductData(p1, id)
       });

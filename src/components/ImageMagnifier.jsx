@@ -32,7 +32,8 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
     img.addEventListener("touchmove", moveMagnifier);
 
     function moveMagnifier(e) {
-      console.log("move event", e)
+      // console.log("move event", e)
+      // console.log("move event", e.type === "touchmove" ? e.changedTouches[0] :"")
       let pos, x, y, whOffsetBal, bgPosOffset;
       e.preventDefault();
 
@@ -60,8 +61,8 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
       /* Get the x and y positions of the image: */
       a = img.getBoundingClientRect();
       /* Calculate the cursor's x and y coordinates, relative to the image: */
-      x = e.pageX - a.left;
-      y = e.pageY - a.top;
+      x = (e.pageX || e.changedTouches[0].pageX) - a.left;
+      y = (e.pageY || e.changedTouches[0].pageY)- a.top;
       /* Consider any page scrolling: */
       x = x - window.pageXOffset;
       y = y - window.pageYOffset;
@@ -91,7 +92,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
   }
 
   const SmallSizeImageArray = ({imgArr=[1,2,3,4]}) => (
-      <div className={" w-["+sqrDim+"px] max-w-full flex justify-center "}>
+      <div className={"  max-w-full flex justify-center "}>
         {
           
           imgArr?.map((i,idx)=>
@@ -102,7 +103,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
               onClick={handleClick} 
               onMouseEnter={(e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
               onTouchStart={((e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")))}
-              className={"min-w-[70px] w-[" + (sqrDim / (sqrDim / 10) * 10)+"px] max-w-[120px] aspect-square" + ((activeImage?.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
+              className={"w-min  max-w-[4rem] aspect-square" + ((activeImage?.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
               src={imagepath(i?.image_url)||no_img_path}
                
             />
@@ -111,18 +112,18 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
       </div>
   )
   const CurrentImage = () => (
-      <div className={"mesh-magnifier-container relative w-[" +sqrDim+ "px] max-w-full aspect-square"}>
-      <div onTouchMove={(e) => magnify("activeImage", 3)} onPointerEnter={(e) => magnify("activeImage", 3)} onMouseEnter={(e) => magnify("activeImage", 3)} className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
-          {/* <VerticalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} />
-          <HorizontalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} /> */}
+      <div className={"mesh-magnifier-container relative  max-w-full aspect-square"}>
+        <div onTouchMove={(e) => magnify("activeImage", 3)} onPointerEnter={(e) => magnify("activeImage", 3)} onMouseEnter={(e) => magnify("activeImage", 3)} className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
+            {/* <VerticalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} />
+            <HorizontalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} /> */}
 
         </div>
-          {
-            // images?.length ?
-            <img id="activeImage" alt="gallery" className={"w-full aspect-square object-cover object-center block"} src={imagepath(activeImage?.image_url || images[0]?.image_url)||no_img_path} />
-              // : ""
-          }
-      <div className={"img-magnifier-glass absolute bottom-0 right-0 w-[100px] aspect-square hover:bg-white border-[3px] border-slate-600  rounded-md cursor-none"}></div>
+            {
+              // images?.length ?
+              <img id="activeImage" alt="gallery" className={"w-full aspect-square object-cover object-center block"} src={imagepath(activeImage?.image_url || images[0]?.image_url)||no_img_path} />
+                // : ""
+            }
+        <div className={"img-magnifier-glass absolute bottom-0 right-0 w-1/4 aspect-square hover:bg-white border-[3px] border-slate-600  rounded-md cursor-none"}></div>
       </div>
   )
   const ToggleBtn = () =>(

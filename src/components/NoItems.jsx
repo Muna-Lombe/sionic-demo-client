@@ -3,7 +3,7 @@ import { titleTagTypes as tags } from '../assets'
 const NoItems = ({ }) => {
   return (
     <div
-      className="loading-product w-full min-w-[372px] flex flex-col justify-center items-center">
+      className="loading-product w-full min-w-[200px] flex flex-col justify-center items-center">
       <div id="no_items_banner__header"
         className="text-lg text-black font-raleway font-semibold">
         <h4>

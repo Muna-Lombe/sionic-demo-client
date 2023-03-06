@@ -3,7 +3,7 @@ import { titleTagTypes as tags } from "../assets";
 
 const DiscountInfo = ({ children }) => {
     return (
-      <div className="discount-information py-1 gap-1 flex flex-col">
+      <div className="discount-information less-than-xs:hidden py-1 gap-1 flex flex-col">
         <p className="best-price-note py-3 text-blue-500 font-[arial] text-base cursor-pointer">
           {tags.discountInfo.titleText}
         </p>

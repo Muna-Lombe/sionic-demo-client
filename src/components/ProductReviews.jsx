@@ -13,7 +13,7 @@ const ProductReviews=({prs})=>{
           imageArray?.map((i,x)=>{
             return (
               <img key={x} src={imagepath(i.image_url) || no_img_path} alt={"review-img-"+x}
-            className="w-[80px] aspect-square "
+            className="min-w-[40px] aspect-square "
             />
             )
           })
@@ -83,7 +83,7 @@ const ProductReviews=({prs})=>{
       <input type="button" value="Review" className="p-2 w-full bg-blue-500 rounded-xl text-white text-lg font-[arial] font-semibold"/>
     )
     return (
-      <div className="overall-rating px-2 min-w-[340px] hidden lg:flex lg:flex-col">
+      <div className="overall-rating px-2  hidden lg:flex lg:flex-col">
         <RatingAverage/>
         <RatingsSummary/>
         <ReviewBtn/>
@@ -93,16 +93,14 @@ const ProductReviews=({prs})=>{
   const Review =({review})=>{
     return (
       <div className="review-component w-full p-2 flex gap-2 justify-between">
-        <div className="reviewer flex gap-3">
-          <div className="reviewer-avtr justify-self-start">
-            <img src={imagepath(review?.i) || review.reviewer.avtr_url || no_avtr_path|| no_img_path} alt="" className="w-[50px] min-w-[50px] aspect-square border-2 rounded-3xl" />
-          </div>
-          <div className="reviewer-details my-2 px-2 flex flex-col gap-8">
-            <div className="reviewer-name-date-ranking min-w-max sm:w-full sm:max-w-full xs:max-w-xs flex flex-col xs:flex-col sm:flex-row lg:flex-col justify-between ">
+        <div className="reviewer flex flex-col gap-3">
+          <div className="reviewer-avtr flex justify-self-start gap-2">
+            <img src={imagepath(review?.i) || review.reviewer.avtr_url || no_avtr_path|| no_img_path} alt="" className="w-[50px] min-w-[50px] h-max aspect-square  border-2 rounded-3xl" />
+            <div className="reviewer-name-date-ranking  sm:w-full sm:max-w-full xs:max-w-xs flex flex-col xs:flex-col sm:flex-row lg:flex-col justify-between ">
               <p className="name text-lg font-medium ">
                 {review.reviewer.name}
               </p>
-              <div className="review-date-rating min-w-max  flex flex-col float-left">
+              <div className="review-date-rating   flex flex-col float-left">
                 <div className="review-date text-slate-400 text-base font-[arial]">
                   {review.datePosted}
                 </div>
@@ -114,12 +112,14 @@ const ProductReviews=({prs})=>{
 
               </div>
             </div>
+          </div>
+          <div className="review-details my-2 less-than-xs:ml-0 ml-12 px-2 flex flex-col gap-8">
             <div className="purchase-platform-brief  flex flex-col gap-2 font-[arial] font-medium">
               <div className="platform w-max px-3 py-1 flex justify-around gap-2 bg-[#F2F5F9] border-1 rounded-xl text-[#5d5d5d] text-sm font-raleway font-semibold">
                 <p className="text-blue-500">
                   <CheckIco />
                 </p>
-                <p>{"purchased on Katundu"}</p>
+                <p className="less-than-xs:hidden">{"purchased on Katundu"}</p>
               </div>
               <div className="brief-outline">
                 <p>{"brief description"}</p>

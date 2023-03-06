@@ -48,7 +48,7 @@ const OrderHistory = ({ itemsOrdered}) => {
     const id = '#'+ order.id
     let date = order.DateCreated.split(",")[0]
     const OrderSummary = () =>(
-      <div id="order-summary" className="visible flex flex-row">
+      <div id="order-summary" className="visible flex flex-row flex-wrap gap-2">
         <div id="quatity_ordered">
           <p className="text-xs text-[#727280] font-medium">{tags.orderHistory.quantityOrderedText}</p>
           <p className="text-xs text-black font-semibold">{order?.OrderProps.quantity.map(i => i.quantity).reduce((a, b) => a + b)} шт.</p>
@@ -78,18 +78,18 @@ const OrderHistory = ({ itemsOrdered}) => {
     )
     
     return (
-    <div id="item" className="  max-w-[400px] mx-1 px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl lining-nums tabular-nums">
-      <div id="item_wrapper" className="w-full p-2 flex flex-col justify-center gap-2">
-        <div id="item_header" className="w-full  flex justify-between gap-2">
-          <div id="item_img" className="w-max border-[1px] border-transparent rounded-2xl">
+    <div id="item" className=" max-w-[400px] mx-1 px-2 pt-2 pb-9  border-[1px] border-gray-300 rounded-2xl lining-nums tabular-nums">
+      <div id="item_wrapper" className="p-2 flex flex-col justify-center gap-2">
+        <div id="item_header" className=" flex less-than-xs:flex-wrap justify-between gap-2">
+          <div id="item_img" className="w-auto flex flex-row items-center border-[1px] border-transparent rounded-2xl">
             {/* <img className="border-[1px] border-transparent rounded-[25px]" src={logo} alt="" /> */}
               <Logo logo={order?.OrderProps.storeName} size={{ font:30, h:40, w:40, x: 0, y: 30 }} addLogo addText={false}/>
+              <div id="item_name" className="text-base text-black font-semibold ">
+                <p>{order?.OrderProps.storeName} </p>
+              </div>
           
           </div>
-          <div id="item_description" className="w-[21rem] flex flex-col justify-center gap-1 font-raleway">
-            <div id="item_name" className="text-base text-black font-semibold ">
-              <p>{order?.OrderProps.storeName} </p>
-            </div>
+          <div id="item_description" className="less-than-xs:w-full less-than-xs:order-3 max-w-[21rem] flex flex-col justify-center gap-1 font-raleway">
             <div id="item_details" className="h-[1rem] flex justify-start gap-10">
               <div id="order_date" className="flex items-center text-[12px] text-[#727280] font-semibold">
                 <p> {date} </p>
@@ -100,12 +100,12 @@ const OrderHistory = ({ itemsOrdered}) => {
             </div>
             
           </div>
-          <div className="show-more relative w-5">
+          <div className="show-more w-min relative">
               <ArrowDown size={18} handleClick={handleRotateIco} />
           </div>
         </div>
-        <div id="item_content" className="w-full flex flex-col justify-center gap-2 font-raleway ">
-          <div id="order_header" className="flex justify-start items-center gap-8">
+        <div id="item_content" className="flex flex-col justify-center gap-2 font-raleway ">
+          <div id="order_header" className="flex flex-row justify-start items-start less-than-xs:gap-4 gap-8">
             <div id="order_status">
               <p className="text-xs text-[#727280] font-medium">{tags.orderHistory.orderStatusText}</p>
               <p className="text-xs text-black font-semibold">{order?.status[0]+'/'+order?.status[1]} </p>
@@ -138,7 +138,7 @@ const OrderHistory = ({ itemsOrdered}) => {
         
       </div>
       <div id="order_history__content" className="w-full">
-        <div id="content_wrapper" className="w-full grid  grid-flow-rows grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-6">
+        <div id="content_wrapper" className="w-full grid  grid-flow-rows grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-6">
          {itemsOrdered?.map((item,x) => <Item key={x} order={item}/>) } 
           
         </div>

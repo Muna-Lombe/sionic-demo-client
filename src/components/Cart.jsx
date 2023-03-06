@@ -60,7 +60,7 @@ const Cart = ({ unOrd, ord }) => {
               <div id="product_image" 
                 className="w-max max-h-[5rem] px-2 flex justify-center items-center">
                 <img 
-                  className=" w-20 h-20 md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={imagepath(orderItem.product.images[0].image_url)} alt="IGM" />
+                  className=" max-w-[5rem] max-h-[5rem] md:w-full md:h-full lg:w-full lg:h-full xl:w-full xl:h-full object-contain" src={imagepath(orderItem.product.images[0].image_url)} alt="IGM" />
               </div>
               <div id="product_description" 
                 className="w-auto max-w-[352px] flex flex-col justify-between"  >
@@ -99,19 +99,18 @@ const Cart = ({ unOrd, ord }) => {
             // md:flex-col-reverse  lg:flex lg:flex-row xl:flex xl:flex-row
               className=" w-full md:w-max lg:w-max xl:w-max flex flex-nowrap justify-around items-center  sm:justify-center md:justify-center    lg:justify-center xl:justify-center gap-2 sm:gap-14 md:gap-14 lg:gap-28 xl:gap-14">
               <div id="product_count" 
-                className=" w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
+                className="less-than-xs:w-auto w-[6rem] md:w-[8rem] lg:w-[8rem] xl:w-[8rem]  h-[2.5rem] p-2 flex justify-around gap-[0.2rem] md:gap-2 lg:gap-4 xl:gap-4 border-[1px] items-center border-gray-300 rounded-3xl">
                 <p 
-                  className="px-3 cursor-pointer" onClick={()=>handleCounter("minus")}>-</p>
-                <input 
-                  type="text" value={orderItem.productCount} disabled="disabled" 
+                  className="less-than-xs:px-2 px-3 cursor-pointer" onClick={()=>handleCounter("minus")}>-</p>
+                <input type="text" value={orderItem.productCount} disabled="disabled" 
                   className="w-[1.4rem] flex justify-center items-center text-center decoration-transparent bg-transparent "  />
                 <p 
-                  className="px-3 cursor-pointer" onClick={() => handleCounter("plus")}>+</p>
+                  className="less-than-xs:px-2 px-3 cursor-pointer" onClick={() => handleCounter("plus")}>+</p>
               </div>
               <div id="product_price" 
                 className="w-max  mx-2">
                 <h2 id="new_price" 
-                  className=" text-[#2967FF] text-[1.2rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem] font-semibold">
+                  className=" text-[#2967FF] less-than-xs:text-base text-[1.2rem] md:text-[1.3rem] lg:text-[1.3rem] xl:text-[1.3rem] font-semibold">
                     
                   {
                     
@@ -161,7 +160,7 @@ const Cart = ({ unOrd, ord }) => {
                     to={{pathname: "/checkout"}} 
                     state={state} 
                     
-                    className={"w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
+                    className={" less-than-xs:w-[5rem] less-than-xs:h-[1rem] w-[7rem] h-[2.1rem] md:w-[10rem] md:h-[2.5rem] lg:w-[10rem] lg:h-[2.5rem] xl:w-[10rem] xl:h-[2.5rem] px-8 py-5 bg-[#2967FF] border-[1px] border-[#2967FF]  flex justify-center items-center rounded-2xl less-than-xs:text-base text-lg md:text-xl lg:text-xl xl:text-xl text-white font-medium" + (disableItem ? " pointer-events-none cursor-auto": "") }    
                   > 
                     {tags.cart.checkoutTag} 
                   </Link>
@@ -170,11 +169,11 @@ const Cart = ({ unOrd, ord }) => {
               <div id="cart_item__total_price" 
                 className=" flex justify-between gap-8 items-center lining-nums tabular-nums">
                 <p 
-                  className=" ">
+                  className=" less-than-xs:text-base">
                   {tags.cart.totalInCartTag}:
                 </p>
                 <p 
-                  className=" text-black text-xl font-bold">
+                  className=" text-black less-than-xs:text-base text-xl font-bold">
                   {total+tags.currencyType} 
                 </p>
                 <button id="Checkout_btn"
@@ -220,7 +219,7 @@ const Cart = ({ unOrd, ord }) => {
     )
     return (
       <div id="cart_container" 
-        className="w-full mx-2 flex flex-col justify-center ">
+        className="w-full flex flex-col justify-center ">
         <div id="cart_header" 
           className=" flex justify-start gap-6 items-baseline">
           <div 

@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import "./rangeSelector.css";
 
-const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
+const RangeSelector = ({ min, max, stateUpdaters, onChange, form="" }) => {
  
   const minValRef = useRef(null);
   const maxValRef = useRef(null);
@@ -58,9 +58,10 @@ const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
         step={(1)}
         ref={minValRef}
         name="range-left"
+        form={form}
         onChange={(event) => {
-          const value = Math.min(+event.target.value, stateUpdaters.max.val - 1);
-          console.log("minv---", value)
+          const value = Math.min(+event.target.value, stateUpdaters.max.val - 100);
+          // console.log("minv---", value)
           
           stateUpdaters.min.setMinVal(value);
           event.target.value = value.toString();
@@ -75,9 +76,10 @@ const RangeSelector = ({ min, max, stateUpdaters, onChange }) => {
         step={(1)}
         ref={maxValRef}
         name="range-right"
+        form={form}
         onChange={(event) => {
-          const value = Math.max(+event.target.value, stateUpdaters.min.val + 1);
-          console.log("maxv---",value)
+          const value = Math.max(+event.target.value, stateUpdaters.min.val + 100);
+          // console.log("maxv---",value)
           
           stateUpdaters.max.setMaxVal(value);
           event.target.value = value.toString();

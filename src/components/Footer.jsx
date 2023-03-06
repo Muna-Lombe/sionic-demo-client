@@ -30,11 +30,11 @@ const Footer = ({}) => {
               
             </span>
           </div>
-          <div id="footer_app_links" className="w-max flex flex-wrap flex-col gap-2 text-xs md:text-base lg:text-base xl:text-base text-slate-600 font-raleway font-semibold">
+          <div id="footer_app_links" className=" flex flex-wrap flex-col gap-2 text-xs md:text-base lg:text-base xl:text-base text-slate-600 font-raleway font-semibold">
             <p>{tags.footer.appInstall+":"}</p>
-            <span className="flex gap-2 contrast-150 child:cursor-pointer">
-              <img src={Google_Play_Link} className="w-[6rem] max-w-[7rem] h-[2rem] md:w-full lg:w-full xl:w-full md:h-full lg:h-full xl:h-full" alt="" />
-              <img src={Apple_Store_Link} className="w-[6rem] max-w-[7rem] h-[2rem] md:w-full lg:w-full xl:w-full md:h-full lg:h-full xl:h-full" alt="" />
+            <span className="flex flex-wrap gap-2 contrast-150 child:cursor-pointer">
+              <img src={Google_Play_Link} className=" max-w-[7rem] h-[2rem] " alt="" />
+              <img src={Apple_Store_Link} className=" max-w-[7rem] h-[2rem] " alt="" />
             </span>
             
           </div>

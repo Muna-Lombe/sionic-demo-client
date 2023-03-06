@@ -1,8 +1,8 @@
 
-body{
+/* body{
   height:100vh;
-  width: calc(100vw-10px);
-}
+  width: 100vw;
+} */
 body:has(.modal-open){
   overflow-y: hidden;
   
@@ -204,3 +204,6 @@ body:has(.modal-open)::-webkit-scrollbar {
 }
 
 
+/* .filter-search-results-wrapper:has(modal-open) :not(modal-open){
+  display:none;
+} */

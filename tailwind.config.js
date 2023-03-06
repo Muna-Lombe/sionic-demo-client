@@ -18,11 +18,17 @@ module.exports = {
         addVariant('exclude-md', '@media (min-width: 475px),@media (min-width: 640px),@media (min-width: 1024px)');
         addVariant('exclude-lg', '@media (min-width: 475px),@media (min-width: 640px),@media (min-width: 768px)');
         addVariant('exclude-xl', '@media (min-width: 475px),@media (min-width: 640px),@media (min-width: 768px),@media (min-width: 1024px)');
-        addVariant('greater-than-xs', '@media (min-width: 640px),@media (min-width: 768px),@media (min-width: 1024px),@media (min-width: 1280px),@media (min-width: 1400px)');
+        addVariant('greater-than-xs', '@media (min-width: 475px),@media (min-width: 640px),@media (min-width: 768px),@media (min-width: 1024px),@media (min-width: 1280px),@media (min-width: 1400px)');
         addVariant('greater-than-sm', '@media (min-width: 768px),@media (min-width: 1024px),@media (min-width: 1280px)');
         addVariant('greater-than-md', '@media (min-width: 1024px),@media (min-width: 1280px),@media (min-width: 1400px)');
         addVariant('greater-than-lg', '@media (min-width: 1280px),@media (min-width: 1400px)');
         addVariant('greater-than-xl', '@media (min-width: 1400px)');
+        addVariant('less-than-xs', '@media (max-width: 475px)');
+        
+        addVariant('less-than-sm', '@media (max-width: 768px)');
+        addVariant('less-than-md', '@media (max-width: 1024px)');
+        addVariant('less-than-lg', '@media (max-width: 1280px)');
+        addVariant('less-than-xl', '@media (max-width: 1400px)');
         // matchVariant(
         //   'nth',
         //   (value) => {

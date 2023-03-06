@@ -4,6 +4,38 @@ export const setTextBg = (text, size={h:1, w:1, x:0, y:1, font:8})=>(
   { backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' version=\'1.1\' height=\'' + size.h + 'px\' width=\'' + size.w + 'px\' style=\'\'><text x=\'' + size.x + '\' y=\'' + size.y + '\' fill=\'gray\' font-family=\'' + 'Raleway' +'\' font-size=\'' + size.font  +'\'>'+text+'</text></svg>")' }
 )
 
+export const filterData = {
+   categories : { mainTitle: "Category", categoryTypes: [1, 2, 3, 4] },
+   inputData : [
+    {
+      type: "toggle",
+      data: {
+        id: "onlyDiscounts", label: "Only Products On Discount  ",
+      }
+    },
+    {
+      type: "select",
+      data: {
+        id: "delivery-time",
+        label: "Delivery Time",
+        options: [
+          { id: "7days", type: "regular", text: "Up to 7 days" },
+          { id: "todayTomorrow", type: "sameDay", text: "Today or tomorrow", hasIco: true },
+          { id: "30mins", type: "express", text: "From 30 minutes", hasIco: true },
+          { id: "5days", type: "regular", text: "Up to 5 days" }
+        ]
+      }
+    },
+    {
+      type: "range",
+      data: {
+        id: "price", label: "Price",
+        prices: { min: { id: "priceMin", value: 500 }, max: { id: "priceMax", value: 3210 } }
+      }
+    }
+
+  ]
+}
 export const titleTagTypes={
   currencyType : "USD",
   location: { city: "Kazan", state: "Republic of Tatarstan" },
@@ -35,6 +67,9 @@ export const titleTagTypes={
     storename: "Katundu", joinus: "Join Us!", appInstall: "Install the app", trademark: "© Katundu", legal:"legal information",
     privacy:"Privacy Policy"
   },
+  filterSearchResults:{
+    applyFiltersText:"Apply Filters" 
+  },
   noItem:{
     mainText : "😃 Waiting for products to load 😃", subText :"🙅 looks like no items here 👀"
   },
@@ -62,6 +97,71 @@ export const titleTagTypes={
   }
 
   
+}
+
+export const colorTags = {
+  1: 'bg-[#FFA601]',
+  2: 'bg-[#2967FF]',
+  3: 'bg-[#58CF18]',
+  4: 'bg-[#FF7CB4]',
+  5: 'bg-[#FFA601]',
+  6: 'bg-[#FF2D87]'
+}
+const tags = [
+  [6, 'День Рождения Гриши'],
+  [5, 'Подарок коллегам'],
+  [4, 'Подарок'],
+  [5, 'Мишка'],
+  [3, 'Мартышка'],
+  [2, 'Игрушка'],
+  [1, 'валентинки'],
+]
+const productStores = [
+  { id: 1, name: "Davies\' Store" },
+  { id: 2, name: "Clear fawn" },
+  { id: 3, name: "About face" },
+  { id: 4, name: "Avita" }
+]
+export const calcDisc = (price, discPerc) => {
+  return (price - (price * (discPerc / 100)))
+}
+const sampleData = [
+  [1, "some nice product 10% super CHEAP!", [tags[3], tags[4], tags[1]], productStores[0], 3000, [true, 5,]],
+  [3, "Great product 5% DISCOUNT", [tags[1], tags[2], tags[3]], productStores[1], 12000, [true, 5]],
+  [5, "FACIAL CREAM NEW STOCK!", [tags[4], tags[3], tags[2]], productStores[2], 1500, [false]],
+  [7, "some nice product 10% super CHEAP!", [tags[6], tags[4], tags[1]], productStores[3], 1000, [false]],
+  [2, "Great new from somewhere stock super cheap product", [tags[2], tags[4], tags[6]], productStores[0], 9000, [true, 5]],
+  [4, "FOR YOUR FACE GREAT NICE EVERYTHING NICE!", [tags[1], tags[3], tags[5]], productStores[1], 16000, [true, 5]],
+  [6, "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam quidem ipsa fugit quod i", [tags[4], tags[3], tags[2]], productStores[3], 3500, [false]]
+]
+export const addToProductData = (product, id) => {
+
+  // if (id > sampleData.length) {id = 0}
+
+  const newProduct = Object.assign({
+    ...product,
+    // category_tags: sampleData[id][2],
+    store: sampleData[id][3],
+    isDiscounted: sampleData[id][5],
+    unitValues:product.images[0]?.image_name?.includes("cf.jpg")
+    ?[
+      { label: "белки", value: "10" },
+      { label: "жиры", value: "14" },
+      { label: "углеводы", value: "25" },
+      { label: "ккал", value:"270"}
+    ]
+    :[]
+  })
+
+ 
+ 
+  
+  
+  
+  
+  
+  
+  return newProduct
 }
 
 export {default as SearchIco } from './SearchIco';

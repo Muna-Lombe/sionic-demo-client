@@ -1,11 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { CancelIco } from '../assets'
+import { CancelIco, colorTags } from '../assets'
 import {updatedAllCatActive, updatedCatActive } from '../orm/models/ProductCategoryModel'
 import { categories } from '../orm/selectors'
-import { colorTags } from '../orm/utilities'
-
 const CategoryTag = ({borderId=1,id,text='tag'})=>{
 
  let cat = useSelector(categories).find(c=> c.id === id)

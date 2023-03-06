@@ -6,7 +6,7 @@ import { AvatarIco, CartIco, PinIco, SearchIco, titleTagTypes as tags } from '..
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProductNamesThatMatch, setSearchedProductId } from '../js/slices/products/productsSlice';
 const Navbar = () => {
-
+  
   const prodNames = useSelector(selectProductNamesThatMatch());
   const dispatch = useDispatch();
   const searchProductText = prodNames[0]?.name || "" //"false"
@@ -21,7 +21,15 @@ const Navbar = () => {
     // inp.value = 
     inp.value = prodNames.find((i)=> i.name === e.target.value).name
   }
-
+  
+  const textStyle = {
+    maxWidth: 'inherit',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }
   const handleBlur = (e, type) =>{
 
     e?.stopPropagation()
@@ -54,7 +62,10 @@ const Navbar = () => {
     handleBlur()
     goto("/search?" + createSearchParams({ query: JSON.stringify(arr[0].name ? arr.map((i) => i.name) : arr) }))
   }
-  
+  const isNotAllowed = () => (
+    location.pathname.includes("checkout" )
+    || location.pathname.includes("history") 
+  )
   const handleChange = (e) => {
     e.preventDefault()
     const suggestions = ((str) =>
@@ -97,22 +108,15 @@ const Navbar = () => {
     };
     suggestions(e.target.value)?.forEach((prod, i) =>{
       const optElem = document.createElement('option')
-      optElem.className = "hover:text-black hover:bg-slate-200";
+      optElem.className = "w-[15.5rem] greater-than-sm:w-full whover:text-black hover:bg-slate-200 text-ellipsis overflow-x-clip";
+      optElem.style = textStyle
       optElem.value = prod.name
-      optElem.innerText = prod.name.length > 39 ? prod.name.slice(0, 36) + "..." : prod.name
+      optElem.innerText = prod.name //prod.name.length > 36 ? prod.name.slice(0, 36) + "..." : prod.name
       optElem.key = i
       optElem.addEventListener("click", (ev) => { handleSubmit([ev.target.innerText]) })
       optgrp.insertAdjacentElement("beforeend", optElem)  
     })
   };
-  const textStyle = {
-    maxWidth: '100%',
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 1,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  }
   const GoToCartIco = ({isBurgerMenu=false,size="2.5rem"}) => (
    
       <Link id='cart' to="cart/"> 
@@ -132,7 +136,7 @@ const Navbar = () => {
       return createSearchParams({ query: JSON.stringify([curtext]) })
     }
     return(
-      <div id="search_field" tabIndex={0} className="relative min-w-[22rem] greater-than-md:min-w-[28rem] w-auto max-w-[28rem] greater-than-md:max-w-[32rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
+      <div id="search_field" tabIndex={0} className="relative min-w-[12rem]  greater-than-md:min-w-[28rem] w-full max-w-[28rem] greater-than-md:max-w-[32rem] less-than-xs:h-[2rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
         {/* <div className="search-input relative w-full max-w-[22rem]  flex   justify-between p-[1px]"> */}
           <input type="text" ref={ref}  name="search" defaultValue={curtext} placeholder={searchProductText||""} onKeyUp={(e) => {handleChange(e); setCurtext(e.target.value)}} className=" search autofill:selection bg-white w-full rounded-bl-3xl rounded-tl-3xl bg-transparent px-2  text-black focus:outline-none" />
     
@@ -145,26 +149,28 @@ const Navbar = () => {
   return (
     //  md:items-center
     <>
-      <nav className=" relative w-full h-full flex justify-center gap-2 items-start  lg:items-center xl:items-center ">
+      <nav className=" p-2 relative w-full h-full flex justify-center gap-2 items-start  lg:items-center xl:items-center ">
         <div id="navbar_left__wrapper" className=" w-full block md:block  lg:gap-6 lg:flex lg:flex-row xl:flex xl:flex-row justify-start items-center transition-all">
-          <div id="logo_location" className="min-w-max w-full lg:w-auto xl:auto flex justify-start  p-4 gap-8">
-            <div id="logo" className="p-1 border-[4px] border-black border-spacing-2 rounded-[4px] text-[2.4rem] leading-10 font-raleway font-bold">
+          <div id="logo_location" className=" w-full lg:w-auto xl:auto flex justify-start gap-8">
+            <div id="logo" className="p-1 border-[4px] border-black border-spacing-2 rounded-[4px] text less-than-xs:text-lg text-[2.4rem] leading-10 font-raleway font-bold">
               <Link to="" > {tags.footer.storename} </Link> 
             </div>
             
-            <div id="address" className="flex items-center justify-between">
+            <div id="address" className="relative flex flex-wrap items-center justify-between">
               <PinIco />
       
-              <h2 className="hidden p-2 md:flex lg:flex" style={textStyle}>{tags.location.city + ", " + tags.location.state}</h2>
+              <h2 className=" hidden absolute w-max  less-than-xs:top-3 less-than-xs:left-6 greater-than-xs:p-2  greater-than-xs:relative greater-than-xs:w-auto md:flex lg:flex flex-wrap text-xs text-ellipsis ">
+                <p>{tags.location.city + ", "}</p>  <p>{tags.location.state}</p>
+              </h2>
             </div>
           </div>
           {
-            location.pathname.includes("checkout")
+            isNotAllowed()
             ? ""
             :<div id="search_field_wrapper"  className="w-full greater-than-md:w-max max-h-14 lg:min-w-[2rem] xl:min-w-[2rem] py-2 flex flex-col justify-start items-start transition-all">
               <div id="search_field_box" className='w-full flex flex-col items-center' onBlur ={(e) => handleBlur(e, "blur")}>
                 <SearchField/>
-                <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="min-w-[22rem] greater-than-md:min-w-[28rem] w-auto max-w-[28rem] greater-than-md:max-w-[32rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
+                <optgroup name="search-suggestions" tabIndex={1} id="search-suggestions" className="min-w-[12rem] greater-than-md:min-w-[28rem] w-full max-w-[28rem] greater-than-md:max-w-[32rem]  p-2 overflow-ellipsis border bg-black opacity-70 rounded-b-3xl text-white cursor-pointer hidden">
                 </optgroup>
               </div>
               
@@ -172,11 +178,11 @@ const Navbar = () => {
           
           }
         </div>
-        <div id="navbar_right__wrapper" className=" absolute right-0   h-full flex md:items-start md:justify-end   lg:m-0 lg:p-0 lg:items-center lg:justify-center xl:m-0 xl:p-0 xl:items-center xl:justify-center">
-          <div id="user_content" className="hidden pt-4 px-2 w-[7rem] h-max md:w-[8rem] lg:w-[8rem] lg:p-0 xl:w-[8rem] xl:p-0 xs:flex sm:flex md:flex lg:flex xl:flex  justify-around items-center gap-2">
+        <div id="navbar_right__wrapper" className=" absolute right-0 hidden greater-than-xs:flex flex-row greater-than-sm:w-[8rem]  h-max md:items-start md:justify-end greater-than-lg:items-center greater-than-lg:justify-center greater-than-lg:m-0 greater-than-lg:p-0  gap-3">
+          {/* <div id="user_content" className=" pt-4 px-2 h-max lg:p-0 xl:p-0  justify-around items-center gap-2"> */}
             <GoToCartIco size={'1.5rem'}/>
             <GoToAvatarIco size={'1.5rem'}/>
-          </div>
+          {/* </div> */}
         </div>
       </nav>
     </>

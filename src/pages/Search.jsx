@@ -19,7 +19,7 @@ const Search = () => {
                 products.length 
                   ? <>
                       <FilterSearchResults/>
-                      <div id="mainbar-search__content" className={"p-2  grid grid-flow-row-dense " + smallScreens + " greater-than-md:" + bigScreens +" overflow-x-clip scroll-smooth gap-[38px] justify-center  transition-all  tag"}>
+                      <div id="search__content" className={"p-2 w-full  grid grid-flow-row-dense " + smallScreens + " greater-than-md:" + bigScreens +" overflow-x-clip scroll-smooth gap-[38px] justify-center  transition-all  tag"}>
                           {products.map((i) => (<Product key={i.id}  product={i} isSearchOrMain/>))}
                       </div>
                     
@@ -31,7 +31,7 @@ const Search = () => {
   }
   return (
       <Suspense fallback={<NoItems />}>
-        <div className="search-wrapper flex flex-col">
+        <div className="search-wrapper relative flex flex-col">
           <SearchResults/>
           <EmbeddedProducts title={"Product You Might Be Interested In"} tagname={"suggested-products"}/>
         </div>

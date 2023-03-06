@@ -9,7 +9,7 @@ const SidebarBanner = ({ onClick, mainText = "Receive goods", subText = "For Fre
       <rect x="110" y="90"  rx="19.5" onClick={onClick} //stroke="#FF2D87"
         className="w-[55%] h-[26%] fill-[#2967FF] cursor-pointer">
       </rect>
-      <text x='157' y='109' z={50} font-family='Raleway' dominantBaseline={"middle"} className="w-auto flex gap-2 "  >
+      <text x='157' y='109' z={50} fontFamily='Raleway' dominantBaseline={"middle"} className="w-auto flex gap-2 "  >
         <tspan className="w-max h-max border text-base fill-white font-raleway hover:font-semibold font-medium" >
           {ctaText}
         </tspan>
@@ -17,7 +17,7 @@ const SidebarBanner = ({ onClick, mainText = "Receive goods", subText = "For Fre
     </g>
   )
   const MainText = ()=>(
-    <text x='110' y='40' font-family='Raleway' dominantBaseline={"middle"} className="w-auto flex gap-2"  >
+    <text x='110' y='40' fontFamily='Raleway' dominantBaseline={"middle"} className="w-auto flex gap-2"  >
       <tspan className="text-xl fill-[#2967FF]  font-semibold" >
         {mainText}
       </tspan> 
@@ -46,9 +46,9 @@ const SidebarBanner = ({ onClick, mainText = "Receive goods", subText = "For Fre
                 <path d="M72.6225 57.3959C72.6225 58.3795 71.8235 59.1843 70.8469 59.1843C69.8703 59.1843 69.0713 58.3795 69.0713 57.3959C69.0713 56.4122 69.8703 55.6074 70.8469 55.6074C71.8235 55.6074 72.6225 56.4122 72.6225 57.3959Z" fill="#2967FF"/>
                 <path d="M52.2918 57.217C51.8479 57.217 51.4928 56.8593 51.5816 56.4122C51.6703 54.5344 52.0255 49.7056 53.0021 44.7874C54.7777 36.2923 57.7074 32 61.7913 32C65.8752 32 68.7162 36.2923 70.3143 44.8768C71.2021 49.7056 71.4684 54.6238 71.5572 56.5016C71.5572 56.9487 71.2021 57.3064 70.8469 57.3064C70.403 57.3064 70.1367 56.9487 70.0479 56.5911C69.8704 49.5267 68.1835 33.6096 61.7913 33.6096C55.3991 33.6096 53.446 49.5267 53.0908 56.5911C53.0908 56.9487 52.7357 57.217 52.2918 57.217Z" fill="#2D2D2F"/>
                 <path d="M49.4507 114H2.7522L9.14439 61.6881H43.0585L49.4507 114Z" fill="white"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M49.4507 114L43.0585 61.6881H9.14439L2.7522 114H49.4507ZM48.447 113.106L42.2733 62.5823H9.92963L3.75597 113.106H48.447Z" fill="#2967FF"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M49.4507 114L43.0585 61.6881H9.14439L2.7522 114H49.4507ZM48.447 113.106L42.2733 62.5823H9.92963L3.75597 113.106H48.447Z" fill="#2967FF"/>
                 <path d="M46.6985 114H0L6.39219 61.6881H40.3063L46.6985 114Z" fill="white"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M46.6985 114L40.3063 61.6881H6.39219L0 114H46.6985ZM45.6948 113.106L39.5211 62.5823H7.17743L1.00377 113.106H45.6948Z" fill="#2967FF"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M46.6985 114L40.3063 61.6881H6.39219L0 114H46.6985ZM45.6948 113.106L39.5211 62.5823H7.17743L1.00377 113.106H45.6948Z" fill="#2967FF"/>
                 <path d="M15.8917 65.8909C16.7743 65.8909 17.4898 65.1703 17.4898 64.2813C17.4898 63.3924 16.7743 62.6718 15.8917 62.6718C15.0092 62.6718 14.2937 63.3924 14.2937 64.2813C14.2937 65.1703 15.0092 65.8909 15.8917 65.8909Z" fill="white"/>
                 <path d="M33.8252 64.2813C33.8252 65.1756 33.115 65.8909 32.2272 65.8909C31.3394 65.8909 30.6292 65.1756 30.6292 64.2813C30.6292 63.3871 31.3394 62.6718 32.2272 62.6718C33.115 62.6718 33.8252 63.3871 33.8252 64.2813Z" fill="white"/>
                 <path d="M15.9806 64.1026C15.6255 64.1026 15.3591 63.7449 15.3591 63.3872C15.4479 61.7776 15.7143 57.4853 16.6021 53.1931C18.1113 45.6816 20.7747 41.9259 24.326 41.9259C27.8772 41.9259 30.4518 45.7711 31.8723 53.1931C32.6713 57.4853 32.8489 61.7776 32.9377 63.3872C32.9377 63.7449 32.6713 64.1026 32.3162 64.1026C31.9611 64.1026 31.6947 63.8343 31.606 63.4766C31.4284 57.3065 29.9191 43.2672 24.4147 43.2672C18.8216 43.2672 17.046 57.3065 16.7796 63.4766C16.6021 63.8343 16.3357 64.1026 15.9806 64.1026Z" fill="#2D2D2F"/>

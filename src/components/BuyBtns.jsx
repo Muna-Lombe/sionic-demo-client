@@ -21,7 +21,7 @@ const BuyBtns = ({ id, }) => {
   }
   return (
     <div className={" buy-btns   my-3 flex flex-col items-center gap-2 "}>
-      <button onClick={() => handleAddToCart(id)} onSubmit={() => ""} disabled={isOrdered} className={(isOrdered ? "bg-slate-400 " : " bg-blue-600  ") + "buy-now w-10/12 h-max py-4 px-6 max-w-xs flex justify-center rounded-2xl text-white text-lg font-[arial] font-thin cursor-pointer transition-transform"}>
+      <button onClick={() => handleAddToCart(id)} onSubmit={() => ""} disabled={isOrdered} className={(isOrdered ? "bg-slate-400 " : " bg-blue-600  ") + "buy-now w-10/12 h-max py-1 px-2  max-w-xs flex justify-center rounded-2xl text-white text-lg font-[arial] font-thin cursor-pointer transition-transform"}>
         <span className={" flex"}>
           {isOrdered ? tags.buyBtn.tooltip : tags.buyBtn.mainText}
         </span>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
-import { InfoIco } from "../assets"
+import { InfoIco, calcDisc } from "../assets"
 import { ClassWatcher } from "../orm/utilities/classWatcher"
-import { calcDisc } from "../orm/utilities"
 
 const PriceTag = ({tagFor,original, discount=false }) => {
   const [currPriceTag, setCurrPriceTag] = useState({oldPrice:original})
@@ -23,7 +22,7 @@ const PriceTag = ({tagFor,original, discount=false }) => {
   }, [])
   return (
     <div className="price-tag my-2">
-      <div className="price-details  py-2 flex flex-row justify-start gap-2 items-baseline">
+      <div className="price-details  py-2 flex flex-row flex-wrap justify-start gap-2 items-baseline">
         <p className="main-price text-4xl text-red-500 font-[arial] font-medium">
           {
             discount
@@ -34,7 +33,7 @@ const PriceTag = ({tagFor,original, discount=false }) => {
         {
           discount
           ?
-            <p className="sub-price text-xl text font-[arial] font-medium">
+            <p className="sub-price text-xl text-slate-400 text font-[arial] font-medium">
               {(currPriceTag.oldPrice || original )+ " ₽"}
             </p>
           :""
@@ -43,9 +42,14 @@ const PriceTag = ({tagFor,original, discount=false }) => {
       {
         discount 
         ?
-          <p className="price-note w-max  px-2  flex flex-row items-center  gap-2 bg-green-500 rounded-xl text-white font-[arial] font-medium">
-            <span>{((currPriceTag.oldPrice || original) - (currPriceTag.discounted || setDisc(original, discount).discounted)).toFixed(2) + "₽"} {" при оплате Ozon Картой"}</span>
-            <span className='w-max h-max py-[2px] flex rounded-lg hover:stroke-white hover:fill-green-500 text-white text-[12px] leading-3 cursor-pointer'>
+          <p className="price-note w-full  px-2  flex flex-row items-center  gap-1 bg-green-500 rounded-xl text-white font-[arial] font-medium less-than-xs:child:text-sm">
+            <span className="w-auto less-than-xs:hidden">
+              {((currPriceTag.oldPrice || original) - (currPriceTag.discounted || setDisc(original, discount).discounted)).toFixed(2) + "₽"} {" при оплате Ozon Картой"}
+            </span>
+            <span className="w-auto  greater-than-xs:hidden">
+              {" Eсть Ozon Картой?"}
+            </span>
+            <span className=' w-4 h-max py-[2px] flex rounded-lg hover:stroke-white hover:fill-green-500 text-white text-[12px] leading-3  cursor-pointer'>
               <InfoIco />
             </span>
           </p>

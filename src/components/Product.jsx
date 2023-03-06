@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector} from 'react-redux';
 import { Link } from "react-router-dom";
-import { BasketIco, titleTagTypes as tags } from '../assets';
+import { BasketIco, calcDisc, titleTagTypes as tags } from '../assets';
 import IMG, { imagepath } from '../assets/images';
 import no_product_img from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
 // assets
-
 import { createdOrder } from '../orm/models/OrderModel';
-import { calcDisc, momentDate } from '../orm/utilities';
+import { momentDate } from '../orm/utilities';
 import types from '../orm/actions/actionTypes';
 import { isAlreadyOrdered, isInCart } from '../orm/selectors';
 import { createdCartItem } from '../orm/models/CartModel';
