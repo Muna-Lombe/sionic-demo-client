@@ -47,8 +47,8 @@ export const isAuthedUser = (id) => createSelector(
     console.log("usr", user)
     const authStillValid = (u)=>{
 
-      console.log("time", momentDate().timeSinceInMins(new Date(u?.timeCreated)) ,momentDate().timeSinceInMins(u?.timeCreated)<1)
-      return momentDate().timeSinceInMins(new Date(u?.timeCreated)) < 1
+      // console.log("time", momentDate().timeSinceInMins(new Date(u?.timeCreated)) ,momentDate().timeSinceInMins(u?.timeCreated)<5)
+      return momentDate().timeSinceInMins(new Date(u?.timeCreated)) < 5
     }
     if(authStillValid(user)){
       return user?.authStatus === types.AUTH_VALID//(ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
