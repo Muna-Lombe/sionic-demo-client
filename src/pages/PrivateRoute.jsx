@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux';
-import { Route, Navigate } from 'react-router-dom';
+import {Navigate } from 'react-router-dom';
 import { authenticatedUsers, isAuthedUser } from '../orm/selectors';
 import types from '../orm/actions/actionTypes';
 
 const PrivateRoute =({ component: Component, redirect}) =>{
   const authSessions = useSelector(authenticatedUsers)
   const userAuthed = useSelector(isAuthedUser(authSessions[0]?.id))
-  console.log(userAuthed)
   return (
     <>
     {

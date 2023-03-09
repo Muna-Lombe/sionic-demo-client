@@ -3,7 +3,6 @@ import { imagepath } from '../assets/images'
 import no_img_path from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
 
 const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
-  const [itemsCentered, setItemsCenter] = useState(false)
   const [activeImage, setActiveImage] = useState(false)
    
   useEffect(()=>{
@@ -30,7 +29,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
 
     glass.addEventListener("touchmove", moveMagnifier);
     img.addEventListener("touchmove", moveMagnifier);
-
+    
     function moveMagnifier(e) {
       // console.log("move event", e)
       // console.log("move event", e.type === "touchmove" ? e.changedTouches[0] :"")
@@ -42,6 +41,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
       y = pos.y;
       whOffsetBal =50
       bgPosOffset = 0.89
+
       if (x > img.width - (w / zoom)) { x = img.width - (w/zoom); }
       if (x < w / zoom) { x = w / zoom; }
       if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
@@ -70,22 +70,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
     }
 
   }
-  const HorizontalLine = ({ count }) => (
-    <div className="absolute w-full h-full flex flex-col justify-center items-center gap-1">
-      {
-        Array(count).fill().map((i,x) => <div key={x} className="line w-full h-[1px] border border-black border-b-[0.6px] opacity-20"></div>)
-      }
-    </div>
 
-  )
-  const VerticalLine = ({ count }) => (
-    <div className="absolute w-full h-full flex justify-center items-center gap-1">
-      {
-        Array(count).fill().map((i,x) => <div key={x}  className="line w-[1px] h-full border border-black border-b-[0.6px] opacity-20 "></div>)
-      }
-    </div>
-
-  )
   const handleSetActive = (id) => { 
       // console.log("active id", e)
       if(activeImage.id !== id) setActiveImage(images.find((i) => i.id === id ))
@@ -101,8 +86,8 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
               id={(activeImage?.id === i.id) ? "active " : i.id||idx} 
               alt="gallery"
               onClick={handleClick} 
-              onMouseEnter={(e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
-              onTouchStart={((e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")))}
+              onPointerEnter={(e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
+              // onTouchStart={((e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")))}
               className={"w-full less-than-xs:max-w-[3rem] max-w-[6rem]  aspect-square" + ((activeImage?.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
               src={imagepath(i?.image_url)||no_img_path}
                
@@ -112,34 +97,29 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
       </div>
   )
   const CurrentImage = () => (
-      <div className={"mesh-magnifier-container relative  max-w-full aspect-square"}>
-        <div onTouchMove={(e) => magnify("activeImage", 3)} onPointerEnter={(e) => magnify("activeImage", 3)} onMouseEnter={(e) => magnify("activeImage", 3)} className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
+      <div className={"mesh-magnifier-container relative  max-w-full aspect-square flex justify-center"}>
+        <div 
+          // onTouchMove={(e) => magnify("activeImage", 3)} 
+          onPointerEnter={(e) => magnify("activeImage", 3)} 
+          onMouseEnter={(e) => magnify("activeImage", 3)} 
+          className={"mesh-mask modal absolute w-full h-full bg-black opacity-50"}>
             {/* <VerticalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} />
             <HorizontalLine count={Number.parseInt(((sqrDim / (sqrDim / 10) * 5)).toString())} /> */}
 
         </div>
             {
               // images?.length ?
-              <img id="activeImage" alt="gallery" className={"w-full aspect-square object-cover object-center block"} src={imagepath(activeImage?.image_url || images[0]?.image_url)||no_img_path} />
+              <img id="activeImage" alt="gallery" className={"w-full  aspect-square object-cover object-center block bg-white"} src={imagepath(activeImage?.image_url || images[0]?.image_url) || no_img_path} />
                 // : ""
             }
         <div className={"img-magnifier-glass absolute bottom-0 right-0 w-1/4 aspect-square hover:bg-white border-[3px] border-slate-600  rounded-md cursor-none"}></div>
       </div>
   )
-  const ToggleBtn = () =>(
-    <div onClick={()=> setItemsCenter(prevState => !prevState)} className={"w-[42px] border border-slate-200 flex flex-row self-end cursor-pointer items-start "+ (itemsCentered ? "justify-end ": "justify-start ") }>
-      {
-        itemsCentered ?
-        <span>🟩</span>
-        : <span>🟥</span>
-      }
-    </div>
-  )
+ 
   return (
-    <div className={"img-magnifier-container relative flex flex-col" + (itemsCentered ? " items-center" : " ") + " "} >
+    <div className={"img-magnifier-container relative flex flex-col"} >
       <CurrentImage />
       <SmallSizeImageArray imgArr={images}  />
-      {/* <ToggleBtn /> */}
     </div>
   )
 }

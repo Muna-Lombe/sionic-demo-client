@@ -153,7 +153,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
             } */}
           </div>
         </div>
-        <h2 id="product_price" className=" text-[#2967FF] text-sm greater-than-md:text-[1.2rem]  font-semibold">
+        <h2 id="product_price" className=" text-[#2967FF] text-sm greater-than-md:text-[1.2rem]  font-semibold lining-nums tabular-nums">
           {
             noPrd
             ? <>

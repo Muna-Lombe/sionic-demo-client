@@ -69,13 +69,13 @@ export const asyncThunk = createAsyncThunk('orm/Models/FETCH_DATA', payloadCreat
 export const ormMiddlewares = Array(ThunkTypes.length-5).fill().map((e,i)=> {return e = createAsyncThunk('orm/'+ThunkTypes[i].modelName+'/FETCH_DATA', payloadCreatorForSingle(ThunkTypes[i])) })
 
 export const fromType = (type) => {
-  let orm, model, actionWord, dispatchStatus = ""; 
+  let  model, actionWord, dispatchStatus = ""; 
 
   
   if(type.includes("orm/")){
     // console.log("orm", type)
     const arr = type.split("/")
-    orm = arr[0]; 
+    // orm = arr[0]; 
     model = arr[1];
     actionWord = arr[2];
     dispatchStatus = arr[3] ;

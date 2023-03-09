@@ -1,7 +1,7 @@
 
 import './App.css';
-import React,{useState, useEffect, lazy, Suspense} from 'react';
-import { BrowserRouter as Router,Routes, Route, Link,  } from "react-router-dom";
+import React,{lazy} from 'react';
+import {Routes, Route } from "react-router-dom";
 import AppWrapper from './components/AppWrapper';
 import { Login } from './components';
 import { PrivateRoute } from './pages';

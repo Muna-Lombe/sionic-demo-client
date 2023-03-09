@@ -1,8 +1,8 @@
 import { createSelector } from "redux-orm";
 
-import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
+import {session } from '../orm/reducers/rootOrmReducer';
 import types from "./actions/actionTypes";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import {  useSelector } from "react-redux";
 import { addToProductData, calcDisc } from "../assets";
 import Store from "../js/store";
 import { momentDate } from "./utilities";
@@ -44,10 +44,8 @@ export const isAuthedUser = (id) => createSelector(
     if(!auths.length) return false
     
     const user = auths.find(u=> u.id === id)
-    console.log("usr", user)
     const authStillValid = (u)=>{
 
-      // console.log("time", momentDate().timeSinceInMins(new Date(u?.timeCreated)) ,momentDate().timeSinceInMins(u?.timeCreated)<5)
       return momentDate().timeSinceInMins(new Date(u?.timeCreated)) < 5
     }
     if(authStillValid(user)){

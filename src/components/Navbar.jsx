@@ -14,14 +14,14 @@ const Navbar = () => {
   const ref = useRef(null)
   const goto = useNavigate()
   const location = useLocation()
-  const handleClick =(e)=>{
-    e.stopPropagation()
-    dispatch( setSearchedProductId([e.target.value]))
-    const inp = document.querySelector('input.search')
-    // console.log(inp)
-    // inp.value = 
-    inp.value = prodNames.find((i)=> i.name === e.target.value).name
-  }
+  // const handleClick =(e)=>{
+  //   e.stopPropagation()
+  //   dispatch( setSearchedProductId([e.target.value]))
+  //   const inp = document.querySelector('input.search')
+  //   // console.log(inp)
+  //   // inp.value = 
+  //   inp.value = prodNames.find((i)=> i.name === e.target.value).name
+  // }
   
   const textStyle = {
     maxWidth: 'inherit',
@@ -149,7 +149,7 @@ const Navbar = () => {
     </div>
   )
 
-  const SearchField =({})=>{
+  const SearchField =({children})=>{
     const [curtext, setCurtext] =useState("")
     const setParams = () =>{
       return createSearchParams({ query: JSON.stringify([curtext]) })
