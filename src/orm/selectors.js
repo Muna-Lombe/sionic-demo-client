@@ -2,13 +2,16 @@ import { createSelector } from "redux-orm";
 
 import { productSession, orderSession, categorySession, imageSession, productVariationSession, productVariationPropertyListValueSession, productVariationPropertySession, productVariationPropertyValueSession, session, orm } from '../orm/reducers/rootOrmReducer';
 import types from "./actions/actionTypes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { addToProductData, calcDisc } from "../assets";
+import Store from "../js/store";
+import { momentDate } from "./utilities";
+import { updatedAuth } from "./models/AuthModel";
 // console.log(session, orm)
 
 const ormSelector = state => state
 
-
+const dispatch = Store.dispatch
 export const filteredCustomModelSelector = (model, ex) =>{
   return createSelector(
     ormSelector(session.schema),
@@ -22,6 +25,37 @@ export const filteredCustomModelSelector = (model, ex) =>{
     }
   )
 } 
+
+export const authenticatedUsers = createSelector(
+  ormSelector(session.schema),
+  state => {
+    const authObject = state.Auth
+      .all()
+      .toRefArray().filter((au)=> au.authStatus === types.AUTH_VALID)
+
+    return authObject//(ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
+
+  }
+)
+export const isAuthedUser = (id) => createSelector(
+  ormSelector(session.schema),
+  authenticatedUsers,
+  (state,auths) => {
+    if(!auths.length) return false
+    
+    const user = auths.find(u=> u.id === id)
+    console.log("usr", user)
+    const authStillValid = (u)=>{
+
+      console.log("time", momentDate().timeSinceInMins(new Date(u?.timeCreated)) ,momentDate().timeSinceInMins(u?.timeCreated)<1)
+      return momentDate().timeSinceInMins(new Date(u?.timeCreated)) < 1
+    }
+    if(authStillValid(user)){
+      return user?.authStatus === types.AUTH_VALID//(ex.length ? catObject.filter(el=> !ex.some((e)=> e=== el.category_id)) :  catObject)
+    }
+    dispatch(updatedAuth({id:user?.id, set:{authStatus:types.AUTH_EXPIRED}}))
+  }
+) 
 export const categories=  createSelector(
   ormSelector(session.schema),
   state => {

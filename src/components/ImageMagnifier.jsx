@@ -103,7 +103,7 @@ const ImageMagnifier = ({  handleClick,images, sqrDim = 400 }) => {
               onClick={handleClick} 
               onMouseEnter={(e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")  )} 
               onTouchStart={((e) => (activeImage?.id !== i.id ? handleSetActive(Number.parseInt(e.target.id)) : ("")))}
-              className={"w-min  max-w-[4rem] aspect-square" + ((activeImage?.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
+              className={"w-full less-than-xs:max-w-[3rem] max-w-[6rem]  aspect-square" + ((activeImage?.id === i.id) ? " p-[0.8px] border-[3px] border-[#00000037] rounded-md" : " p-2") +" object-cover object-center block cursor-pointer"} 
               src={imagepath(i?.image_url)||no_img_path}
                
             />

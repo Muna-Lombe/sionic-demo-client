@@ -1,4 +1,5 @@
 import types from "../actions/actionTypes";
+import { mapper } from "../utilities";
 import { fromType } from "../utilities/StateLoader";
 
 export default function customReducer({session, model,action }) {
@@ -36,7 +37,7 @@ export default function customReducer({session, model,action }) {
 
       }
       const customDispatch = () => {
-        for (const [m, d] of payload) {
+        for (const [m, d] of mapper(payload).deserialize) {
           // console.log("m & d", m,d)
           if (isTargetModel(m)) {
             // console.log("is", m, "target model? : ", isTargetModel(m))
@@ -67,17 +68,32 @@ export default function customReducer({session, model,action }) {
       break;
     case ( isTargetModel() && verb() + '_' + model.modelName) === (types.UPDATE+'_'+model.modelName):
       // console.log("update", payload, model.modelName, model.withId(payload.id))
-
-      model.withId(payload.id).update(payload.set);
+      if("scope"){
+        const {set, id, ...otherProps} = payload
+  
+        model.withId(id).update(set);
+        if(otherProps?.fn) otherProps.fn()
+      }
       // session.reduce();
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (types.UPDATE_ALL + '_' + model.modelName):
+      if("scope"){
+        let { set, id, ...otherProps } = payload
+
         model.all().update(payload.set)
+        if (otherProps?.fn) otherProps.fn()
+
+      }
       // session.reduce();
       break;
     case (isTargetModel() && verb() + '_' + model.modelName) === (types.REMOVE + '_' + model.modelName):
       // model.withId(payload.id).delete();
-      model.withId(payload.id).delete();
+      if("scope"){
+        let { id, ...otherProps } = payload
+        model.withId(payload.id).delete();
+        if (otherProps?.fn) otherProps.fn()
+
+      }
 
 
       // session.reduce();

@@ -137,7 +137,7 @@ const OrderHistory = ({ itemsOrdered}) => {
         </p>
         
       </div>
-      <div id="order_history__content" className="w-full">
+      <div id="order_history__content" className="w-full ">
         <div id="content_wrapper" className="w-full grid  grid-flow-rows grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-6">
          {itemsOrdered?.map((item,x) => <Item key={x} order={item}/>) } 
           

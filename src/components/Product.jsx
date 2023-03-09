@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector} from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BasketIco, calcDisc, titleTagTypes as tags } from '../assets';
 import IMG, { imagepath } from '../assets/images';
 import no_product_img from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
@@ -8,7 +8,7 @@ import no_product_img from '../assets/tests/jsonServer/img/placeholders/no_produ
 import { createdOrder } from '../orm/models/OrderModel';
 import { momentDate } from '../orm/utilities';
 import types from '../orm/actions/actionTypes';
-import { isAlreadyOrdered, isInCart } from '../orm/selectors';
+import { authenticatedUsers, isAlreadyOrdered, isAuthedUser, isInCart } from '../orm/selectors';
 import { createdCartItem } from '../orm/models/CartModel';
 
 
@@ -16,7 +16,11 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
   
   let img = new IMG()
   const dispatch = useDispatch()
+  const goto = useNavigate()
+  const location = useLocation()
   const isOrdered = useSelector(isInCart(product?.id))
+  const authSessions = useSelector(authenticatedUsers)
+  const userAuthed = useSelector(isAuthedUser(authSessions[0]?.id))
   // let cats = useSelector(filteredCategoriesFromModel(product?.categoryIds))
   const textStyle = {
     maxWidth: '100%',
@@ -46,13 +50,18 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
       }))
 
   }
+
+  const handleRedirect = () => {
+    
+    goto("/signin", { state: { redirect: location.pathname } })
+  }
   
   const BuyBtn=({})=>(
     <button
       id="add_to_cart_btn"
       className={(isOrdered ? "relative " : " group   hover:bg-blue-500   hover:text-white ") + "  py-[3px] px-1 w-full h-max flex flex-row-reverse justify-center border-[#2967FF] rounded-lg border-[1px] text-blue-500 stroke-blue-500 cursor-pointer"}
       disabled={isOrdered}
-      onClick={() => handleAddToCart(product.id)}
+      onClick={() => userAuthed ? handleAddToCart(product.id) : handleRedirect()}
     >
       <span className={(isOrdered ? "peer " : " ")}>
         <BasketIco isBurgerMenu={false} />

@@ -5,6 +5,7 @@ import { Link, createSearchParams, useLocation, useNavigate } from "react-router
 import { AvatarIco, CartIco, PinIco, SearchIco, titleTagTypes as tags } from '../assets';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProductNamesThatMatch, setSearchedProductId } from '../js/slices/products/productsSlice';
+import Logo from './Logo';
 const Navbar = () => {
   
   const prodNames = useSelector(selectProductNamesThatMatch());
@@ -65,7 +66,10 @@ const Navbar = () => {
   const isNotAllowed = () => (
     location.pathname.includes("checkout" )
     || location.pathname.includes("history") 
+    
   )
+  
+
   const handleChange = (e) => {
     e.preventDefault()
     const suggestions = ((str) =>
@@ -119,15 +123,30 @@ const Navbar = () => {
   };
   const GoToCartIco = ({isBurgerMenu=false,size="2.5rem"}) => (
    
-      <Link id='cart' to="cart/"> 
+    <Link id='cart' to="cart/" className=' less-than-xs:w-8 aspect-square flex'> 
         <CartIco size={size} isBurgerMenu={isBurgerMenu} isCartBtn={true} /> 
       </Link> 
   )
   
   const GoToAvatarIco = ({size})=> (
-    <Link to="history/"> 
-      <AvatarIco  size={size}  />
-    </Link> 
+
+    <div className="avtr">
+      <Link to="history/" className='peer less-than-xs:w-8 flex'> 
+        <AvatarIco  size={size}  />
+      </Link> 
+      <Link id='cart' to="cart/" className='hidden '>
+        <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
+      </Link> 
+      <Link id='dashboard' to="dashboard/" className='hidden '>
+        <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
+      </Link> 
+      <Link id='settings' to="settings/" className='hidden '>
+        <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
+      </Link> 
+      <Link id='logout' to="logout/" className='hidden '>
+        <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
+      </Link> 
+    </div>
   )
 
   const SearchField =({})=>{
@@ -136,11 +155,12 @@ const Navbar = () => {
       return createSearchParams({ query: JSON.stringify([curtext]) })
     }
     return(
+      
       <div id="search_field" tabIndex={0} className="relative min-w-[12rem]  greater-than-md:min-w-[28rem] w-full max-w-[28rem] greater-than-md:max-w-[32rem] less-than-xs:h-[2rem] h-[2.8rem] max-h-[3.2rem] flex justify-between border-[1px] rounded-3xl">
         {/* <div className="search-input relative w-full max-w-[22rem]  flex   justify-between p-[1px]"> */}
           <input type="text" ref={ref}  name="search" defaultValue={curtext} placeholder={searchProductText||""} onKeyUp={(e) => {handleChange(e); setCurtext(e.target.value)}} className=" search autofill:selection bg-white w-full rounded-bl-3xl rounded-tl-3xl bg-transparent px-2  text-black focus:outline-none" />
     
-          <Link to={"search?" + setParams()} onClick={() => handleBlur()} className=" top-0 right-0 w-[6rem] h-full rounded-3xl m-[0.00rem] px-2 bg-[#F0F4FB] flex justify-center items-center">
+          <Link to={"search?" + setParams()} onClick={() => handleBlur()} className=" top-0 right-0 w-1/5 h-full rounded-3xl m-[0.00rem] px-2 bg-[#F0F4FB] flex justify-center items-center">
             <SearchIco />
           </Link> 
       </div>
@@ -152,10 +172,11 @@ const Navbar = () => {
       <nav className=" p-2 relative w-full h-full flex justify-center gap-2 items-start  lg:items-center xl:items-center ">
         <div id="navbar_left__wrapper" className=" w-full block md:block  lg:gap-6 lg:flex lg:flex-row xl:flex xl:flex-row justify-start items-center transition-all">
           <div id="logo_location" className=" w-full lg:w-auto xl:auto flex justify-start gap-8">
-            <div id="logo" className="p-1 border-[4px] border-black border-spacing-2 rounded-[4px] text less-than-xs:text-lg text-[2.4rem] leading-10 font-raleway font-bold">
-              <Link to="" > {tags.footer.storename} </Link> 
-            </div>
-            
+            <Logo>
+              <div id="logo" className="p-1 border-[4px] border-black border-spacing-2 rounded-[4px] text less-than-xs:text-lg text-[2.4rem] leading-10 font-raleway font-bold">
+                <Link to="" > {tags.footer.storename} </Link> 
+              </div>
+            </Logo>
             <div id="address" className="relative flex flex-wrap items-center justify-between">
               <PinIco />
       
@@ -178,11 +199,9 @@ const Navbar = () => {
           
           }
         </div>
-        <div id="navbar_right__wrapper" className=" absolute right-0 hidden greater-than-xs:flex flex-row greater-than-sm:w-[8rem]  h-max md:items-start md:justify-end greater-than-lg:items-center greater-than-lg:justify-center greater-than-lg:m-0 greater-than-lg:p-0  gap-3">
-          {/* <div id="user_content" className=" pt-4 px-2 h-max lg:p-0 xl:p-0  justify-around items-center gap-2"> */}
+        <div id="navbar_right__wrapper" className=" absolute top-3  right-0 flex flex-row greater-than-sm:w-[8rem]  h-max md:items-start md:justify-end greater-than-lg:items-center greater-than-lg:justify-center greater-than-lg:m-0 greater-than-lg:p-0  gap-3">
             <GoToCartIco size={'1.5rem'}/>
             <GoToAvatarIco size={'1.5rem'}/>
-          {/* </div> */}
         </div>
       </nav>
     </>

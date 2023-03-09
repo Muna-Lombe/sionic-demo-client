@@ -1,7 +1,9 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, findNonSerializableValue } from "@reduxjs/toolkit";
 import db from "../../assets/tests/jsonServer/db"
 import { CREATE } from "../actions/actionTypes"
 import { ThunkTypes } from "../actions/thunkTypes";
+import { mapper } from ".";
+// import { Map } from ".";
 
 
 export const load = async (model, thunkFulfilled) => {
@@ -34,8 +36,8 @@ const payloadCreatorForMany = async (arg, thunkAPI) => {
       compiledResponse.set(model.modelName, responses[idx]);
     });
     // await thunkAPI.dispatch({ type: 'FETCH_SUCCESS', payload: compiledResponse });
-    // console.log("compiled", compiledResponse);
-    return compiledResponse;
+
+    return mapper(compiledResponse).serialize;
   } catch (error) {
     thunkAPI.dispatch({ type: 'FETCH_ERROR', error });
     return error;

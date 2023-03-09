@@ -46,7 +46,7 @@ module.exports = {
         //   }
         // );
         // addVariant('child-nth', '&>')
-      }
+      },
 
     ],
     theme: {

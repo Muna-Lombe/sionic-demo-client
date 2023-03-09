@@ -10,6 +10,7 @@ import ProductVariationPropertyValue from "../models/ProductVariationPropertyVal
 import ProductVariationPropertyListValue from "../models/ProductVariationPropertyListValueModel";
 import { defaultUpdater } from "redux-orm/lib/redux";
 import CartItem from "../models/CartModel";
+import Auth from "../models/AuthModel";
 
 export const orm = new ORM({
     stateSelector: state => {
@@ -19,27 +20,12 @@ export const orm = new ORM({
 
 });
 // getFromDB
-orm.register(Product,CartItem, Order,ProductCategory,  ProductImage, ProductVariation, ProductVariationProperty,ProductVariationPropertyValue,ProductVariationPropertyListValue);
+orm.register(Auth,Product,CartItem, Order,ProductCategory,  ProductImage, ProductVariation, ProductVariationProperty,ProductVariationPropertyValue,ProductVariationPropertyListValue);
 
 export const ormRootReducer = createReducer(orm, defaultUpdater) //customStateUpdater) 
-
-// export const ormRootReducer = combineReducers({
-//     orm: createReducer(orm, customStateUpdater),
-//     // entities: reduce
-// }) 
 
 let emptyState = orm.getEmptyState()
 
 // creates session with empty db state
 export const session = orm.session(emptyState);
 
-export const productSession = session['Product']
-export const orderSession = session['Order']
-export const categorySession = session['ProductCategory']
-export const imageSession = session['ProductImage']
-export const productVariationPropertySession = session['ProductVariationProperty']
-export const productVariationPropertyListValueSession = session['ProductVariationPropertyListValue']
-export const productVariationPropertyValueSession = session['ProductVariationPropertyValue']
-export const productVariationSession = session['ProductVariation']
-// export default orm;
-// console.log("products", selectProductsFromModel(orm.Product).apply())

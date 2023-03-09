@@ -2,7 +2,6 @@ import { titleTagTypes as tags} from "../assets";
 
 
 const ContentSpecification = ({ children})=>{
-  console.log("chil", children)
     return(
       <div className="content-specification w-full max-w-[342px] ">
         <p className=' text-blue-500 text-sm font-[arial] font-medium cursor-pointer'>

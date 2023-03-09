@@ -10,12 +10,17 @@ const FullProductCharacteristics = ({ children }) => {
         </div>
         <div className="characteristics-content w-full md:max-w-3xl lg:max-w-5xl flex flex-col md:flex-row flex-wrap justify-between gap-4">
           <div className="main-left p-1">
-            <ProductDescriptor />
-            <ProductDescriptor />
+            <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-wrap less-than-xs:child:justify-between">
+              <ProductDescriptor />
+              <ProductDescriptor />
+            </div>
+
           </div>
           <div className="main-right p-1">
-            <ProductDescriptor />
-            <ProductDescriptor />
+            <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-wrap less-than-xs:child:justify-between">
+              <ProductDescriptor />
+              <ProductDescriptor />
+            </div>
           </div>
         </div>
       </div>
@@ -26,12 +31,16 @@ const FullProductCharacteristics = ({ children }) => {
         </div>
         <div className="characteristics-content w-full md:max-w-3xl lg:max-w-5xl flex flex-col md:flex-row flex-wrap justify-between gap-4">
           <div className="additional-left p-1">
-            <ProductDescriptor />
-            <ProductDescriptor />
+            <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-wrap less-than-xs:child:justify-between">
+              <ProductDescriptor />
+              <ProductDescriptor />
+            </div>
           </div>
           <div className="additional-right p-1">
-            <ProductDescriptor />
-            <ProductDescriptor />
+            <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-wrap less-than-xs:child:justify-between">
+              <ProductDescriptor />
+              <ProductDescriptor />
+            </div>
           </div>
         </div>
       </div>

@@ -134,11 +134,11 @@ const ShowProduct = ()=>{
                 <ContentDetails contentType={"product"} showLogo={<Logo logo={productItem?.store.name} />} variations={productItem?.variations.map((p)=> ({...p, text:p.price}))}>
                       { productItem?.variations.map((i,x)=>
                             <ContentDescription key={x} first={x===0} id={`${i.id}`} >
-                              <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:gap-4">
+                              <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:justify-between">
                                 <ProductDescriptor key={101} id={`${i.id}${x}`} label={"In stock"} values={[i.stock]} />
                               </div>
                               { i.properties.map((k,v)=> 
-                              <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-col">
+                                <div className="w-full less-than-xs:child:max-w-[330px] less-than-xs:child:flex-wrap less-than-xs:child:justify-between">
                                 <ProductDescriptor key={v} id={`${i.id}${v}`} label={k.name} values={k.values || [`${k.type}`]} />
                               </div>
                               )}

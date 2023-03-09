@@ -1,6 +1,6 @@
 import React from 'react'
 import { image1_1, imagepath } from '../assets/images'
-import { ArrowDown, CheckIco, ThumbIco, titleTagTypes as tags } from '../assets'
+import { ArrowDown, CheckIco, OpenIco, ThumbIco, titleTagTypes as tags } from '../assets'
 import { CopyIco } from '../assets'
 import no_img_path from '../assets/tests/jsonServer/img/placeholders/no_product_img.png'
 
@@ -61,10 +61,10 @@ const QAs = ({ qas}) => {
     return(
       <div className="sorter-wrapper  py-1 w-full h-14">
         <div onClick={()=>handleBlur()} className="answer-sorter  max-w-min flex flex-col justify-between gap-1  border-2 border-slate-400 rounded-lg">
-          <div className=" sorter-input my-1 px-1 w-max flex gap-10">
-            <input disabled type="text" name="sort-selector" id="sort-selector" value={answersList[0]} className="w-max flex flex-row bg-white" />
-            <p  className="w-full p-1 flex items-center cursor-pointer opacity-50 bg-transparent z-[5] ">
-              <ArrowDown handleClick={handleRotateIco} />
+          <div className=" sorter-input relative my-1 px-1 flex less-than-xs:gap-1 gap-10">
+            <input disabled type="text" name="sort-selector" id="sort-selector" value={answersList[0]} className="w-min flex flex-row bg-white" />
+            <p  className="less-than-xs:absolute top-0 right-0 p-1 flex items-center cursor-pointer opacity-50 bg-transparent z-[5] ">
+              <ArrowDown defaultPos={"up"} handleClick={handleRotateIco} />
             </p>
           </div>
           <optgroup onClick={(e) => handleSetValue(e)} className="sort-options top-full left-0 w-full bg-white border opacity-90 rounded-xl child:cursor-pointer child-hover:bg-slate-400  hidden ">

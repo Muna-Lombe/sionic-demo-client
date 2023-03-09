@@ -16,11 +16,10 @@ const CartIco = ({size, isBurgerMenu,isCartBtn=false}) => {
   )
   return (
  
-    <div id="border_circle" className={"p-2 min-w-[1.5rem] w-[" + size + "] max-w-[2.8rem] aspect-square relative sm:flex md:flex lg:flex border-[0.9px] border-[#727280] rounded-[2rem] flex justify-center items-center"} >
+    <div id="border_circle" className={"p-2 max-w-[2.8rem] aspect-square relative sm:flex md:flex lg:flex border-[0.9px] border-[#727280] rounded-[2rem] flex justify-center items-center"} >
         <BasketIco isBurgerMenu={isBurgerMenu} />
         {
           isCartBtn && <AddCartCount/>
-
         }
      </div>
      
