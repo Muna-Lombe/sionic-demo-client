@@ -1,21 +1,10 @@
 {
   "files": {
-    "main.css": "/sionic-demo-client/static/css/main.bb86eefc.css",
-    "main.js": "/sionic-demo-client/static/js/main.7362a493.js",
-    "static/css/190.d02735f6.chunk.css": "/sionic-demo-client/static/css/190.d02735f6.chunk.css",
-    "static/js/190.12217c7a.chunk.js": "/sionic-demo-client/static/js/190.12217c7a.chunk.js",
-    "static/css/486.d02735f6.chunk.css": "/sionic-demo-client/static/css/486.d02735f6.chunk.css",
-    "static/js/486.b5eee4fe.chunk.js": "/sionic-demo-client/static/js/486.b5eee4fe.chunk.js",
-    "static/css/9.d02735f6.chunk.css": "/sionic-demo-client/static/css/9.d02735f6.chunk.css",
-    "static/js/9.cad84f54.chunk.js": "/sionic-demo-client/static/js/9.cad84f54.chunk.js",
-    "static/css/585.d02735f6.chunk.css": "/sionic-demo-client/static/css/585.d02735f6.chunk.css",
-    "static/js/585.001744ff.chunk.js": "/sionic-demo-client/static/js/585.001744ff.chunk.js",
-    "static/css/970.d02735f6.chunk.css": "/sionic-demo-client/static/css/970.d02735f6.chunk.css",
-    "static/js/970.b2e12942.chunk.js": "/sionic-demo-client/static/js/970.b2e12942.chunk.js",
-    "static/css/18.d02735f6.chunk.css": "/sionic-demo-client/static/css/18.d02735f6.chunk.css",
+    "main.css": "/sionic-demo-client/static/css/main.bcf8ea1c.css",
+    "main.js": "/sionic-demo-client/static/js/main.48e43f72.js",
+    "static/js/565.2715d8b8.chunk.js": "/sionic-demo-client/static/js/565.2715d8b8.chunk.js",
+    "static/js/279.2fe9fadc.chunk.js": "/sionic-demo-client/static/js/279.2fe9fadc.chunk.js",
     "static/js/787.08250d33.chunk.js": "/sionic-demo-client/static/js/787.08250d33.chunk.js",
-    "static/js/426.a45e9103.chunk.js": "/sionic-demo-client/static/js/426.a45e9103.chunk.js",
-    "static/js/972.98a0563f.chunk.js": "/sionic-demo-client/static/js/972.98a0563f.chunk.js",
     "static/media/601a7316507cf.jpg": "/sionic-demo-client/static/media/601a7316507cf.234517002bfc9d07d123.jpg",
     "static/media/image13_6.png": "/sionic-demo-client/static/media/image13_6.234517002bfc9d07d123.png",
     "static/media/601a7316506cf.jpg": "/sionic-demo-client/static/media/601a7316506cf.51c4b99c4777f7f4bf81.jpg",
@@ -82,25 +71,14 @@
     "static/media/601a731656eaf.jpg": "/sionic-demo-client/static/media/601a731656eaf.1817ce75ac650274fac2.jpg",
     "static/media/601a731659703.jpg": "/sionic-demo-client/static/media/601a731659703.1817ce75ac650274fac2.jpg",
     "index.html": "/sionic-demo-client/index.html",
-    "main.bb86eefc.css.map": "/sionic-demo-client/static/css/main.bb86eefc.css.map",
-    "main.7362a493.js.map": "/sionic-demo-client/static/js/main.7362a493.js.map",
-    "190.d02735f6.chunk.css.map": "/sionic-demo-client/static/css/190.d02735f6.chunk.css.map",
-    "190.12217c7a.chunk.js.map": "/sionic-demo-client/static/js/190.12217c7a.chunk.js.map",
-    "486.d02735f6.chunk.css.map": "/sionic-demo-client/static/css/486.d02735f6.chunk.css.map",
-    "486.b5eee4fe.chunk.js.map": "/sionic-demo-client/static/js/486.b5eee4fe.chunk.js.map",
-    "9.d02735f6.chunk.css.map": "/sionic-demo-client/static/css/9.d02735f6.chunk.css.map",
-    "9.cad84f54.chunk.js.map": "/sionic-demo-client/static/js/9.cad84f54.chunk.js.map",
-    "585.d02735f6.chunk.css.map": "/sionic-demo-client/static/css/585.d02735f6.chunk.css.map",
-    "585.001744ff.chunk.js.map": "/sionic-demo-client/static/js/585.001744ff.chunk.js.map",
-    "970.d02735f6.chunk.css.map": "/sionic-demo-client/static/css/970.d02735f6.chunk.css.map",
-    "970.b2e12942.chunk.js.map": "/sionic-demo-client/static/js/970.b2e12942.chunk.js.map",
-    "18.d02735f6.chunk.css.map": "/sionic-demo-client/static/css/18.d02735f6.chunk.css.map",
-    "787.08250d33.chunk.js.map": "/sionic-demo-client/static/js/787.08250d33.chunk.js.map",
-    "426.a45e9103.chunk.js.map": "/sionic-demo-client/static/js/426.a45e9103.chunk.js.map",
-    "972.98a0563f.chunk.js.map": "/sionic-demo-client/static/js/972.98a0563f.chunk.js.map"
+    "main.bcf8ea1c.css.map": "/sionic-demo-client/static/css/main.bcf8ea1c.css.map",
+    "main.48e43f72.js.map": "/sionic-demo-client/static/js/main.48e43f72.js.map",
+    "565.2715d8b8.chunk.js.map": "/sionic-demo-client/static/js/565.2715d8b8.chunk.js.map",
+    "279.2fe9fadc.chunk.js.map": "/sionic-demo-client/static/js/279.2fe9fadc.chunk.js.map",
+    "787.08250d33.chunk.js.map": "/sionic-demo-client/static/js/787.08250d33.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bb86eefc.css",
-    "static/js/main.7362a493.js"
+    "static/css/main.bcf8ea1c.css",
+    "static/js/main.48e43f72.js"
   ]
 }
