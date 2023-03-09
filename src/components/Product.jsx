@@ -53,7 +53,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
 
   const handleRedirect = () => {
     
-    goto("/signin", { state: { redirect: location.pathname } })
+    goto("signin", { state: { redirect: location.pathname } })
   }
   
   const BuyBtn=({})=>(
@@ -130,7 +130,7 @@ const Product = ({ product, noPrd, isSearchOrMain, minW =8}) => {
               {
                 noPrd
                   ? <div className="no-prd-field w-[70%] h-6 border rounded-md bg-gradient-to-tr from-slate-400 to-slate-500 animate-pulse opacity-30"></div>
-                  : <Link to={"/product/" + product?.id}  style={textStyle} >
+                  : <Link to={"product/" + product?.id}  style={textStyle} >
                       {product?.name}
                     </Link>
               }

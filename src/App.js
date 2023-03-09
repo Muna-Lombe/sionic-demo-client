@@ -24,18 +24,18 @@ function App() {
     <AppWrapper>
       <Routes>
         <Route path="/" exact element={<Main/>} />
-        <Route path="/product/:id" exact element={<ShowProduct />} />
-        <Route path="/search" exact element={<Search />} />
-        <Route path="/cart" exact element={
-          <PrivateRoute redirect={"/cart"} component={Basket} />
+        <Route path="product/:id" exact element={<ShowProduct />} />
+        <Route path="search" exact element={<Search />} />
+        <Route path="cart" exact element={
+          <PrivateRoute redirect={"cart"} component={Basket} />
         } />
-        <Route path="/checkout" exact element={
-          <PrivateRoute redirect={"/checkout"} component={Checkout} />
+        <Route path="checkout" exact element={
+          <PrivateRoute redirect={"checkout"} component={Checkout} />
         } />
-        <Route path="/history" exact element={
-          <PrivateRoute redirect={"/history"} component={History} />
+        <Route path="history" exact element={
+          <PrivateRoute redirect={"history"} component={History} />
         } />
-        <Route path="/signin" exact element={<Login /> } /> 
+        <Route path="signin" exact element={<Login /> } /> 
         
         <Route
           path="*"

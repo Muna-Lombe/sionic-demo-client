@@ -61,7 +61,7 @@ const Navbar = () => {
     // console.log("submit", arr)
     dispatch(setSearchedProductId(arr[0].name ? arr.map((i)=> i.name) : arr))
     handleBlur()
-    goto("/search?" + createSearchParams({ query: JSON.stringify(arr[0].name ? arr.map((i) => i.name) : arr) }))
+    goto("search?" + createSearchParams({ query: JSON.stringify(arr[0].name ? arr.map((i) => i.name) : arr) }))
   }
   const isNotAllowed = () => (
     location.pathname.includes("checkout" )
@@ -131,19 +131,19 @@ const Navbar = () => {
   const GoToAvatarIco = ({size})=> (
 
     <div className="avtr">
-      <Link to="history/" className='peer less-than-xs:w-8 flex'> 
+      <Link to="history" className='peer less-than-xs:w-8 flex'> 
         <AvatarIco  size={size}  />
       </Link> 
-      <Link id='cart' to="cart/" className='hidden '>
+      <Link id='cart' to="cart" className='hidden '>
         <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
       </Link> 
-      <Link id='dashboard' to="dashboard/" className='hidden '>
+      <Link id='dashboard' to="dashboard" className='hidden '>
         <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
       </Link> 
-      <Link id='settings' to="settings/" className='hidden '>
+      <Link id='settings' to="settings" className='hidden '>
         <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
       </Link> 
-      <Link id='logout' to="logout/" className='hidden '>
+      <Link id='logout' to="logout" className='hidden '>
         <CartIco size={size} isBurgerMenu={false} isCartBtn={true} />
       </Link> 
     </div>
