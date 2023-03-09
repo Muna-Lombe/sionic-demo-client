@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { InfoIco, calcDisc } from "../assets"
+import { InfoIco, calcDisc, titleTagTypes as tags } from "../assets"
 import { ClassWatcher } from "../orm/utilities/classWatcher"
 
 const PriceTag = ({tagFor,original, discount=false }) => {
@@ -26,8 +26,8 @@ const PriceTag = ({tagFor,original, discount=false }) => {
         <p className="main-price text-4xl text-red-500 font-[arial] font-medium">
           {
             discount
-            ? (currPriceTag.discounted|| setDisc(original,discount).discounted) + "₽"
-            : (currPriceTag.oldPrice || original)+"₽"
+            ? (currPriceTag.discounted|| setDisc(original,discount).discounted) + tags.currencyType
+            : (currPriceTag.oldPrice || original)+tags.currencyType
           }
         </p>
         {
@@ -44,7 +44,7 @@ const PriceTag = ({tagFor,original, discount=false }) => {
         ?
           <p className="price-note w-full  px-2  flex flex-row items-center  gap-1 bg-green-500 rounded-xl text-white font-[arial] font-medium less-than-xs:child:text-sm">
             <span className="w-auto less-than-xs:hidden">
-              {((currPriceTag.oldPrice || original) - (currPriceTag.discounted || setDisc(original, discount).discounted)).toFixed(2) + "₽"} {" при оплате Ozon Картой"}
+              {((currPriceTag.oldPrice || original) - (currPriceTag.discounted || setDisc(original, discount).discounted)-10).toFixed(2) + tags.currencyType} {" When paying on Katundu by card"}
             </span>
             <span className="w-auto  greater-than-xs:hidden">
               {" Eсть Ozon Картой?"}

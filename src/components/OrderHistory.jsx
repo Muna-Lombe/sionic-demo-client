@@ -55,7 +55,7 @@ const OrderHistory = ({ itemsOrdered}) => {
         </div>
         <div id="order_cost">
           <p className="text-xs text-[#727280] font-medium"> {tags.orderHistory.orderCostText}</p>
-          <p className="text-xs text-black font-semibold"> {order?.OrderProps.totalCost + "₽"}</p>
+          <p className="text-xs text-black font-semibold"> {order?.OrderProps.totalCost + tags.currencyType}</p>
         </div>
         <div id="delivery_address">
           <p className="text-xs text-[#727280] font-medium"> {tags.orderHistory.deliveryAddressText} </p>

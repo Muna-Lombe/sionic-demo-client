@@ -37,8 +37,8 @@ export const filterData = {
   ]
 }
 export const titleTagTypes={
-  currencyType : "USD",
-  location: { city: "Kazan", state: "Republic of Tatarstan" },
+  currencyType : "ZMW",
+  location: { city: "Lusaka", state: "Lusaka Province" },
   buyBtn:{
     mainText :"Add to cart", subText :"Delivery Tomorrow", tooltip :"Item already in cart"
   },
@@ -49,7 +49,7 @@ export const titleTagTypes={
     categoriesText: "Categories", settingsText: "Settings"
   },
   cart:{
-    currencyType : "USD", cartTag:"Cart", emptyCartBtnTag:"Empty Cart",
+    currencyType : "ZMW", cartTag:"Cart", emptyCartBtnTag:"Empty Cart",
     qtyType: "pcs.", promoCountdown: "to ", priceMinTag: "from", checkoutTag:"Checkout", totalInCartTag:"Cart Total"
   },
   checkout:{
@@ -81,7 +81,7 @@ export const titleTagTypes={
     text : "information about delivery"
   },
   paymentType:{
-    mainText :"Ozon installments", subText :"Read more"
+    mainText :"Katundu installments", subText :"Read more"
   },
   pickupPoints:{
     text : "Supply points and postmates"

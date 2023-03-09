@@ -118,14 +118,14 @@ const CheckoutForm = ({ }) => {
           <label htmlFor="order_cost">
             {tags.checkout.totalPriceText+":"}
           </label>
-          <input id="o_cost" className=" w-auto max-w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end text-xl bg-transparent text-end lining-nums tabular-nums" name="order_cost" form="checkout_form" type="text" value={(total || 0) +"₽"} readOnly required  />
+          <input id="o_cost" className=" w-auto max-w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end text-xl bg-transparent text-end lining-nums tabular-nums" name="order_cost" form="checkout_form" type="text" value={(total || 0) +tags.currencyType} readOnly required  />
         </div>
 
         <div id="delivery_cost__wrapper" className="w-full  py-1 px-2 flex  sm:flex-row  md:flex-row  lg:flex-row xl:flex-row justify-between md:justify-between lg:justify-between xl:justify-between items-center text-lg text-[#727280] font-raleway ">
           <label className="" htmlFor="delivery_cost">
             {tags.checkout.deliveryCostText+":"}
           </label>
-          <input id="d_cost" className="max-w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent text-end lining-nums tabular-nums" name="delivery_cost" form="checkout_form" type="text" value={(deliveryPrice || 0) +"₽"} readOnly required />
+          <input id="d_cost" className="max-w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent text-end lining-nums tabular-nums" name="delivery_cost" form="checkout_form" type="text" value={(deliveryPrice || 0) +tags.currencyType} readOnly required />
         </div>
 
         <div id="total_cost__wrapper" className="w-full  px-2 flex  sm:flex-row  md:flex-row  lg:flex-row xl:flex-row justify-between md:justify-between lg:justify-between xl:justify-between items-center text-xl text-[#727280] font-raleway font-medium ">
@@ -133,7 +133,7 @@ const CheckoutForm = ({ }) => {
             {tags.checkout.sumTotalText+":"}
           </label>
           <input id="t_cost" className="max-w-[8rem] flex justify-start  md:justify-end lg:justify-end xl:justify-end  bg-transparent text-black font-bold text-end lining-nums tabular-nums" name="total_cost" form="checkout_form" type="text" value={(total 
-          + deliveryPrice) +"₽"} readOnly required />
+          + deliveryPrice) +tags.currencyType} readOnly required />
         </div>
 
       </div>
