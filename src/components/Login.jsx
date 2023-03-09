@@ -28,7 +28,7 @@ export default function Login({userId}) {
     }
     const h = await Promise.all([sha256(data.password)])
     dispatch(createdAuth({dateCreated:momentDate().shortDate, timeCreated:new Date(),  authStatus:types.AUTH_VALID}))
-    console.log("loc",location)
+    // console.log("loc",location)
     goto(location.state.redirect)
   }
   return (
